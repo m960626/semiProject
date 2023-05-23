@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mini.mapper.GuestMapper">
+	<!-- 용병모집 게시판 -->
+	<select id="selectGuestBList" parameterType="hashmap" resultType="com.example.mini.model.Guest">
+		<![CDATA[
+		SELECT G.*, F.FLOC
+		FROM T2_GUESTB G
+		INNER JOIN T2_FIELD F ON G.MNO = F.FNO
+		LIMIT ${startNum}, 6 ]]>
+	</select>
+	
+	<!-- 용병모집 게시판 페이징 -->
+	<select id="selectGuestBListCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS PAGECNT
+		FROM T2_GUESTB G
+		INNER JOIN T2_FIELD F ON G.MNO = F.FNO
+	</select>
+	
+	<!-- 경기 일정 -->
+	<select id="selectGMatchList" parameterType="hashmap" resultType="com.example.mini.model.Guest">
+		SELECT U.ID, U.NAME, U.NICK, C.CNAME, CNO_A, MTIMES, MTIMEE, MAGE, FLOC, mDate, mNo
+		FROM 
+			T2_USER U
+		INNER JOIN T2_CLUB C ON U.CNO = C.CNO
+		INNER JOIN T2_MATCH M ON C.CNAME = M.CNO_H
+		INNER JOIN T2_FIELD F ON M.MNO = F.FNO
+		WHERE 
+			U.ID = #{uId}
+	</select>
+	
+	<!-- 게시판 작성자 정보 -->
+	<select id="selectGuestBInfo" parameterType="hashmap" resultType="com.example.mini.model.Guest">
+		SELECT U.ID, U.NAME, U.NICK, C.CNAME, phone
+		FROM 
+			T2_USER U
+		INNER JOIN T2_CLUB C ON U.CNO = C.CNO
+		WHERE 
+			U.ID = #{uId}
+	</select>
+	
+	<!-- 게시판 댓글 작성자 정보 -->
+	<select id="selectGuestCommInfo" parameterType="hashmap" resultType="com.example.mini.model.Guest">
+		SELECT U.ID, U.NAME, U.NICK, phone
+		FROM 
+			T2_USER U
+		WHERE 
+			U.ID = #{uId}
+	</select>
+	
+	
+	<!-- 게시판 상세 내용 -->
+	<select id="selectGuestRead" parameterType="hashmap" resultType="com.example.mini.model.Guest">
+		SELECT G.*, F.FLOC, NAME, NICK, CNO_H, CNO_A, MTIMES, MTIMEE, MDATE
+		FROM T2_GUESTB G
+		INNER JOIN T2_FIELD F ON G.MNO = F.FNO
+		INNER JOIN T2_USER U ON G.ID = U.ID
+		INNER JOIN T2_MATCH M ON M.MNO = G.MNO
+		WHERE GNO = #{gNo}
+	</select>
+	
+	<!-- 게시판 댓글 -->
+	<select id="selectGuestComm" parameterType="hashmap" resultType="com.example.mini.model.Guest">
+		SELECT GC.*, name, nick, phone
+		FROM T2_GUESTC GC
+		INNER JOIN T2_USER U ON GC.ID = U.ID
+		WHERE GNO = #{gNo}
+	</select>
+	
+	<!-- 게시판 댓글 개수 -->
+	<select id="selectCommCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM T2_GUESTC C
+		INNER JOIN T2_GUESTB G ON G.GNO = C.GNO
+		WHERE G.GNO = #{gNo}
+		GROUP BY G.GNO
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="insertGuest" parameterType="hashmap">
+		INSERT INTO T2_GUESTB
+			(id, mNo, gPosi1, gPosi2, gPosi3, gTitle, gInfo, gStatYn, gDate, delYn, gPCnt, gAGE)
+		VALUES
+			(#{uId}, #{mNo}, #{uPosi1}, #{uPosi2}, #{uPosi3}, #{title}, #{cont}, 'Y', SYSDATE(), 'N', #{cnt}, #{age})
+	</insert>
+	
+	<!-- 댓글 작성 -->
+	<insert id="insertGuestComm" parameterType="hashmap">
+		INSERT INTO T2_GUESTC
+			(gNo, id, gcDate, gcCont, delYn, gPosi, gStateYn)
+		VALUES
+			(#{gNo}, 'test124', SYSDATE(), 'ㅋㅋ 진짜 개고수인데 뽑아주삼', 'N', 'ST', 1)
+	</insert>
+	
+	<!-- 용병 승인 버튼 -->
+	<update id="successGuest" parameterType="hashmap">
+		UPDATE T2_GUESTC
+		SET GSTATEYN = 2
+		WHERE GCNO = #{gcNo}
+	</update>
+	
+	<!-- 용병 승인 시 게시글의 용병 cnt 증가 -->
+	<update id="GuestCntUp" parameterType="hashmap">
+		UPDATE T2_GUESTB
+		SET getCnt = getCnt+1
+		WHERE gNo = #{gNo}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

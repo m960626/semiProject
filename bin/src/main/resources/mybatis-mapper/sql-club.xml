@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.example.mini.mapper.ClubMapper">
+	<insert id="insertClub" parameterType="hashmap">
+		INSERT INTO T2_CLUB
+			(cLoc, cInfo, cName, cAge1, cAge2, cStat, cDay1, cDay2, cDay3, cMax, cGrade, cGender, cDate, cid)
+		VALUES
+			(#{cLoc}, #{cont}, #{cName}, #{age1}, #{age2}, #{cStatus}, #{day1}, #{day2}, #{day3}, #{cMax}, #{cGrade}, #{cGender}, NOW(), 'test123')
+	</insert>
+	
+	<select id="selectClubYn" parameterType="hashmap" resultType="com.example.mini.model.User">
+		select 
+			id
+		   ,U.cNo
+		   ,cName
+		from T2_USER U
+		LEFT JOIN T2_CLUB C ON C.cNo = U.cNo
+		where id = #{id}
+	</select>
+	<select id="selectClubList" parameterType="hashmap" resultType="com.example.mini.model.Club">	
+			SELECT * 
+			FROM (
+			SELECT cImg, cName, IFNULL(CNT, 0) AS cnt, cStat, C.cLoc, locName, cAge1, cAge2, cDay1, cDay2, cDay3, IFNULL(ROUND((cWin / (cWin + cLose) * 100)),0) AS rate, cGender, cDate
+			FROM mini_db2.T2_CLUB C
+			LEFT JOIN (
+				select CNO, COUNT(*) AS CNT
+				from mini_db2.T2_USER
+				GROUP BY CNO
+			) A ON A.CNO = C.CNO
+			INNER JOIN mini_db2.T2_LOC L ON L.locNum = C.cLoc
+			ORDER BY cDate desc
+			) A
+			WHERE 1=1
+			<if test="cName != '' and cName != null">
+				AND cName LIKE CONCAT('%', #{cName} ,'%')
+			</if>
+			<if test="cLoc != '' and cLoc != null">
+				AND cLoc = #{cLoc}
+			</if>
+			<if test="cStat != '' and cStat != null">
+				AND cStat = #{cStat}
+			</if>
+			<if test="cnt1 != '' and cnt1 != null">
+				AND cnt  >= #{cnt1}
+			</if>
+			<if test="cnt2 != '' and cnt2 != null">
+				AND cnt  >= #{cnt2}
+			</if>
+			<if test="cAge1 != '' and cAge1 != null">
+				AND cAge1 >= #{cAge1}
+			</if>
+			<if test="cAge2 != '' and cAge2 != null">
+				AND #{cAge2} >= cAge2 
+			</if>
+			<if test="rate != '' and rate != null">
+				AND rate > #{rate}
+			</if>
+			<if test="cGender != '' and cGender != null">
+				AND cGender = #{cGender}
+			</if>
+			<if test="cDay1 != '' and cDay1 != null">
+				AND (cDay1 = #{cDay1} || cDay2 = #{cDay1} || cDay3 = #{cDay1})
+			</if>
+			<if test="cDay2 != '' and cDay2 != null">
+				|| (cDay1 = #{cDay1} || cDay2 = #{cDay2} || cDay3 = #{cDay2})
+			</if>
+			<if test="cDay3 != '' and cDay3 != null">
+				|| (cDay1 = #{cDay3} || cDay2 = #{cDay3} || cDay3 = #{cDay3})
+			</if>
+			LIMIT ${startNum}, 10
+	</select>
+	
+	<select id="selectClubCnt" parameterType="hashmap" resultType="int">	
+			SELECT count(*) as sCnt
+			FROM (
+			SELECT cImg, cName, IFNULL(CNT, 0) AS cnt, cStat, C.cLoc, locName, cAge1, cAge2, cDay1, cDay2, cDay3, IFNULL(ROUND((cWin / (cWin + cLose) * 100)),0) AS rate, cGender, cDate
+			FROM mini_db2.T2_CLUB C
+			LEFT JOIN (
+				select CNO, COUNT(*) AS CNT
+				from mini_db2.T2_USER
+				GROUP BY CNO
+			) A ON A.CNO = C.CNO
+			INNER JOIN mini_db2.T2_LOC L ON L.locNum = C.cLoc
+			ORDER BY cDate desc
+			) A
+			WHERE 1=1
+			<if test="cName != '' and cName != null">
+				AND cName LIKE CONCAT('%', #{cName} ,'%')
+			</if>
+			<if test="cLoc != '' and cLoc != null">
+				AND cLoc = #{cLoc}
+			</if>
+			<if test="cStat != '' and cStat != null">
+				AND cStat = #{cStat}
+			</if>
+			<if test="cnt1 != '' and cnt1 != null">
+				AND cnt  >= #{cnt1}
+			</if>
+			<if test="cnt2 != '' and cnt2 != null">
+				AND cnt  >= #{cnt2}
+			</if>
+			<if test="cAge1 != '' and cAge1 != null">
+				AND cAge1 >= #{cAge1}
+			</if>
+			<if test="cAge2 != '' and cAge2 != null">
+				AND #{cAge2} >= cAge2 
+			</if>
+			<if test="rate != '' and rate != null">
+				AND rate > #{rate}
+			</if>
+			<if test="cGender != '' and cGender != null">
+				AND cGender = #{cGender}
+			</if>
+			<if test="cDay1 != '' and cDay1 != null">
+				AND (cDay1 = #{cDay1} || cDay2 = #{cDay1} || cDay3 = #{cDay1})
+			</if>
+			<if test="cDay2 != '' and cDay2 != null">
+				|| (cDay1 = #{cDay1} || cDay2 = #{cDay2} || cDay3 = #{cDay2})
+			</if>
+			<if test="cDay3 != '' and cDay3 != null">
+				|| (cDay1 = #{cDay3} || cDay2 = #{cDay3} || cDay3 = #{cDay3})
+			</if>
+	</select>
+	
+		<!-- 클럽 상세보기(클럽 정보) -->
+	<select id="selectClubinfo" parameterType="hashmap" resultType="com.example.mini.model.Club">
+		SELECT *
+		FROM T2_CLUB C
+		INNER JOIN T2_USER U ON U.ID = C.CID
+		INNER JOIN T2_LOC L ON C.CLOC = L.LOCNUM
+		WHERE C.CNO = #{cNo}
+	</select>
+	
+	
+	<!-- 클럽 현재 인원 -->
+	<select id="selectClubUserCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM T2_USER U
+		WHERE CNO = #{cNo}
+	</select>
+	
+	<!-- 클럽 선수 명단 -->
+	<select id="selectClubUserList" parameterType="hashmap" resultType="com.example.mini.model.Join">
+		SELECT *
+		FROM T2_USER U
+		WHERE CNO = #{cNo}
+	</select>
+	
+	
+	<!-- 클럽 신청 내역 -->
+	<select id="selectClubJoin" parameterType="hashmap" resultType="com.example.mini.model.Join">
+		SELECT *
+		FROM T2_CLUBJOIN J
+		INNER JOIN T2_USER U ON J.ID = U.ID
+		WHERE J.CNO = #{cNo} AND DELYN= 'N'
+	</select>
+	
+	
+	<!-- 클럽 신청 내역 거절 -->
+	<update id="updateJoinFalse" parameterType="hashmap">
+		UPDATE T2_CLUBJOIN
+		SET jStat = '3'
+		WHERE jNo = #{jNo}
+	</update>
+	
+	<!-- 클럽 신청 내역 수락 시 타임라인 추가 -->
+	<insert id="insertClubTL" parameterType="hashmap">
+		INSERT INTO T2_CLUBTL
+			(tDate, cNo, tKind, id)
+		VALUES
+			(NOW(), #{cNo}, '1', #{id})
+	</insert>
+	
+	<!-- 클럽 신청 수락 시 클럽 멤버 추가 -->
+	<update id="insertJoinTrue" parameterType="hashmap">
+		UPDATE T2_USER
+		SET cNo = #{cNo}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 클럽 신청 내역 거절 -->
+	<update id="updateJoinTrue" parameterType="hashmap">
+		UPDATE T2_CLUBJOIN
+		SET jStat = '2'
+		WHERE jNo = #{jNo}
+	</update>
+	
+	<!-- 최근 경기 기록 -->
+	<select id="selectMatchList" parameterType="hashmap" resultType="com.example.mini.model.Matching">
+		SELECT * 
+		FROM mini_db2.T2_MATCH M
+		INNER JOIN T2_FIELD F ON M.MNO = F.FNO
+		WHERE CNO_H = #{cName} OR CNO_A = #{cName}
+		ORDER BY MDATE DESC
+	</select>
+	
+	<!-- 최근 경기 기록 -->
+	<select id="selectTimeLine" parameterType="hashmap" resultType="com.example.mini.model.TimeLine">
+		SELECT TNO, TDATE, T.CNO, TKIND, T.ID, U.NAME, U.NICK, T.MNO, M.CNO_H, M.CNO_A, M.MDATE, M.MTIMES, FNAME
+		FROM mini_db2.T2_CLUBTL T
+		LEFT JOIN mini_db2.T2_USER U ON U.ID = T.ID
+		LEFT JOIN mini_db2.T2_MATCH M ON M.MNO = T.MNO
+		LEFT JOIN mini_db2.T2_FIELD F ON M.MNO = F.FNO
+		WHERE T.CNO = #{cNo}
+		ORDER BY TDATE DESC
+	</select>
+	
+	<!-- 회원정보 개별 조회 -->
+	<select id="selectClubUserInfo" parameterType="hashmap" resultType="com.example.mini.model.Join">
+		SELECT *
+		FROM 
+			T2_USER U
+		WHERE 
+			U.ID = #{uId}
+	</select>
+	
+	<!-- 회원 방출 -->
+	<delete id="deleteClubUser" parameterType="hashmap">
+		
+	</delete>
+	
+	
+	<!-- 회원 등급 상승 -->
+	<update id="updateClubUser" parameterType="hashmap">
+		
+	</update>
+	
+	<!-- 팀 공지사항 리스트 -->
+	<select id="selectClubNotice" parameterType="hashmap" resultType="com.example.mini.model.Club">
+		SELECT *
+		FROM mini_db2.T2_CNOTICE c
+		inner join mini_db2.T2_USER t on t.id = c.id
+		WHERE 
+			c.cNo = #{cNo}
+		order by nDate desc
+	</select>
+	
+</mapper>

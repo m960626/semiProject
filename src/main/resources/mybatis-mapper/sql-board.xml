@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mini.mapper.BoardMapper">
+	<select id="selectBoardList" parameterType="hashmap" resultType="com.example.mini.model.Board">
+		<![CDATA[	
+			SELECT 
+				B.cmNo
+				,B.id
+				,nick
+				,cmDate
+				,cmTitle
+				,cmKind
+				,cmCnt
+				,IFNULL(commCnt,0) AS commCnt
+			FROM T2_COMMUBOARD B
+			LEFT JOIN (
+				SELECT
+					cmNO, COUNT(*) AS commCnt
+				FROM mini_db2.T2_BOARDCO		
+				WHERE delYn = 'N'
+				GROUP BY cmNO
+			) A ON A.cmNO = B.cmNo
+			INNER JOIN mini_db2.T2_USER U ON U.ID = B.ID
+			WHERE cmKind = #{cmKind}
+			ORDER BY cmNo DESC
+			LIMIT ${startNum}, ${endNum} ]]>
+	</select>
+	
+	<select id="selectBoardCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM T2_COMMUBOARD
+		WHERE cmKind = #{cmKind}
+	</select>
+		
+	<select id="getBoard" parameterType="hashmap" resultType="com.example.mini.model.Board">
+		SELECT
+			cmNo
+			,B.id
+ 		    ,nick
+			,cmDate
+			,cmTitle
+			,cmCont
+			,cmKind
+			,cmCnt
+			,delYn
+		FROM T2_COMMUBOARD	B
+		INNER JOIN mini_db2.T2_USER U ON U.ID = B.ID		
+		WHERE cmNo = #{cmNo} 
+	</select>
+	
+	<select id="getCommentList" parameterType="hashmap" resultType="com.example.mini.model.Board">
+		SELECT
+			cmcoNo
+		   ,cmNo
+		   ,B.id
+		   ,nick
+		   ,cmcoDate
+		   ,cmcoCont
+		   ,delYn
+		FROM T2_BOARDCO	B
+		INNER JOIN mini_db2.T2_USER U ON U.ID = B.ID		
+		WHERE cmNo = #{cmNo}
+	</select>
+	
+	<select id="getCommCnt" parameterType="hashmap" resultType="int">
+		SELECT
+			count(*) as CNT
+		FROM mini_db2.T2_BOARDCO		
+		WHERE cmNo = #{cmNo} AND delYn = 'N'
+	</select>
+	
+	<insert id="AddComment" parameterType="hashmap">
+		INSERT INTO T2_BOARDCO
+			(cmNo, id, cmcoDate, cmcoCont, delYn)
+		VALUES
+			(#{cmNo}, #{id}, now(), #{comment}, 'N')
+	</insert>
+	
+	<update id="deleteComment" parameterType="hashmap">
+		UPDATE T2_BOARDCO
+		SET
+			DELYN = 'Y'
+		WHERE cmcoNo = ${cmcoNo}
+	</update>
+	
+	<update id="updateComment" parameterType="hashmap">
+		UPDATE mini_db2.T2_BOARDCO
+		SET
+			cmcoCont = #{cont}
+		WHERE cmcoNo = #{cmcoNo}
+	</update>
+	
+	<update id="updateBbsCnt" parameterType="hashmap">
+		UPDATE mini_db2.T2_COMMUBOARD
+		SET
+			cmCnt = cmCnt + 1
+		WHERE cmNo = #{cmNo}		
+	</update>
+	
+</mapper>

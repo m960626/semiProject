@@ -1,0 +1,763 @@
+.clubS .btn1{
+    border: 1px solid transparent;
+    background-color: #4b4b4b;
+    color: rgb(235, 235, 235);
+    font-weight: bold;
+    width: 120px;
+    height: 50px;
+}
+
+.clubS .btn2{
+    border: 1px solid transparent;
+    background-color: #9b9b9b;
+    color: rgb(235, 235, 235);
+    font-weight: bold;
+    width: 120px;
+    height: 50px;
+}
+
+/*
+.clubS table, th, td{
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding-left: 28px;
+    padding-right: 27px;
+}
+*/
+
+.sub_title2 {
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+
+.sub_title2 h2 {
+    font-size: 24px;font-weight: 500;line-height: 1;
+}
+
+.form_row.form_flex .form_inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;}
+
+
+/* ============================클럽 상세 조회 css ============================*/
+
+.titleBg{
+    width: 100%;
+    height: 210px;
+}
+
+.tlogo{
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin-right: 30px;
+}
+
+.cInfo{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #FAC47A;
+}
+
+.clubInfo{
+    margin-top: 30px; 
+}
+.player{
+    margin-top: 50px; 
+}
+
+/* ====================클럽 선수명단 테이블==================== */
+
+.player table, .player table th, .player table td{
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;  
+}
+
+.player table{
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.player th{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+ul, li{
+    font-size: 20px;
+}
+
+/* 클럽 상세조회 버튼 */
+
+.clubS .btn3{
+    border: 1px solid #11073f;
+    background-color: #313131;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    width: 150px;
+    height: 50px;
+	float : right;
+    border-radius: 5px;
+}
+
+.clubS .btn3:hover{
+    border: 1px solid rgb(83, 126, 207);
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+
+/* 클럽 상세 조회 글씨 */
+
+.topView h1{font-size: 80px; color: #FAC47A;}
+
+.topView h2{font-size: 70px; color: #FAC47A;}
+
+.topView h3{margin-top: 30px; font-size: 30px; font-weight: bold;}
+
+
+
+/* ============================최근 경기 일정============================*/
+.clubS .matchTitle{
+    font-weight: bolder;
+    text-align: left;
+}
+
+.clubS .matchLoc{
+    background-color: #A341F9; 
+    color: white; 
+    height: 20px; 
+    width: 50px; 
+    text-align: center; 
+    font-size: 0.8rem;
+}
+
+.clubS .matchGender{font-size: 0.8rem; text-align: left;}
+
+
+/* 최근경기 매치 날짜 */
+.date{font-size: 20px; text-align: left;}
+
+.score{font-size: 20px;}
+
+/* 최근 경기일정 테이블 */
+.clubInfo2 table{
+    width: 100%;
+}
+
+
+
+
+
+/* ============================가입신청 내역============================ */
+
+.cJoin table, .cJoin table th, .cJoin table td{
+    margin-top: 20px;
+    border: 1px solid transparent;
+    border-collapse: collapse;
+    border-bottom: 1px double #a8a8a8;
+    padding: 5px;
+}
+
+.cJoin table{
+    width: 100%;
+}
+
+.cJoin th{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.cJoin .okno{
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 5px;
+    height: 30px;
+    width: 50px;
+}
+
+
+/* ============================공지사항============================ */
+
+.notice table th, .notice table td{
+    margin-top: 20px;
+    border: 1px solid transparent;
+    border-collapse: collapse;
+    border-bottom: 1px double #a8a8a8;
+
+}
+
+.notice table{
+    width: 100%;
+}
+
+.notice th{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+
+
+
+/* ============================클럽 메뉴텝============================  */
+.tab_menu{position:relative;}
+
+.tab_menu .cont_area{margin-top:30px; }
+.tab_menu .cont_area .cont{
+    display:none; 
+    color:#fff; 
+    width:100%; 
+    }
+
+
+
+
+
+
+
+
+
+/* ============================ 문상혁 수정 ============================  */
+.container.clubView {margin-top: 89px;}
+.clubView .topView {background : #1b2657; padding: 36px 0; margin-bottom: 30px;}
+.cont li span {font-size: inherit}
+
+.tab_menu .list{overflow:hidden; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr;}
+
+.clubRead .list > li a{
+    border: 1px solid #1b2657;
+    border-right:0;
+    display: block;
+    color: #1b2657;
+    width: 100%;
+    box-sizing: border-box;
+    height: 45px;
+    text-align: center;
+    line-height: 43px;
+    font-weight: 500;
+ }
+ .tab_menu .list li:first-child a {
+ 	border-radius : 4px 0 0 4px;
+ }
+.clubRead .list > li:last-child a {
+	border-right:1px solid #1b2657;
+	border-radius : 0 4px 4px 0;
+}
+.clubRead .list > li.is_on a {
+    background-color: #1b2657 !important;
+    color: #fff;
+}
+.clubRead .list > li a:hover{
+	background-color: #f2f3f9;
+
+ }
+
+
+.player {
+    margin-top: 25px;
+}
+.player thead {
+	border-top: 2px solid #333;
+    border-collapse: collapse;
+}
+.player thead tr {
+	height: 60px;
+}
+.player tbody {
+	text-align:center;
+}
+.player tbody tr {
+	border-top: 1px solid #9e9e9e;
+    border-bottom: 1px solid #9e9e9e;
+}
+.player tbody tr td {
+	padding: 20px 10px
+}
+.player tbody .joinBtn a{
+	display: inline-block;
+    box-sizing: border-box;
+    padding: 4px 30px;
+    color: #fff;
+    font-weight: 500;
+    border-radius:4px;
+}
+.player tbody .joinBtn a + a{
+	margin-left: 4px
+}
+.player tbody .joinBtn a.true {
+	background: #0074FF;
+}
+.player tbody .joinBtn a.false {
+	background: #F8003A;
+}
+.player tbody .joinBtn a.true:hover {
+	background: #046ae5;
+}
+.player tbody .joinBtn a.false:hover {
+	background: #e50338;
+}
+.player tbody .joinBtn a.trueEnd {
+	color: #0074FF;
+	border: 1px solid #0074FF;
+}
+.player tbody .joinBtn a.falseEnd {
+	color: #F8003A;
+	border: 1px solid #F8003A;
+}
+.date p {
+	text-align: center;
+	font-weight:500;
+	color: #555;
+}
+.clubInfo2 .titleBox {
+	text-align: left;
+	padding-left: 15px;
+	margin-top: 0px;
+}
+.clubInfo2 .titleBox .matchLoc span {
+	display:inline-block;
+	background : #484848;
+	color : #FAC47A;
+	border-radius: 2px;
+    padding: 0px 8px;
+    line-height: 22px;
+    font-size: 13px;
+    vertical-align :top;
+}
+.clubInfo2 .titleBox .matchTitle {
+	font-size: 19px;   
+    margin-top: 1px;
+    margin-bottom: 3px;
+    font-weight: 600; 
+}
+.clubInfo2 .titleBox .matchTitle span {
+	font-size: inherit;
+	font-weight : inherit;
+}
+.clubInfo2 .titleBox .matchTitle span.home {
+	position :relative;
+    z-index: 2;
+}
+.clubInfo2 .titleBox .matchTitle span.home::after {
+	content: '';
+    position: absolute;
+    width: 104%;
+    height: 6px;
+    background: #0074FF;
+    opacity: 15%;
+    border-radius: 8px;
+    bottom: 1px;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 1;
+}
+.clubInfo2 .titleBox .matchGender {
+	font-size: 14px;
+}
+.clubInfo2 .titleBox .matchGender:before {
+	content:'';
+	display:inline-block;
+	width:4px;
+	height:4px;
+	background: #0074FF;
+	border-radius : 50%;
+	vertical-align: middle;
+    position: relative;
+    top: -1px;
+    margin: 0 4px;
+}
+.clubInfo2 .score .scoreNum {
+	font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    right: 12px;
+}
+.clubInfo2 .score .scoreNum.not {
+	font-size: 16px;
+}
+.clubInfo2 .score .result {
+	display : inline-block;
+	padding: 4px 15px;
+	font-size: 18px;
+	border-radius : 8px;
+	font-weight:500;
+}
+.clubInfo2 .score.win .result {
+	color: #fff; 
+	background: #0074FF;
+}
+.clubInfo2 .score.draw .result {
+	color: #FAC47A; 
+	background: #484848;
+}
+.clubInfo2 .score.lose .result {
+	color: #fff; 
+	background: #F8003A;
+}
+
+.clubInfo2 tr:hover td{
+	background: #f9f9f9;
+	
+}
+
+.player tr:hover td{
+	background: #f9f9f9;
+}
+
+.clubInfo2 td {padding: 20px 0;}
+
+.timeLine li {
+	display:flex;
+}
+.timeLine li.nonList {
+    text-align: center;
+    border-top: 2px solid #333444;
+    display: block;
+    padding: 52px 0;
+    font-size: 18px;
+}
+.clubInfo2 .nonList {
+    text-align: center;
+    border-top: 2px solid #333444;
+    font-size: 18px;
+    padding: 52px 0;
+}
+.timeLine li .textArea {
+	width:calc(100% - 120px);
+	padding-left: 20px;
+}
+.timeLine li .date {
+	width:120px;
+}
+.timeLine li .date p {
+	position: relative;
+	top: 2px;
+}
+.timeLine li > div {
+	padding: 26px 0;
+}
+.timeLine li {
+ 	border-bottom: 1px double #a8a8a8;
+}
+.timeLine li .textArea > span {
+	display: inline-block;
+    padding: 0px 8px;
+    line-height: 22px;
+    font-size: 13px;
+    margin-bottom: 4px;
+    vertical-align:top;
+    border-radius: 2px
+}
+.timeLine li.join .textArea > span {
+	color: #fff;
+    background: #0074FF;
+}	
+.timeLine li.dele .textArea > span {
+	color: #fff;
+    background: #F8003A;
+}	
+.timeLine li.match .textArea > span {
+	color: #FAC47A;
+    background: #484848;
+}	
+.timeLine li .textArea p {
+	font-size: 18px;
+	font-weight: 500;
+}
+.timeLine li .textArea p b{
+	font-size: inherit;
+	font-weight: inherit;
+}
+.timeLine li:hover {
+	background: #f9f9f9;
+}		
+.timeLine li .textArea span.point{
+	font-weight: inherit;
+	position: relative;
+	z-index: 2;
+}	
+.timeLine li .textArea span.point:before {
+	content: '';
+    position: absolute;
+    width: 104%;
+    height: 6px;
+    background: #fac06a;
+    opacity: 25%;
+    border-radius: 8px;
+    bottom: 1px;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: -1;
+}
+#tab1 h3 {
+	margin-top: 6px;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 60px;
+    color: #1d242a;
+}
+#tab1 {
+	padding-top: 30px;
+}
+#tab1 .clubInfoArea {
+	margin-top: 8px;
+    padding: 21px 26px;
+    background-color: #f9fafb;
+    border-radius: 16px;
+}
+#tab1 .clubInfoArea li {
+	font-size: 17px;
+}
+.cInfo span, .cont li span {
+ 	font-size: inherit;
+	color: inherit;
+}
+#tab1 .clubInfoArea li+li {
+	margin-top: 12px;
+}
+#tab1 .clubInfoArea li::before {
+	content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1px solid #016ff2;
+    margin-right: 6px;
+    position: relative;
+    top: -3px;
+    box-sizing: border-box;
+}
+#tab1 .subject {
+	display: inline-block;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background-color: #F2F3F7;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #1b2657;
+}
+.section {
+	position: relative;
+}
+#tab1 .section + .section {
+	margin-top: 32px;
+	padding-top: 32px;
+}	
+
+.section + .section::before {
+	content:'';
+	position: absolute;
+	width: 100%;
+	height:1px;
+	top: 0;
+	border-top: 1px dashed #a8a8a8;
+}
+
+
+/* table 수정 */
+.cont .tbl {
+	table-layout: fixed;
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: auto;
+    min-width: 100%;
+    max-width: none;
+    margin-top: 7px;
+}
+.tbl th {
+    position: relative;
+    z-index: 10;
+    padding: 16px 2px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    color: #00234f;
+}
+
+.tbl th::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ebf4ff;
+    z-index: -1;
+    left: 0;
+    top: 0;
+}
+
+.tbl th:first-child~th::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 16px;
+    background: #7b9fcc;
+    left: 0px;
+    top: 21px;
+}
+
+.tbl th:first-child::before {
+    border-radius: 5px 0 0 5px
+}
+
+.tbl th:last-child::before {
+    border-radius: 0 5px 5px 0
+}
+
+.tbl td {
+    vertical-align: middle;
+    padding: 16px 2px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.tbl tbody tr {
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.tbl tbody tr:hover {
+	background: #f9f9f9;
+	cursor:pointer;
+}	
+	
+	
+.clubInfo2 td {
+	border-bottom: 1px double #a8a8a8;
+}
+	
+.clubInfo2 td .score {
+	text-align: center;
+}
+	
+	
+/* 회원정보 상세 보기*/
+.dimClose {position:absolute; top: 30px; right:30px;}
+.user-read {display: none; position: relative; z-index:1001;}
+.user-read.on {display: block;}
+.dim-layer {position: fixed; _position: absolute;  top: 0;  left: 0;
+width: 100%;  height: 100%;  z-index: 1001;}
+.dim-layer .read_dim {position: absolute;  top: 0;  left: 0;  width: 100%;
+height: 100%; background: #000; opacity: .5; filter: alpha(opacity=50);}
+.read-inner {
+	max-width: 700px; 
+	height: 450px; 
+	border-radius: 8px; 
+	background: #fff; 
+	display: inline-block; 
+	box-sizing: border-box;
+	z-index: 1002;
+	position: fixed; 
+	margin: 0 auto; 
+	left: 0; 
+	right: 0;
+	top: 50%; 
+	transform: translateY(-50%);
+	padding: 25px
+}
+
+.read-inner .subject {
+	display: inline-block;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background-color: #F2F3F7;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #1b2657;
+}
+.read-inner h3{
+    margin-top: 6px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 60px;
+    color: #1d242a;
+}
+.read-inner	.clubInfoArea {
+	margin-top: 8px;
+    padding: 21px 26px;
+    background-color: #f9fafb;
+    border-radius: 16px;
+}
+.read-inner	.clubInfoArea li {
+	    font-size: 17px;
+}	
+.read-inner	.clubInfoArea li + li {
+	margin-top: 8px;
+}
+.read-inner	.clubInfoArea li:before {
+	content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1px solid #016ff2;
+    margin-right: 6px;
+    position: relative;
+    top: -3px;
+    box-sizing: border-box;
+}	
+.read-inner .clubInfoArea li span {
+	font-size: inherit;
+}
+
+.read-inner .btnArea {
+	text-align: right;
+	margin-top: 14px;
+}
+.read-inner .btnArea a{
+	text-align: center;
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	border-radius : 4px;
+	font-weight: 500;
+}	
+.read-inner .btnArea a + a {
+	margin-left: 5px;
+}
+.read-inner .btnArea a.clubOut {
+	border: 1px solid #444;
+	color:#444;
+}
+.read-inner .btnArea a.clubOut:hover {
+	background: #f7f7f7;
+}
+.read-inner .btnArea a.clubUp {
+	background: #444;
+	color : #fff;
+}
+.read-inner .btnArea a.clubUp:hover{
+	background: #5c5c5c;
+}
+#tab5 .notice {
+	border-top: 2px solid #333444;
+}
+#tab5 .notice th {
+	text-align: center;
+    font-size: 16px;
+    padding: 24px 0;
+}
+#tab5 .notice tr {
+	border-bottom : 1px solid #a8a8a8
+}
+#tab5 .notice td {
+	text-align: center;
+	padding: 17px 0;
+}
+#tab5 .notice td.date {
+}
+#tab5 .notice td.nCont {
+	text-align : left;
+	padding-left: 20px;
+    font-size: 18px;
+    font-weight: 500;
+}
