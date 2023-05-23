@@ -29,27 +29,55 @@ public class BoardController {
 		
 	/* 공지사항 페이지*/
 	@RequestMapping("/sub05_01") 
-    public String noticeboard(Model model) throws Exception{
+    public String noticeboard(HttpServletRequest request, Model model) throws Exception{
+		request.setAttribute("sessionId", session.getAttribute("sessionId")); 
+		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
+		
 		return "/sub05_01";
     }
 	
+	/* 공지사항게시판 글 작성 페이지*/
+	@RequestMapping("/sub05_01_add") 
+    public String writeNotice(HttpServletRequest request, Model model) throws Exception{
+		return "/sub05_01_add";
+    }
+	
+	/* 공지사항게시판 글 수정페이지*/
+	 @RequestMapping("/sub05_01_modify") // 주소
+	    public String Noticemodify(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{ 
+		  				// 웹페이지에 정보를 넘겨주기 위한 코드
+		  	request.setAttribute("map", map);
+		    
+	        return "/sub05_01_edit";  // html 파일과 연동하여 호출하기 위한 코드
+	    }
+	
+	
 	/* 소통게시판 페이지*/
 	@RequestMapping("/sub05_02") 
-    public String board(Model model) throws Exception{
+    public String board(HttpServletRequest request, Model model) throws Exception{
+		request.setAttribute("sessionId", session.getAttribute("sessionId")); 
+		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
+		
 		return "/sub05_02";
     }
 	
-	/* 영상게시판 페이지*/
-	@RequestMapping("/sub05_03") 
-    public String videoboard(Model model) throws Exception{
-		return "/sub05_03";
+	/* 소통게시판 글 작성 페이지*/
+	@RequestMapping("/sub05_02_add") 
+    public String writeBoard(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		return "/sub05_02_add";
     }
 	
-	/* 글 작성 페이지*/
-	@RequestMapping("/sub05_04") 
-    public String writeBoard(Model model) throws Exception{
-		return "/sub05_04";
-    }
+	/* 소통게시판 글 수정페이지*/
+	 @RequestMapping("/sub05_02_modify") // 주소
+	    public String modify(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{ 
+		  				// 웹페이지에 정보를 넘겨주기 위한 코드
+		  	request.setAttribute("map", map);
+		    
+	        return "/sub05_02_edit";  // html 파일과 연동하여 호출하기 위한 코드
+	    }
+	
+	
+	
 		
 	/* 공지사항 조회 페이지*/
 	@RequestMapping("sub05_01_read") 
@@ -131,6 +159,106 @@ public class BoardController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+	
+	// 소통게시판 게시글 추가
+	 @RequestMapping(value = "/cm/add.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		
+		public String cmAdd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	    	
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			
+			map.put("userId", session.getAttribute("sessionId"));
+			
+			boardService.addCm(map); 
+			
+		    resultMap.put("result", "success"); 
+			
+			return new Gson().toJson(resultMap); 
+		}
+	 
+	 
+	// 소통게시판 게시물 수정 
+		 		  
+	  @RequestMapping(value = "/cm/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		
+		public String cmEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	    	
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			
+			boardService.editCm(map); 
+			
+		    resultMap.put("result", "success"); 
+			
+			return new Gson().toJson(resultMap); 
+		}
+	  
+	  // 소통게시판 게시물 삭제
+	  @RequestMapping(value = "/cm/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		
+		public String cmRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	    	
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			
+			boardService.removeCm(map); 
+			
+		    resultMap.put("result", "success"); // return 값
+			
+			return new Gson().toJson(resultMap); 
+		}
+	  
+	  
+	// 공지사항 게시글 추가
+		 @RequestMapping(value = "/no/add.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			
+			public String noAdd(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		    	
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				
+				map.put("userId", session.getAttribute("sessionId"));
+				
+				boardService.addNo(map); 
+				
+			    resultMap.put("result", "success"); 
+				
+				return new Gson().toJson(resultMap); 
+			}
+		 
+		 
+		// 공지사항 게시물 수정 
+			 		  
+		  @RequestMapping(value = "/no/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			
+			public String noEdit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		    	
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				
+				boardService.editNo(map); 
+				
+			    resultMap.put("result", "success"); 
+				
+				return new Gson().toJson(resultMap); 
+			}
+		  
+		  // 공지사항 게시물 삭제
+		  @RequestMapping(value = "/no/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			
+			public String noRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		    	
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				
+				boardService.removeNo(map); 
+				
+			    resultMap.put("result", "success"); // return 값
+				
+				return new Gson().toJson(resultMap); 
+			}
+		  
 }
 
 

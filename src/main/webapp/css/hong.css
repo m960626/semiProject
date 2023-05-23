@@ -774,3 +774,7 @@ height: 100%; background: #000; opacity: .5; filter: alpha(opacity=50);}
     font-size: 18px;
     font-weight: 500;
 }
+
+/* 공지 및 소통게시판 h3 */
+.h3Font{margin-bottom: 10px; font-size: 22px;}
+

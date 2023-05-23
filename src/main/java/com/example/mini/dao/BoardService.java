@@ -23,4 +23,24 @@ public interface BoardService {
 	
 	// 조회수 
 	void editBbsCnt(HashMap<String, Object> map);
+
+	// 게시글 등록
+	void addCm(HashMap<String, Object> map);
+	
+	// 게시글 수정
+	void editCm(HashMap<String, Object> map) throws Exception;
+	
+	// 게시글 삭제
+	void removeCm(HashMap<String, Object> map);
+	
+	// 공지 게시판 게시글 등록
+	void addNo(HashMap<String, Object> map);
+	
+	// 공지 게시판 수정
+	void editNo(HashMap<String, Object> map) throws Exception;
+	
+	// 공지 게시판 삭제
+	void removeNo(HashMap<String, Object> map);
+	
+
 }

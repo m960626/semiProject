@@ -62,7 +62,8 @@ input,textarea,select,button{font-size:16px;font-family:'Noto Sans KR', sans-ser
 img,fieldset {border:0;}
 form,fieldset,input {margin:0;padding:0;}
 em,address,optgroup {font-style:normal;font-weight:normal;}
-button {border:none 0;margin:0;padding:0;overflow:visible;cursor:pointer;background:none;}
+/*공지사항 및 소통 게시판 버튼 수정 05-22*/
+button {border:none 0;margin:0;padding:0;overflow:visible;cursor:pointer;background:none; background-color: white; border: 1px solid #004391; border-radius: 5px; width: 50px; margin-left: 5px;}
 
 
 ol,ul,li {list-style:none;}
@@ -80,7 +81,7 @@ input[placeholder] { color:#999;}
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color:#999;}
 ::-moz-placeholder {/* Mozilla Firefox 19+*/ color:#999;}
 :-ms-input-placeholder {/* ie10+*/ color:#999;}
-
+	
 input {color:#333 !important;}
 
 select {

@@ -202,6 +202,16 @@ public class MatchingController {
 		matchingService.editMatch(map);
 		return new Gson().toJson(resultMap);
 	}
+	
+	
+	/* 참가 선수 리스트 */
+	@RequestMapping(value = "/GUser/List.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String GUserList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = matchingService.searchGPlayerList(map);
+		return new Gson().toJson(resultMap);
+	}
 }
 
 

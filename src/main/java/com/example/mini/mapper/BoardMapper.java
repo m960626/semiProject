@@ -33,4 +33,24 @@ public interface BoardMapper {
 	
 	// 조회수
 	void updateBbsCnt(HashMap<String, Object> map);
+
+	// 공지 게시판 게시글 등록
+	void insertNo(HashMap<String, Object> map);
+	
+	// 공지 게시판 게시글 수정
+	void updateNo(HashMap<String, Object> map);
+	
+	// 공지 게시판 게시글 삭제
+	void deleteNo(HashMap<String, Object> map);
+	
+	// 소통 게시판 게시글 등록
+	void insertCm(HashMap<String, Object> map);
+	
+	// 소통 게시판 게시글 수정
+	void updateCm(HashMap<String, Object> map);
+	
+	// 소통 게시판 게시글 삭제
+	void deleteCm(HashMap<String, Object> map);
+	
+
 }

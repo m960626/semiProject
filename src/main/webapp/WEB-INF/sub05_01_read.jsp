@@ -69,6 +69,8 @@
                               <span class="writer"><i class="ri-user-line"></i><b class="hid">작성자</b><span>{{info.nick}}</span></span>
                               <span class="date"><i class="ri-time-line"></i><b class="hid">작성일</b><span>{{info.cmDate}}</span></span>
                               <span class="date"><i class="ri-time-line"></i><b class="hid">조회수</b><span>조회수 {{info.cmCnt}}</span></span>
+                               <button class="" v-if="sessionStatus == '2'"  style="float: right;" @click="fnRemove(item)">삭제</button>
+                               <button class="" v-if="sessionStatus == '2'" style="float: right;" @click="fnModify(item)">수정</button>
                             </div>
                           </div>
                           <div class="detail">
@@ -171,6 +173,59 @@ Vue.component('paginate', VuejsPaginate)
 	    		var self = this;
 	    		self.commentNo = item.cmNo;
 	    		self.commentInfo = item;
+	    		
+	    	}
+	    	, pageChange : function(url, param) { 
+	    		var target = "_self";
+	    		if(param == undefined){
+	    			return;
+	    		}
+	    		var form = document.createElement("form"); 
+	    		form.name = "dataform";
+	    		form.action = url;
+	    		form.method = "post";
+	    		form.target = target;
+	    		for(var name in param){
+					var item = name;
+					var val = "";
+					if(param[name] instanceof Object){
+						val = JSON.stringify(param[name]);
+					} else {
+						val = param[name];
+					}
+					var input = document.createElement("input");
+		    		input.type = "hidden";
+		    		input.name = item;
+		    		input.value = val;
+		    		form.insertBefore(input, null);
+				}
+	    		document.body.appendChild(form);
+	    		form.submit();
+	    		document.body.removeChild(form);
+	    	},
+	    	// 소통게시판 수정 버튼
+	    	fnModify : function(){ 
+	     		 var self = this;
+	    		self.pageChange("/sub05_01_modify", {cmNo : self.cmNo});  
+	    	},
+	    	fnRemove : function(){
+				if (!confirm("게시글을 삭제하시겠습니까?")) {
+			    } 
+				else {
+			    // 확인(예) 버튼 클릭 시 이벤트		
+		    		var self = this;
+		            var nparmap = {cmNo : self.cmNo};
+		            $.ajax({
+		                url:"/no/remove.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+			                alert("삭제되었습니다.");
+			                location.href="sub05_01";
+		                }
+		            }); 
+			    }
 	    	}
 		},
 		created : function() {

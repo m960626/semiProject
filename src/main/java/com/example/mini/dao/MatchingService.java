@@ -42,4 +42,7 @@ public interface MatchingService {
 	
 	// 매치 업데이트
 	void editMatch(HashMap<String, Object> map);
+	
+	// 경기참여 선수 선택 
+	HashMap<String, Object> searchUserList(HashMap<String, Object> map);
 }

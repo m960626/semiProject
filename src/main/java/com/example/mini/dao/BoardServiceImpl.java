@@ -65,4 +65,48 @@ public class BoardServiceImpl implements BoardService{
 		boardMapper.updateBbsCnt(map);
 	}
 
+	// 소통게시판 게시글 등록
+	@Override
+	public void addCm(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		boardMapper.insertCm(map);
+	}
+
+	// 소통게시판 게시글 수정
+	@Override
+	public void editCm(HashMap<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		boardMapper.updateCm(map);
+	}
+
+	// 소통게시판 게시글 삭제
+	@Override
+	public void removeCm(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		boardMapper.deleteCm(map);
+	}
+
+	// 공지 게시판 게시글 등록
+	@Override
+	public void addNo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		boardMapper.insertNo(map);
+	}
+
+	// 공지 게시판 게시글 수정
+	@Override
+	public void editNo(HashMap<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		boardMapper.updateNo(map);
+	}
+
+	// 공지 게시판 게시글 삭제
+	@Override
+	public void removeNo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		boardMapper.deleteNo(map);
+	}
+
+
+
 }

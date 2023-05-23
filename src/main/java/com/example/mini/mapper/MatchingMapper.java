@@ -52,4 +52,6 @@ public interface MatchingMapper {
 	// 매치 업데이트
 	void updateMatch(HashMap<String, Object> map);
 	
+	// 경기참여 선수 선택
+	List<User> selectGUserList(HashMap<String, Object> map);
 }

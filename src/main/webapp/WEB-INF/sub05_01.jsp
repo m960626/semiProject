@@ -56,7 +56,7 @@
 						<span class="post">총 <b>{{cnt}}</b>건의 게시물이 있습니다.
 						</span> <span class="page">(<b>1</b>/{{pageCount}} 페이지)
 						</span>
-						<span class="bbsWrite" v-if="sessionStatus == 2"><a href="javascript:;">글쓰기</a></span>
+						<span v-if="sessionStatus == '2'" @click="fnadd" class="write"><a href="javascript:;" class="write"><b>글쓰기</b></a></span>
 					</div>
 					<!-- //게시판 게시물 갯수 -->
 
@@ -223,6 +223,10 @@ Vue.component('paginate', VuejsPaginate)
 						self.pageChange("/sub05_01_read", {cmNo : cmNo});
 						}
 				});
+	    	},
+	     	// 공지게시판 게시글 작성
+	     	fnadd : function(){ 
+	     	   location.href = "/sub05_01_add"
 	    	}
 		},
 		created : function() {

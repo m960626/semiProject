@@ -29,56 +29,50 @@
 			<div class="wrap">
 				<div class="matching__body" >
  <!-- ========================================================== 매치 예약 조회 =============================================================== -->
-					<div class="matching_title">
+	<div class="matching_title">
 						<h2 class="mh2">매칭 내역</h2>
 					</div>
-					<table>
-						<tbody>
-							<tr class="matching_list" v-for="item in list">
-								<td>
+							<div class="matching_list" v-for="item in list">
+								<div class="matching_inner">
 									<div class="dateBox">
 										<div class="date">
 											{{item.mDate}} <br>{{item.mTimeS}}
 										</div>
 									</div>
-								</td>
-								<td class="titleBox">
-									<div class="matchLoc"
-										v-bind:class="{'loc_color1' : item.fLoc ==  '서울',
-	                                									 'loc_color2' : item.fLoc ==  '경기',
-	                                									 'loc_color3' : item.fLoc ==  '인천',
-	                                									 'loc_color4' : item.fLoc ==  '강원',
-	                                									 'loc_color5' : item.fLoc ==  '충북',
-	                                									 'loc_color6' : item.fLoc ==  '경북',
-	                                									 'loc_color7' : item.fLoc ==  '세종',
-	                                									 'loc_color8' : item.fLoc ==  '대전',
-	                                									 'loc_color9' : item.fLoc ==  '대구',
-	                                									 'loc_color10' : item.fLoc ==  '충남',
-	                                									 'loc_color11' : item.fLoc ==  '전북',
-	                                									 'loc_color12' : item.fLoc ==  '경남',
-	                                									 'loc_color13' : item.fLoc ==  '울산',
-	                                									 'loc_color14' : item.fLoc ==  '전남',
-	                                									 'loc_color15' : item.fLoc ==  '광주',
-	                                									 'loc_color16' : item.fLoc ==  '부산',
-	                                									 'loc_color17' : item.fLoc ==  '제주'
-	                              														}">{{item.fLoc}}</div>
-									<div class="matchTitle">{{item.fName}}</div>
-									<div v-if="item.mGender == 1" class="matchGender">남자 11
-										VS 11</div>
-									<div v-else-if="item.mGender == 2" class="matchGender">여자
-										11 VS 11</div>
-									<div v-else class="matchGender">혼성 11 VS 11</div>
-								</td>
-								<td>
+									<div class="titleBox">
+										<div class="matchLoc"
+											v-bind:class="{'loc_color1' : item.fLoc ==  '서울',
+															'loc_color2' : item.fLoc ==  '경기',
+															'loc_color3' : item.fLoc ==  '인천',
+															'loc_color4' : item.fLoc ==  '강원',
+															'loc_color5' : item.fLoc ==  '충북',
+															'loc_color6' : item.fLoc ==  '경북',
+															'loc_color7' : item.fLoc ==  '세종',
+															'loc_color8' : item.fLoc ==  '대전',
+															'loc_color9' : item.fLoc ==  '대구',
+															'loc_color10' : item.fLoc ==  '충남',
+															'loc_color11' : item.fLoc ==  '전북',
+															'loc_color12' : item.fLoc ==  '경남',
+															'loc_color13' : item.fLoc ==  '울산',
+															'loc_color14' : item.fLoc ==  '전남',
+															'loc_color15' : item.fLoc ==  '광주',
+															'loc_color16' : item.fLoc ==  '부산',
+															'loc_color17' : item.fLoc ==  '제주'
+																			}">{{item.fLoc}}</div>
+										<div class="matchTitle">{{item.fName}}</div>
+										<div v-if="item.mGender == 1" class="matchGender">남자 11 VS
+											11</div>
+										<div v-else-if="item.mGender == 2" class="matchGender">여자
+											11 VS 11</div>
+										<div v-else class="matchGender">혼성 11 VS 11</div>
+									</div>
 									<div class="btnBox">
 										<button class="clubBtn" @click="fnAclub()">상대 클럽 보기</button>
 										<button class="fieldBtn" @click="fnfield()">구장 정보 보기</button>
 										<button class="editBtn" onclick="opendimmed()">참여 인원 수정</button>
 									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+							</div>
+						</div>
 					
 					
 					<!-- 페이징 추가 3 -->
@@ -138,7 +132,7 @@
 									경기 기록하기<i class="ico_arrow"></i>
 								</button>
 							</div>
-						</div>
+						</div> 
 <!-- ========================================================== 경기 참가선수 기록 =============================================================== -->
 						<div class="matching_record" v-if="item.mNo == setNum">
 							<table border="1" width="100%" class="record_table">
@@ -290,6 +284,10 @@ var app = new Vue({
 	   , closeSize : 0
 
 	},
+    mounted() {
+	      // 페이지 로드 시 input 필드 비활성화
+	      this.disableInputFields();
+	    },
 	methods : {
 	// ======================================== 매치 리스트 가져오기 ========================================
 		fnGetList : function(){
@@ -439,18 +437,24 @@ var app = new Vue({
         fnAddRecord : function(){ 
             var self = this;
             var nparmap = {list : JSON.stringify(self.gplaylist)};
-            console.log(self.gplaylist)
-            $.ajax({
-                url:"/GPlayer/edit.dox", 
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {  
-                	alert("기록이 저장되었습니다.");
-                }
+            console.log(self.gplaylist);
 
+            // Disable input fields
+            var inputFields = document.querySelectorAll('input[type="text"]');
+            inputFields.forEach(function(field) {
+              field.disabled = true;
+            });
+
+            $.ajax({
+              url:"/GPlayer/edit.dox", 
+              dataType:"json",	
+              type : "POST", 
+              data : nparmap,
+              success : function(data) {  
+                alert("기록이 저장되었습니다.");
+              }
             });  
-        },
+          }, 
 		// ======================================== 선수 누적기록 업데이트 ========================================
 		/* fnEditPlayer : function(){ 
             var self = this;
@@ -565,8 +569,7 @@ var app = new Vue({
                 $(this).prop("checked", false);
                 alert("11명까지만 선택할 수 있습니다.")
             }
-        })
+        }) 
     });
 
 </script>
-

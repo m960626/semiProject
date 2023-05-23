@@ -142,4 +142,13 @@ public class MatchingServiceImpl implements MatchingService{
 		// TODO Auto-generated method stub
 		matchingMapper.updateMatch(map);
 	}
+	
+	// 경기참여 인원 조회 리스트
+	@Override
+	public HashMap<String, Object> searchUserList(HashMap<String, Object> map) {
+	// TODO Auto-generated method stub
+	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+	resultMap.put("list",  matchingMapper.selectGUserList(map));
+	return resultMap;
+	}
 }

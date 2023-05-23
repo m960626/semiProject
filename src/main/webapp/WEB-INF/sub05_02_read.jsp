@@ -5,10 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <jsp:include page="/layout/header.jsp"></jsp:include>
-<title>티키타카 - 공지사항(05_01)</title>
+<title>티키타카 - 자유게시판(05_02)</title>
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/hong.css">
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <!-- 페이징 추가 1-->
@@ -36,7 +37,7 @@
                     </div>
 
                     <div class="bottom">
-                        <h3 class="title">소통게시판</h3>
+                        <h3 class="title">자유게시판</h3>
                     </div>
                 </div>
             </div>
@@ -49,7 +50,7 @@
                 <div class="sub-top-area">
                     <div class="page-title">
                         <h2>
-                            소통게시판
+                            자유게시판
                         </h2>
                         <p>
                             소통해요~
@@ -57,6 +58,7 @@
                     </div>
                 </div>
                 <!-- // 페이지 타이틀 -->
+
 
 
                 <div class="bbs-wrap">
@@ -69,6 +71,8 @@
                               <span class="writer"><i class="ri-user-line"></i><b class="hid">작성자</b><span>{{info.nick}}</span></span>
                               <span class="date"><i class="ri-time-line"></i><b class="hid">작성일</b><span>{{info.cmDate}}</span></span>
                               <span class="date"><i class="ri-time-line"></i><b class="hid">조회수</b><span>조회수 {{info.cmCnt}}</span></span>
+                              <button class="" v-if="info.id == sessionId || sessionStatus == '2'"  style="float: right;" @click="fnRemove(item)">삭제</button>
+                              <button class="" v-if="info.id == sessionId || sessionStatus == '2'" style="float: right;" @click="fnModify(item)">수정</button>    	
                             </div>
                           </div>
                           <div class="detail">
@@ -88,7 +92,7 @@
                                   <div class="info">
                                     <span class="write">
                                       <i class="ri-user-line"></i>
-                                      {{item.nick}}</span>
+                                     {{item.nick}}</span>
                                     <span class="date">
                                       <i class="ri-time-line"></i>
                                       {{item.cmcoDate}}</span>
@@ -145,7 +149,7 @@
                       <!-- btns -->
                       <div class="btns ac clearfix">
                         <div class="float-l">
-                          <a href="/sub05_02" class="btn-outline">목록</a>
+                          <a href="/sub05_03" class="btn-outline">목록</a>
                         </div>
                       </div>
                     </div>
@@ -186,6 +190,7 @@ Vue.component('paginate', VuejsPaginate)
 	                success : function(data) {  
 	                	self.info = data.info;
 	                	self.commentList = data.commentList;
+	                	console.log(self.commentList);
 	                	self.commCnt = data.commCnt
                 		self.dataFlg = true;
 	                	for(var i=0; i<self.commentList.length; i++){
@@ -273,6 +278,57 @@ Vue.component('paginate', VuejsPaginate)
 						}
 					});    		
 		    	}
+	    	}, pageChange : function(url, param) { 
+	    		var target = "_self";
+	    		if(param == undefined){
+	    			return;
+	    		}
+	    		var form = document.createElement("form"); 
+	    		form.name = "dataform";
+	    		form.action = url;
+	    		form.method = "post";
+	    		form.target = target;
+	    		for(var name in param){
+					var item = name;
+					var val = "";
+					if(param[name] instanceof Object){
+						val = JSON.stringify(param[name]);
+					} else {
+						val = param[name];
+					}
+					var input = document.createElement("input");
+		    		input.type = "hidden";
+		    		input.name = item;
+		    		input.value = val;
+		    		form.insertBefore(input, null);
+				}
+	    		document.body.appendChild(form);
+	    		form.submit();
+	    		document.body.removeChild(form);
+	    	},
+	    	// 소통게시판 수정 버튼
+	    	fnModify : function(item){ 
+	     		 var self = this;
+	    		self.pageChange("/sub05_02_modify", {cmNo : self.cmNo});  
+	    	},
+	    	// 소통게시판 삭제 버튼
+	    	fnRemove : function(item){
+				if (!confirm("게시글을 삭제하시겠습니까?")) {
+			    } 
+				else {
+		    		var self = this;
+		            var nparmap = {cmNo : self.cmNo};
+		            $.ajax({
+		                url:"/cm/remove.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+			                alert("삭제되었습니다.");
+			                location.href="sub05_02";
+		                }
+		            }); 
+			    }
 	    	}
 		},
 		created : function() {

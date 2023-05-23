@@ -235,3 +235,64 @@ textarea {resize: none; width: 100%;}
 	max-width: 50px;
 	width:100%;
 }
+
+   /* Board Write */
+.tbl-write{border-top:2px solid #004391; border-bottom:1px solid #aaa;}
+.tbl-write thead{border-bottom:1px solid #aaa; background-color:#fafafa;}
+.tbl-write thead th{text-align:center;}
+.tbl-write tbody th{background-color:#fafafa; text-align:left;}
+.tbl-write tbody + tbody{border-top:1px solid #eaeaea;}
+.tbl-write tr + tr{border-top:1px dotted #eaeaea;}
+.tbl-write th,
+.tbl-write td{padding: 10px 15px; border-right:1px solid #eaeaea; border-left:1px solid #eaeaea; font-size: 15px; line-height:1.5;}
+.tbl-write th:first-child,
+.tbl-write td:first-child{border-left:none;}
+.tbl-write th:last-child,
+.tbl-write td:last-child{border-right:none;}
+.tbl-write th{vertical-align:middle; font-weight:500;}
+.tbl-write th br {display: none;}
+.tbl-write td{vertical-align:top; font-weight:400; line-height: 40px;}
+.tbl-write input {margin:0;}
+.tbl-write td.col-subject > input {width:100%;}
+.tbl-write td.col-call .form-controls {max-width: 320px;}
+.tbl-write td.col-email .form-controls.type-email2 .select {margin-left: 5px;}
+.tbl-write td.col-file .file .btn {margin: 0 0 0 3px;}
+.tbl-write td.col-file .row + .row {margin-top: 6px;}
+.tbl-write textarea[disabled] {box-sizing: border-box;  width: 100%; padding: 9px 13px; border: 1px solid #BDBDBD; background: #F5F5F5;   cursor: default; border-radius: 3px;}
+.text {
+    height: 40px;
+    line-height: 24px;
+    padding: 0 10px;
+}
+/* Basic */
+.radio {display:inline-block; position:relative; margin:5px 0; line-height:1; vertical-align:middle;}
+.radio label {display:inline-block; position:relative; min-width:20px; min-height:20px; font-size:13px; line-height:18px; vertical-align:middle;}
+.radio label span {display:inline-block; padding-left:28px; vertical-align:middle; font-size: 15px;}
+.radio label:before, .radio label:after {content:''; position:absolute; left:0; top:0;}
+.radio label:before {top:0; width:20px; height:20px; border:1px solid #ddd; background:#fff; border-radius:50%;}
+.radio > input {display:none; position:absolute; left:0; top:0; width:20px; height:20px;}
+.radio + .radio {margin-left:10px;}
+/* Checked */
+.radio > input:checked + label:before {background-color:#fff; border-color:#2496ee;}
+.radio > input:checked + label:after {top:6px; left:6px; width:10px; height:10px; border-radius:50%; background:#2496ee;}
+/* Focused */
+.radio > input.is-focused + label:before,
+.radio > input:hover + label:before,
+.radio > input:focus + label:before {border-color:#888;}
+.radio > input:checked:focus + label:before,
+.radio > input:checked:hover + label:before {border-color:#2496ee; transition:all 0.3s;}
+/* Disabled */
+.radio > input[disabled] + label {color:#999;}
+.radio > input[disabled] + label:before {background-color:#f0f0f0;}
+.radio > input[disabled]:focus + label:before,
+.radio > input[disabled]:hover + label:before {border-color:#ddd;}
+.radio > input[disabled]:checked + label:after {background:#888;}
+.radio > input[disabled]:checked + label:before,
+.radio > input[disabled]:checked:focus + label:before,
+.radio > input[disabled]:checked:hover + label:before {border-color:#888;}
+[aria-disabled="true"], [disabled] {    background: #f5f5f5;}   
+.btns.ac {margin-top: 30px;}
+
+
+
+

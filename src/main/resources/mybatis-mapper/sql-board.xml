@@ -92,11 +92,68 @@
 		WHERE cmcoNo = #{cmcoNo}
 	</update>
 	
+	<!-- 게시글 조회수 증가 -->	
 	<update id="updateBbsCnt" parameterType="hashmap">
 		UPDATE mini_db2.T2_COMMUBOARD
 		SET
 			cmCnt = cmCnt + 1
 		WHERE cmNo = #{cmNo}		
 	</update>
+	
+	<!-- 소통게시판 게시글 등록 -->
+	<insert id="insertCm" parameterType="hashMap" >
+		INSERT INTO mini_db2.T2_COMMUBOARD
+		
+		VALUES
+			(#{cmNo}, #{userId}, sysdate(), #{cmtTitle}, #{cmCont}, '2', '0', '1') 
+		
+	</insert>
+	
+	<!-- 소통게시 게시글 수정 -->
+	<update id="updateCm" parameterType="hashMap">
+	 	UPDATE mini_db2.T2_COMMUBOARD
+	 	SET
+	 		cmTitle = #{cmTitle}
+	 		, cmCont = #{cmCont}
+	 		, cmDate = sysdate()
+	 	WHERE cmNo = #{cmNo}
+
+	</update> 
+	
+	<!-- 소통게시 게시글 삭제 -->
+	<delete id="deleteCm" parameterType="hashMap">
+ 		DELETE FROM mini_db2.T2_COMMUBOARD
+ 		WHERE cmNo = #{cmNo} 
+ 		
+	</delete>
+	
+		
+	<!-- 공지 게시판 게시글 등록 -->
+	<insert id="insertNo" parameterType="hashMap" >
+		INSERT INTO mini_db2.T2_COMMUBOARD
+		
+		VALUES
+			(#{cmNo}, #{userId}, sysdate(), #{cmtTitle}, #{cmCont}, '1', '0', '1') 
+		
+	</insert>
+	
+	<!-- 공지 게시판 게시글 수정 -->
+	<update id="updateNo" parameterType="hashMap">
+	 	UPDATE mini_db2.T2_COMMUBOARD
+	 	SET
+	 		cmTitle = #{cmTitle}
+	 		, cmCont = #{cmCont}
+	 		, cmDate = sysdate()
+	 	WHERE cmNo = #{cmNo}
+
+	</update> 
+	
+	<!-- 공지 게시판 게시글 삭제 -->
+	<delete id="deleteNo" parameterType="hashMap">
+ 		DELETE FROM mini_db2.T2_COMMUBOARD
+ 		WHERE cmNo = #{cmNo} 
+ 		
+	</delete>
+
 	
 </mapper>

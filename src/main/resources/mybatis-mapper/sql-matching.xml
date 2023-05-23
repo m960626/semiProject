@@ -139,4 +139,18 @@
 		      , mStat = 2
 		  WHERE mNo = #{mNo}
 	</update>
+	
+	
+	<!-- 매칭참여 인원 선택 리스트 -->
+	<select id="selectGUserList" parameterType="hashmap" resultType="com.example.mini.model.Matching">
+		SELECT M.mNo, U.NAME, position1, position2, position3, U.GOAL, M.mStat
+		FROM mini_db2.T2_MATCH M
+		INNER JOIN mini_db2.T2_CLUB C ON M.cNo_h = C.cName
+		INNER JOIN mini_db2.T2_USER U ON U.cNo = C.cNo
+		WHERE M.mStat != '4' AND mNo = #{mNo}
+		
+		
+	</select>
+	
+	
 </mapper>
