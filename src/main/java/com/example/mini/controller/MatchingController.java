@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -63,6 +64,12 @@ public class MatchingController {
 		return "/sub02_03";
     }
 	
+	/* 매칭 조회 페이지*/
+	@RequestMapping("/sub02_04") 
+    public String fieldview(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+		return "/sub02_04";
+    }
 	
 	/* 매칭예약 조회 페이지*/
 	@RequestMapping("/Schedule.do") 
@@ -154,7 +161,47 @@ public class MatchingController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	/* 매칭 정보 가져오기*/
+	@RequestMapping(value = "/matching/getInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String getInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = matchingService.searchMatchInfo(map);
+		return new Gson().toJson(resultMap);
+	}
 	
+	/* 클럽원 리스트*/
+	@RequestMapping(value = "/clubPList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String clubPList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = matchingService.searchClubPList(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	/* 매칭 인원 추가*/
+	@RequestMapping(value = "/addPList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addPList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String json = map.get("list").toString();
+		ObjectMapper mapper = new ObjectMapper();
+	    List<String> list = mapper.readValue(json, new TypeReference<ArrayList<String>>(){});
+		map.put("list", list);
+		
+		matchingService.addPList(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	/* 매치 업데이트 */
+	@RequestMapping(value = "/updateMatch.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String updateMatch(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		matchingService.editMatch(map);
+		return new Gson().toJson(resultMap);
+	}
 }
 
 

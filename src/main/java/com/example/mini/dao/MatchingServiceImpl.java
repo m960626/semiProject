@@ -106,5 +106,40 @@ public class MatchingServiceImpl implements MatchingService{
 		resultMap.put("list",  matchingMapper.selectMainMatch(map));
 		return resultMap;
 	}
+	// 경기 상세 조회
+	@Override
+	public HashMap<String, Object> searchMatchInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("info",  matchingMapper.selectMatchInfo(map));
+		return resultMap;
+	}
 	
+	//클럽원 리스트
+	@Override
+	public HashMap<String, Object> searchClubPList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", matchingMapper.selectClubPList(map));
+		return resultMap;
+	}
+	
+	// 매칭 인원 추가
+	@Override
+	public void addPList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stu
+		List<String> list = (List<String>) map.get("list");
+		for(int i=0; i<list.size(); i++) {
+			map.put("id", list.get(i));
+			matchingMapper.inserPList(map);
+		}
+		
+	}
+	
+	// 매치 업데이트
+	@Override
+	public void editMatch(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		matchingMapper.updateMatch(map);
+	}
 }

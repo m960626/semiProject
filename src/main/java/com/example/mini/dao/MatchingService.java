@@ -30,4 +30,16 @@ public interface MatchingService {
 	
 	// 매치 조회 - 메인페이지
 	HashMap<String, Object> searchMainMatch(HashMap<String, Object> map);
+	
+	// 경기 조회
+	HashMap<String, Object> searchMatchInfo(HashMap<String, Object> map);
+	
+	//클럽원 리스트
+	HashMap<String, Object> searchClubPList(HashMap<String, Object> map);
+	
+	// 매칭 인원 추가
+	void addPList(HashMap<String, Object> map);
+	
+	// 매치 업데이트
+	void editMatch(HashMap<String, Object> map);
 }

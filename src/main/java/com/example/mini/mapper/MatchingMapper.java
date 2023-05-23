@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.mini.model.Club;
 import com.example.mini.model.Matching;
+import com.example.mini.model.User;
 
 @Mapper
 public interface MatchingMapper {
@@ -39,6 +40,16 @@ public interface MatchingMapper {
 	// 매치 조회 - 메인페이지
 	List<Matching> selectMainMatch(HashMap<String, Object> map);
 	
+	// 매치 정보 조회
+	Matching selectMatchInfo(HashMap<String, Object> map);
 	
+	// 클럽원 리스트
+	List<User>selectClubPList(HashMap<String, Object> map);
+	
+	// 매칭 인원 추가
+	void inserPList(HashMap<String, Object> map);
+	
+	// 매치 업데이트
+	void updateMatch(HashMap<String, Object> map);
 	
 }

@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="box-nav">
-                                    <a href="/sub01_03" target="" class="nav">
+                                    <a href="/clubView.do" target="" class="nav">
                                         <span class="text">내 클럽</span>
                                     </a>
                                     <div class="box-nav">

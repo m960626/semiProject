@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="/layout/header.jsp"></jsp:include>
+<jsp:include page="/layout/subHeader.jsp"></jsp:include>de>
 <link rel="stylesheet" href="css/style.css">
 <title>티키타카 - 매칭 신청(02_02)</title>
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/common.css">
-<link rel="stylesheet" type="text/css" href="css/pearl.css">
+<link rel="stylesheet" type="text/css" href="../css/pearl.css">
+<link rel="stylesheet" type="text/css" href="../css/hong.css">
 
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
@@ -28,7 +29,7 @@
 	document.cookie = "safeCookie1=foo; SameSite=Lax";
 	document.cookie = "safeCookie2=foo";
 	document.cookie = "crossCookie=bar; SameSite=None; Secure";
-</script>
+</script>  
 </head>
 <style>
 </style>
@@ -37,13 +38,13 @@
 		<div class="container">
 			<div class="wrap">
 				<div class="sub_title">
-					<h2>매칭 신청</h2>
+					<h2>매칭 예약</h2>
 				</div>
 				<form action="">
 					<div class="form_row form_flex">
 						<div class="form_inner">
 							<label for="club_name" class="lbl">클럽명</label> <input type="text"
-								id="club_name" class="int" v-model="idInfo.cName" disabled="disabled">
+								id="club_name" class="int" v-model="info.clubName" disabled="disabled">
 						</div>
 						<div class="form_inner">
 							<label for="date" class="lbl">시합 날짜</label> <input type="date"
@@ -178,10 +179,59 @@
 					</div>
 				</form>
 				<!-- // form -->
-				<div class="foot_btn">
-					<button class="btn_form" @click="fnApply">매치 신청하기</button>
+				<div class="btnBox2">
+					<button class="btn_form" @click="opendimmed">참여인원 선택하기</button>
+					<button class="btn_form" @click="fnApply">신청하기</button>
 				</div>
 				<!-- // foot_btn -->
+				<div id="myModal" class="editDimmed">
+				    <div class="editDimmed-content">				 
+				        <h1>참여인원 선택</h1>				        
+				      	<div class="tbl tbl-list">
+						<table>
+							<colgroup>
+								<col style="width: 50px">
+								<col style="width: 50px">
+								<col style="width: 100px">
+								<col style="width: 100px">
+								<col style="width: 100px">
+								<col style="width: 100px">
+							</colgroup>
+							<thead>
+								<tr>
+									<th scope="col"></th>
+									<th scope="col">No.</th>
+									<th scope="col">선수명</th>
+									<th scope="col">포지션</th>
+									<th scope="col">득점수</th>
+									<th scope="col">활동 경기수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template>
+									<tr v-for="(item, index) in list">							
+										<td scope="col">
+											<div class="details_check">
+												<input type="checkbox"  v-model="pList" :value="item.id" :id="item.name">
+												<label :for="item.name"><span></span></label>
+											</div>										
+										</td>
+										<td scope="col">{{index + 1}}</td>
+										<td scope="col">{{item.name}}</td>
+										<td scope="col">{{item.position1}}</td>
+										<td scope="col">{{item.mgoal}}</td>
+										<td scope="col">{{item.cnt}}</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+						</div>
+						<div class="dimBtn">
+				        <button class="btn" @click="fnpList">저장</button>
+				        <button @click="fnCloseDim">취소</button>
+				        </div>
+				    </div>
+				</div>							
 			</div>
 		</div>
 	</div>
@@ -215,14 +265,17 @@
 			   ,intro : ""
 			}
 			, idInfo : {}
+			, list : []
+			, pList : []
+			, mNo : ""
 		},
 		methods : {
 			// 클럽 여부 확인
 			fnCheck : function() {
 				var self = this;
 				if(self.sessionId == ""){
-					alert("회원가입 후 이용해주세요.");
-					location.href="/main.do";
+					alert("로그인 후 이용해주세요.");
+					location.href="/login.do";
 				}
 				else {
 					var nparmap = {id : self.sessionId};			
@@ -232,8 +285,9 @@
 			            type : "POST", 
 			            data : nparmap,
 			            success : function(data) { 
-			            	if(data.info.cNo != "") {
-			        			self.idInfo = data.info;
+			            	if(data.result == "success") {		          			
+			            		self.idInfo = data.info;
+			        			self.info.clubName = self.idInfo.cName; 
 			            	}
 			            	else {
 			            		alert("클럽 가입 후 이용해주세요.");
@@ -266,6 +320,8 @@
 	                 type : "POST", 
 	                 data : nparmap,
 	                 success : function(data) { 
+	                	 self.mNo = data.mNo;
+	                	 self.fnMatchP(self.mNo);
 	                 }
 	             }); 
 			}
@@ -287,6 +343,31 @@
 		           }
 		        }).open();
 		   }
+			//dimmed 창 열기, 클럽원 리스트
+			, opendimmed : function() {
+				  var modal = document.getElementById("myModal");
+				  modal.style.display = "block";
+				  var self = this;
+				  var nparmap = {id : self.sessionId};
+	             $.ajax({
+	                 url:"/clubPList.dox",
+	                 dataType:"json",	
+	                 type : "POST", 
+	                 data : nparmap,
+	                 success : function(data) { 
+	                	 self.list = data.list;
+	                 }
+	             }); 
+		   }
+		   , fnpList : function (){
+			   var self = this;
+			   closedimmed();
+		   }
+		   , fnCloseDim : function (){
+			   var self = this;
+			   self.pList = [];
+			   closedimmed();
+		   }	
 			// 구장 & 경기 정보 추가
 		   , fnApply : function(){
 	    		var self = this;
@@ -345,18 +426,59 @@
 	    		else if(self.info.intro == ''){
 	    			alert("팀 소개를 작성해주세요.");
 	    		}
+	    		else if(self.pList.length == 0){
+	    			alert("참여 인원을 선택해주세요.");
+	    		}
 	    		else {
 					self.fnAddField();
 					self.fnAddMatch();
+					
 					alert("매칭 신청되었습니다.");
 					location.href="/sub02_03";
-	    		}
+	    		} 
 			}
+			, fnMatchP : function(mNo) {
+				var self = this;
+				var nparmap = {list : JSON.stringify(self.pList), mNo : self.mNo, cNo : self.idInfo.cNo};
+	            $.ajax({
+	                 url:"/addPList.dox",
+	                 dataType:"json",	
+	                 type : "POST", 
+	                 data : nparmap,
+	                 success : function(data) { 
+	                 }
+	             });  
+			}
+		
 		},
 		created : function() {
 			var self = this;
 			self.fnCheck();			
 		}
 		
-});	
+});		    
+//dimmed 창 열기
+function opendimmed() {
+  var modal = document.getElementById("myModal");
+  modal.style.display = "block";
+}
+
+// dimmed 창 닫기
+function closedimmed() {
+  var modal = document.getElementById("myModal");
+  modal.style.display = "none";
+}
+
+// 선택인원 제한
+$(document).ready(function () {
+       $("input[type='checkbox']").on("click", function(){
+           let count = $("input:checked[type='checkbox']").length;
+
+           if(count > 11){
+               $(this).prop("checked", false);
+               alert("11명까지만 선택할 수 있습니다.")
+           }
+       })
+   });
+		   
 </script>

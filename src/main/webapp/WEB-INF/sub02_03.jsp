@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="/layout/header.jsp"></jsp:include>
+<jsp:include page="/layout/subHeader.jsp"></jsp:include>
 <link rel="stylesheet" href="css/style.css">
 <title>티키타카 - 매칭 조회(02_03)</title>
 <link rel="stylesheet" type="text/css" href="css/reset.css">
@@ -70,7 +70,7 @@
 	                        </div>
 	                        <div class="btnBox">
 	                            <button class="clubBtn">상대 클럽 보기</button>
-	                            <button class="fieldBtn">구장 정보 보기</button>
+	                            <button class="fieldBtn"  @click="fnView(item.mNo)">구장 정보 보기</button>
 	                        </div>
 	                    </div><!-- // matching_inner -->
 	                </div><!-- // matching_list -->
@@ -118,7 +118,6 @@ Vue.component('paginate', VuejsPaginate)
 	                 type : "POST", 
 	                 data : nparmap,
 	                 success : function(data) { 
-	                	 console.log(data);
 	                	 self.list = data.list; 
 	                	 self.cnt = data.cnt;
 		 	             self.pageCount = Math.ceil(self.cnt / 10);
@@ -167,6 +166,40 @@ Vue.component('paginate', VuejsPaginate)
 					}
 				});
 			}
+			, pageChange : function(url, param) {
+	    		var target = "_self";
+	    		if(param == undefined){
+	    		//	this.linkCall(url);
+	    			return;
+	    		}
+	    		var form = document.createElement("form"); 
+	    		form.name = "dataform";
+	    		form.action = url;
+	    		form.method = "post";
+	    		form.target = target;
+	    		for(var name in param){
+					var item = name;
+					var val = "";
+					if(param[name] instanceof Object){
+						val = JSON.stringify(param[name]);
+					} else {
+						val = param[name];
+					}
+					var input = document.createElement("input");
+		    		input.type = "hidden";
+		    		input.name = item;
+		    		input.value = val;
+		    		form.insertBefore(input, null);
+				}
+	    		document.body.appendChild(form);
+	    		form.submit();
+	    		document.body.removeChild(form);
+	    	}    	
+	    	, fnView : function(mNo){
+	    		var self = this;
+				self.pageChange("/sub02_04", {mNo : mNo});					
+	    	}
+			
 		},
 		created : function() {
 			var self = this;
