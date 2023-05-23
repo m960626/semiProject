@@ -3,12 +3,26 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.example.mini.mapper.ClubMapper">
-	<insert id="insertClub" parameterType="hashmap">
+	<insert id="insertClub" parameterType="hashmap" useGeneratedKeys="true" keyProperty="cNo" keyColumn="cNo">
 		INSERT INTO T2_CLUB
 			(cLoc, cInfo, cName, cAge1, cAge2, cStat, cDay1, cDay2, cDay3, cMax, cGrade, cGender, cDate, cid)
 		VALUES
-			(#{cLoc}, #{cont}, #{cName}, #{age1}, #{age2}, #{cStatus}, #{day1}, #{day2}, #{day3}, #{cMax}, #{cGrade}, #{cGender}, NOW(), 'test123')
+			(#{cLoc}, #{cont}, #{cName}, #{age1}, #{age2}, #{cStatus}, #{day1}, #{day2}, #{day3}, #{cMax}, #{cGrade}, #{cGender}, NOW(), #{cid})
 	</insert>
+	
+	
+	<insert id="insertClubImg" parameterType="hashmap">
+		INSERT INTO T2_CIMG
+			(cNo, imgData)
+		VALUES
+			(#{cNo}, #{img})
+	</insert>
+	
+	<update id="updateClubMaster" parameterType="hashmap">
+		UPDATE T2_USER
+		SET cNo = #{cNo}, status = '3'
+		WHERE id = #{cid}
+	</update>
 	
 	<select id="selectClubYn" parameterType="hashmap" resultType="com.example.mini.model.User">
 		select 
@@ -22,7 +36,7 @@
 	<select id="selectClubList" parameterType="hashmap" resultType="com.example.mini.model.Club">	
 			SELECT * 
 			FROM (
-			SELECT cImg, cName, IFNULL(CNT, 0) AS cnt, cStat, C.cLoc, locName, cAge1, cAge2, cDay1, cDay2, cDay3, IFNULL(ROUND((cWin / (cWin + cLose) * 100)),0) AS rate, cGender, cDate
+			SELECT C.cNo, cImg, cName, IFNULL(CNT, 0) AS cnt, cStat, C.cLoc, locName, cAge1, cAge2, cDay1, cDay2, cDay3, IFNULL(ROUND((cWin / (cWin + cLose) * 100)),0) AS rate, cGender, cDate, imgData
 			FROM mini_db2.T2_CLUB C
 			LEFT JOIN (
 				select CNO, COUNT(*) AS CNT
@@ -30,6 +44,7 @@
 				GROUP BY CNO
 			) A ON A.CNO = C.CNO
 			INNER JOIN mini_db2.T2_LOC L ON L.locNum = C.cLoc
+			LEFT JOIN mini_db2.T2_CIMG I ON I.cNo = C.cNo
 			ORDER BY cDate desc
 			) A
 			WHERE 1=1
@@ -235,6 +250,51 @@
 		WHERE 
 			c.cNo = #{cNo}
 		order by nDate desc
+	</select>
+	
+	
+	<!-- 클럽 상세보기 // 로그인 한 유저정보 가져오기 -->
+	<select id="searchSessionInfo" parameterType="hashmap" resultType="com.example.mini.model.Join">
+		SELECT status, cNo
+		FROM T2_USER
+		WHERE ID = #{uId}
+	</select>
+	
+	
+	<!-- 클럽 가입 신청 insert -->
+	<insert id="insertClubUser" parameterType="hashmap">
+		INSERT INTO T2_CLUBJOIN
+			(id, cNo, jDate, jStat, DelYn)
+		VALUES
+			(#{uId}, #{cNo}, NOW(), '1', 'N')
+	</insert>
+	
+	<!-- 메인화면 클럽 순위 경기 수 -->
+	<select id="selectMainClub" parameterType="hashmap" resultType="com.example.mini.model.Club">
+		select C.CNAME, TOTAL, LOCNAME, C.CNO, USER
+		FROM(
+			SELECT CNAME, COUNT(*) AS TOTAL
+			FROM(
+				SELECT 
+				   cNo_H as cName, mDate
+				FROM mini_db2.T2_MATCH
+				union
+				SELECT 
+				   cNo_A as cName, mDate
+				FROM mini_db2.T2_MATCH
+			) A 
+			GROUP BY cName
+			LIMIT 5
+		) A
+		INNER JOIN mini_db2.T2_CLUB C ON A.CNAME = C.CNAME
+		INNER JOIN mini_db2.T2_LOC L ON C.CLOC = L.LOCNUM
+		LEFT JOIN (
+			select cNo, count(*) AS USER
+			from mini_db2.T2_USER
+			where cNo is not null
+			group by cNo
+		) U ON U.CNO = C.CNO
+		ORDER BY TOTAL DESC
 	</select>
 	
 </mapper>

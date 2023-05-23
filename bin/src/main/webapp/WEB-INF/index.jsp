@@ -98,15 +98,15 @@
                           </div>
                         </div>
                         <div class="schedule_list">
-                          <div class="item end" v-for="item in list">
-                            <a href="javascript:;" @click="fnView">
+                          <div class="item end" v-for="item2 in list">
+                            <a href="javascript:;">
                               <p></p>
                               <span class="subject">
-                                <p>{{item.cNoH}}</p>
-                                <p>{{item.fName}}</p>
+                                <p>{{item2.cNoH}}</p>
+                                <p>{{item2.fName}}</p>
                               </span>
                               <span class="date">
-                                {{item.mDate}}
+                                {{item2.mDate}} {{item2.mTimeS}}
                               </span>
                             </a>
                           </div>
@@ -120,31 +120,30 @@
             <section id="section04">
                 <div class="wrap">
                     <h3>이번 달 클럽 순위</h3>
-                    <div class="clubList" v-for="(item, index) in list">
+                    <div class="clubList">
                         <div class="leftArea">
                             <div class="slider-nav slider">
-                                <div class="item">
+                                <div class="item" v-for="(left, index1) in clubList">
                                     <a href="javascript:;">
-                                        <span class="num">{{index + 1}}</span>
-                                        <span class="name">{{item.cName}}</span>
-                                        <span class="score">40경기</span>
+                                        <span class="num"></span>
+                                        <span class="name">{{left.cName}}</span>
+                                        <span class="score">{{left.total}}경기</span>
                                     </a>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                         <div class="rightArea">
                             <div class="slider-for slider">
-                                <div class="item">
+                                <div class="item" v-for="right in rList">
                                     <div class="clubInfo">
                                         <div class="imgBox">
                                             <div class="img">
-                                                {{item.cImg}}
                                             </div>
                                         </div>
                                         <div class="txtBox">
-                                            <p><b>클럽명</b> : {{item.cName}}</p>
-                                            <p><b>활동 지역</b> : {{item.cLoc}}</p>
-                                            <p><b>클럽 인원 수</b> : {{item.cPcnt}}명</p>
+                                            <p><b>클럽명</b> : {{right.cName}}</p>
+                                            <p><b>활동 지역</b> : {{right.locName}}</p>
+                                            <p><b>클럽 인원 수</b> : {{right.user}}명</p>
                                             <a href="javascript:;">정보 더보기 +</a>
                                         </div>
                                     </div>
@@ -259,6 +258,8 @@ var app = new Vue({
     el: '#container',
     data: {
     	list : [],
+    	clubList : [],
+    	rList : [],
     	selectPage: 1,
     	pageCount: 1,
     	cnt : 0,
@@ -270,18 +271,14 @@ var app = new Vue({
     	// 매치 리스트 가져오기
     	fnGetList : function(){
     		var self = this;
-    		 <!-- 페이징 추가 6-->
- 			var startNum = ((self.selectPage-1) * 10);
-    		var nparmap ={startNum : startNum};
+    		var nparmap ={};
              $.ajax({
-                 url:"/main/getList.dox",
+                 url:"/matching/mainMatch.dox",
                  dataType:"json",	
                  type : "POST", 
                  data : nparmap,
                  success : function(data) {   
-                	 self.list = data.list; 
-                	 self.cnt = data.cnt;
-	 	             self.pageCount = Math.ceil(self.cnt / 10);
+                	 self.list = data.list;
                 	 for(var i=0; i<self.list.length; i++){
                 		 var loc = self.list[i].fLoc.slice(0, 2);
                 		 self.list[i].fLoc = loc;
@@ -293,29 +290,62 @@ var app = new Vue({
                 		 
                 		 var time = self.list[i].mTimeS.slice(0, 5);
                 		 self.list[i].mTimeS = time;
+                		 
                 	 }	
                  }
              }); 
-		}
-		, fnView : function(){
+		},
+		fnClubRank : function() {
 			var self = this;
-    		var nparmap ={}; // startNum : self.startNum
-             $.ajax({
-                 url:"/main/clubList.dox",
-                 dataType:"json",	
-                 type : "POST", 
-                 data : nparmap,
-                 success : function(data) {   
-                	 self.list = data.list; 
-                	 
-                 }
-             });
+			var nparmap = {};
+			$.ajax({
+                url:"/Club/ClubRank.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {  
+               	 	self.clubList = data.list;
+               	 	self.rList = data.rlist;	
+               	 	console.log(self.clubList);
+               	 	console.log(self.rList);
+                }
+            }); 
 		}
 	},
 	created : function() {
 		var self = this;
 		self.fnGetList();
-		self.fnClubList();
+		self.fnClubRank();
 	}
 });
+
+
+</script>
+
+<script>
+  window.onload = function() { // window.addEventListener('load', (event) => {와 동일합니다.
+	
+	  
+	  if ($('.clubList').length) {
+			var slideFor = $('.slider-for');
+			var slideNav = $('.slider-nav');
+			slideFor.slick({
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				fade: true,
+				asNavFor: '.slider-nav',
+				draggable: false,
+				arrows:false,
+				autoplay: true
+			});
+			slideNav.slick({
+				slidesToShow: 5,
+				slidesToScroll: 1,
+				asNavFor: '.slider-for',
+				focusOnSelect: true,
+				draggable: false,
+				autoplay: true
+			});
+		}
+  };
 </script>

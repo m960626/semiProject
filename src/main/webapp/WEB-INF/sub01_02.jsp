@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="/layout/header.jsp"></jsp:include>
+<jsp:include page="/layout/subHeader.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/pearl.css">
 <link rel="stylesheet" type="text/css" href="css/reset.css">

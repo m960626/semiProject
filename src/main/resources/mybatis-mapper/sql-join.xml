@@ -61,13 +61,6 @@
 		WHERE ID = #{id}
 	</update>
 	
-	<!-- 마이페이지 정보 호출 -->
-	<select id="selectMyPageUser" parameterType="hashmap" resultType="com.example.mini.model.Join">
-		SELECT NICK, ID, STATUS
-		FROM T2_USER
-		WHERE ID = #{id}
-	</select>
-	
 	<select id="findId" parameterType="hashmap" resultType="int">
 		SELECT ID
 		FROM T2_USER

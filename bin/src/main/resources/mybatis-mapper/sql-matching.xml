@@ -99,6 +99,9 @@
 		SELECT *
 		FROM T2_MATCH M
 		INNER JOIN T2_FIELD F ON F.fNo = M.mNo
+		WHERE MDATE > sysdate()
 		ORDER BY mDATE ASC
 	</select>
+	
+	
 </mapper>

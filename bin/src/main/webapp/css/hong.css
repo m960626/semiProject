@@ -102,9 +102,8 @@ ul, li{
     font-weight: bold;
     width: 150px;
     height: 50px;
-    margin-left: 30px;
+	float : right;
     border-radius: 5px;
-
 }
 
 .clubS .btn3:hover{
@@ -112,9 +111,6 @@ ul, li{
     background-color: rgb(255, 255, 255);
     color: black;
 }
-
-
-
 
 /* 클럽 상세 조회 글씨 */
 
@@ -143,14 +139,6 @@ ul, li{
 
 .clubS .matchGender{font-size: 0.8rem; text-align: left;}
 
-.clubS span{
-    background-color: #FF0000;
-    color: white; width: 115px; 
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 5px; 
-    margin-left: 5px;
-}
 
 /* 최근경기 매치 날짜 */
 .date{font-size: 20px; text-align: left;}
@@ -428,6 +416,19 @@ ul, li{
 .timeLine li {
 	display:flex;
 }
+.timeLine li.nonList {
+    text-align: center;
+    border-top: 2px solid #333444;
+    display: block;
+    padding: 52px 0;
+    font-size: 18px;
+}
+.clubInfo2 .nonList {
+    text-align: center;
+    border-top: 2px solid #333444;
+    font-size: 18px;
+    padding: 52px 0;
+}
 .timeLine li .textArea {
 	width:calc(100% - 120px);
 	padding-left: 20px;
@@ -513,6 +514,10 @@ ul, li{
 }
 #tab1 .clubInfoArea li {
 	font-size: 17px;
+}
+.cInfo span, .cont li span {
+ 	font-size: inherit;
+	color: inherit;
 }
 #tab1 .clubInfoArea li+li {
 	margin-top: 12px;
@@ -738,7 +743,7 @@ height: 100%; background: #000; opacity: .5; filter: alpha(opacity=50);}
 }
 #tab5 .notice th {
 	text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     padding: 24px 0;
 }
 #tab5 .notice tr {

@@ -1,7 +1,5 @@
 package com.example.mini.model;
 
-import lombok.Data;
-
 public class User {
 	private String id;
 	private int cWin;
@@ -40,6 +38,7 @@ public class User {
 	private int mrCard;
 	private int mCnt;
 	private String name;
+	private String gender;
 	
 	
 	public String getId() {
@@ -263,5 +262,11 @@ public class User {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 }

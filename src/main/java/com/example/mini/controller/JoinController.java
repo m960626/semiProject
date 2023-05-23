@@ -89,17 +89,6 @@ public class JoinController {
 		return new Gson().toJson(resultMap);
 	}
 	
-	//중복체크 기능
-	@RequestMapping(value = "/user/check.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String sameCheck(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		int cnt = joinService.searchUserChk(map);
-		resultMap.put("cnt", cnt);
-		resultMap.put("result", "success");
-		return new Gson().toJson(resultMap);
-	}
-	
 //	// 회원정보수정
 //	@RequestMapping("/join.do") 
 //    public String uInfo(Model model) throws Exception{
@@ -126,15 +115,6 @@ public class JoinController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
-
-	// 마이페이지 정보 호출
-	@RequestMapping("/mypage.do") 
-	public String searchMyPageUser(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		request.setAttribute("sessionId", session.getAttribute("sessionId"));
-		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
-		request.setAttribute("sessionNickName", session.getAttribute("sessionNickName"));
-		return "/sub06_01";
-    }
 		
 	// 아이디 찾기 페이지
 	@RequestMapping("/findid.do") 

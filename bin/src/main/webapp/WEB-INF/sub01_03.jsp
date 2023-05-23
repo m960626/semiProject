@@ -24,15 +24,15 @@
 				<div class="wrap clubS">
 					<!-- 클럽 간략 정보 및 가입신청 버튼 -->
 					<form class="titleBg">
-						<div style="float: right; margin-right: 20px;">
-							<button class="btn3">클럽 가입 신청</button>
+						<div style="float: right;">
+							<a href="javascript:;" class="btn3" @click="fnClubJoinBtn" v-if="sessionInfo.cNo == 0 || sessionInfo.cNo == null || sessionInfo.cNo == ''">클럽 가입 신청</a>
 							<h1>{{userCnt}}/{{info.cMax}}</h1>
 						</div>
 						<div>
 							<img src="/image/teamLogo1.png" class="tlogo">
 						</div>
 						<h2>{{info.cName}}</h2>
-						<div class="cInfo">{{info.match}}경기 {{info.cWin}}승 {{info.cLose}}패 {{info.cDraw}}무 (승률 {{info.wRate}}%)</div>
+						<div class="cInfo">{{info.match}}경기 {{info.cWin}}승 {{info.cLose}}패 {{info.cDraw}}무 <span v-if="info.wRate > 0">(승률 {{info.wRate}}%)</span></div>
 						<div class="cInfo">클럽 장 : {{info.nick}}</div>
 						<div class="cInfo">클럽 생성일 : {{info.cDate}}</div>
 					</form>
@@ -59,7 +59,7 @@
 									<h3>클럽 기본 정보</h3>
 									<ul class="clubInfoArea">
 										<li>클럽 명 : {{info.cName}}</li>
-										<li>클럽 전적 : {{info.match}}경기 {{info.cWin}}승 {{info.cLose}}패 {{info.cDraw}}무 (승률 {{info.wRate}}%)</li>
+										<li>클럽 전적 : {{info.match}}경기 {{info.cWin}}승 {{info.cLose}}패 {{info.cDraw}}무 <span v-if="info.wRate > 0">(승률 {{info.wRate}}%)</span></li>
 										<li>활동 지역 : {{info.locName}}</li>
 										<li>연령대 : {{info.cAge1}}대 ~ {{info.cAge2}}대</li>
 										<!-- <li>남녀 성비 : 남녀 혼성</li>  -->
@@ -86,8 +86,26 @@
 												<th scope="col">퇴장</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody class="userOnly" v-if="sessionInfo.cNo == cNo">
 											<tr v-for="(item, index) in list" @click="fnUserInfo(item)">
+												<td v-if="item.status == '3'">클럽장</td>
+												<td v-else-if="item.status == '2'">매니저</td>
+												<td v-else>{{index+1}}</td>
+												<td>{{item.name}}</td>
+												<td>
+													<span>{{item.position1}}</span>
+													<span v-if="item.position2 != null && item.position2 != ''">, {{item.position2}}</span>
+													<span v-if="item.position3 != null && item.position3 != ''">, {{item.position3}}</span>
+												</td>
+												<td>{{item.userAge}}</td>
+												<td>{{item.goal}}</td>
+												<td>{{item.assi}}</td>
+												<td>0</td>
+												<td>{{item.rCard}}</td>
+											</tr>
+										</tbody>
+										<tbody v-else>
+											<tr v-for="(item, index) in list">
 												<td v-if="item.status == '3'">클럽장</td>
 												<td v-else-if="item.status == '2'">매니저</td>
 												<td v-else>{{index+1}}</td>
@@ -123,6 +141,9 @@
 				                        <col width="150px">
 				                    </colgroup>
 									<tbody>
+										<tr v-if="matchList.length == 0">
+											<td class="nonList" colspan="3">최근 경기 기록이 없습니다.</td>
+										</tr>
 										<tr v-for="(item, index) in matchList">
 											<td>
 												<div class="date">
@@ -162,8 +183,8 @@
 							<!-- 타임 라인 -->
 							<div id="tab3" class="cont">
 								<ul class="timeLine">
+									<li class="nonList" v-if="timeList.length == 0">작성된 타임라인이 없습니다.</li>
 									<li v-for="(item, index) in timeList" v-bind:class="{'join' : item.tKind == '1', 'dele' : item.tKind == '2', 'match' : item.tKind == '3'}">
-										
 										<div class="date">
 											<p>{{item.month}}월 {{item.day}}일</p>
 											<p>{{item.hour}}:{{item.minutes}}</p>
@@ -210,8 +231,10 @@
 											<th>승인 여부</th>
 										</tr>
 									</thead>
-
-									<tbody>
+									<tbody v-if="sessionInfo.cNo == cNo && sessionStatus == 3">
+										<tr v-if="joinList.length == 0">
+											<td colspan="6">클럽 가입자가 없습니다.</td>
+										</tr>
 										<tr v-for="(item, index) in joinList">
 											<td>{{index+1}}</td>
 											<td>{{item.name}}</td>
@@ -229,6 +252,11 @@
 												<a class="trueEnd" v-if="item.jStat == '2'">승인 완료</a>
 												<a class="falseEnd" v-if="item.jStat == '3'">승인 거부</a>
 											</td>
+										</tr>
+									</tbody>
+									<tbody v-else>
+										<tr>
+											<td colspan="6">클럽 관리자만 확인하실 수 있습니다.</td>
 										</tr>
 									</tbody>
 								</table>
@@ -250,7 +278,12 @@
 										</tr>
 									</thead>
 
-									<tbody>
+									<tbody v-if="sessionInfo.cNo == cNo">
+										<tr v-if="noticeList.length == 0">
+											<td colspan="3">
+												작성된 공지사항이 없습니다.
+											</td>
+										</tr>
 										<tr v-for="(item, index) in noticeList">
 											<td class="date">
 												<p>{{item.date}}</p>
@@ -259,6 +292,13 @@
 											<td class="nCont">{{item.nCont}}</td>
 											<td v-if="item.status == '3'">클럽장</td>
 											<td v-else-if="item.status == '2'">매니저</td>
+										</tr>
+									</tbody>
+									<tbody v-else>
+										<tr>
+											<td colspan="3">
+												클럽 회원들만 확인 가능합니다.
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -304,9 +344,9 @@
   				<li>선수 성적 : 00경기 {{userInfo.goal}}골 {{userInfo.assi}}도움 {{userInfo.yCard}}경고 {{userInfo.rCard}}도움
   				</li>
   			</ul>
-  			<div class="btnArea">
-  				<a href="javascript:;" class="clubOut" @click="fnClubOut(userInfo.id)">클럽 방출</a>
-  				<a href="javascript:;" class="clubUp" @click="fnClubUp(userInfo.id)">매니저 등록</a>
+  			<div class="btnArea" v-if="sessionStatus == 3">
+  				<a href="javascript:;" class="clubUp" @click="fnClubOut(userInfo.id)">클럽 방출</a>
+  				<!-- <a href="javascript:;" class="clubUp" @click="fnClubUp(userInfo.id)">매니저 등록</a> -->
   			</div>
   			<a href="javascript:;" class="dimClose">닫아줘~</a>
        </div>
@@ -319,7 +359,10 @@
 	var app = new Vue({
 		el : '#app',
 		data : {
-			cNo : '1',
+			sessionId : "${sessionId}",
+			sessionNickName : "${sessionNickName}",
+			sessionStatus : "${sessionStatus}",
+			cNo : "${map.cNo}",
 			info : {},
 			list : [],
 			joinList : [],
@@ -328,7 +371,11 @@
 			noticeList : [],
 			userCnt : '',
 			title : "",
-			userInfo : {}
+			userInfo : {},
+			sessionInfo : {
+				cNo : "",
+				status : ""
+			}
 		},
 		methods : {
 			fnGetClub : function(){
@@ -429,7 +476,6 @@
                     data : nparmap,
                     success : function(data) { 
                     	self.joinList = data.list;
-                    	console.log(self.joinList);
                     	for(var i=0; i<self.joinList.length; i++) {
                     		var age = (new Date().getFullYear()) - (new Date(self.joinList[i].birth).getFullYear());
                     		var tMonth = new Date().getMonth()+1;
@@ -587,6 +633,43 @@
                     	}
                     }
                 });
+			},
+			fnSessionUser : function() {
+				var self = this;
+				var nparmap = {
+						uId : self.sessionId
+				};
+				$.ajax({
+                    url:"/Club/SessionInfo.dox",
+                    dataType:"json",
+                    type : "POST", 
+                    data : nparmap,
+                    success : function(data) {
+                    	self.sessionInfo = data.info;
+                    	console.log(self.sessionInfo);
+                    }
+                });
+				
+			},
+			fnClubJoinBtn : function() {
+				var self = this;
+				if(self.sessionId == ''){
+					alert("로그인하셔용");
+				}else {
+					var nparmap = {
+							uId : self.sessionId,
+							cNo : self.cNo
+					};
+					$.ajax({
+	                    url:"/Club/clubJoinUser.dox",
+	                    dataType:"json",
+	                    type : "POST", 
+	                    data : nparmap,
+	                    success : function(data) {
+	                    	alert("클럽 신청을 완료하였습니다.");
+	                    }
+	                });
+				}
 			}
 			
 		},
@@ -597,6 +680,7 @@
 			self.fnClubJoin();
 			self.fnGetTimeLine();
 			self.fnGetNotice();
+			self.fnSessionUser();
 		}
 		
 	});	

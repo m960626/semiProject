@@ -29,50 +29,50 @@
 			<div class="wrap">
 				<div class="matching__body" >
  <!-- ========================================================== 매치 예약 조회 =============================================================== -->
-	<div class="matching_title">
+					<div class="matching_title">
 						<h2 class="mh2">매칭 내역</h2>
 					</div>
-							<div class="matching_list" v-for="item in list">
-								<div class="matching_inner">
-									<div class="dateBox">
-										<div class="date">
-											{{item.mDate}} <br>{{item.mTimeS}}
-										</div>
-									</div>
-									<div class="titleBox">
-										<div class="matchLoc"
-											v-bind:class="{'loc_color1' : item.fLoc ==  '서울',
-															'loc_color2' : item.fLoc ==  '경기',
-															'loc_color3' : item.fLoc ==  '인천',
-															'loc_color4' : item.fLoc ==  '강원',
-															'loc_color5' : item.fLoc ==  '충북',
-															'loc_color6' : item.fLoc ==  '경북',
-															'loc_color7' : item.fLoc ==  '세종',
-															'loc_color8' : item.fLoc ==  '대전',
-															'loc_color9' : item.fLoc ==  '대구',
-															'loc_color10' : item.fLoc ==  '충남',
-															'loc_color11' : item.fLoc ==  '전북',
-															'loc_color12' : item.fLoc ==  '경남',
-															'loc_color13' : item.fLoc ==  '울산',
-															'loc_color14' : item.fLoc ==  '전남',
-															'loc_color15' : item.fLoc ==  '광주',
-															'loc_color16' : item.fLoc ==  '부산',
-															'loc_color17' : item.fLoc ==  '제주'
-																			}">{{item.fLoc}}</div>
-										<div class="matchTitle">{{item.fName}}</div>
-										<div v-if="item.mGender == 1" class="matchGender">남자 11 VS
-											11</div>
-										<div v-else-if="item.mGender == 2" class="matchGender">여자
-											11 VS 11</div>
-										<div v-else class="matchGender">혼성 11 VS 11</div>
-									</div>
-									<div class="btnBox">
-										<button class="clubBtn" @click="fnAclub()">상대 클럽 보기</button>
-										<button class="fieldBtn" @click="fnfield()">구장 정보 보기</button>
-										<button class="editBtn" onclick="opendimmed()">참여 인원 수정</button>
-									</div>
+					<div class="matching_list" v-for="item in list">
+						<div class="matching_inner">
+							<div class="dateBox">
+								<div class="date">
+									{{item.mDate}} <br>{{item.mTimeS}}
+								</div>
+							</div>
+							<div class="titleBox">
+								<div class="matchLoc"
+									v-bind:class="{'loc_color1' : item.fLoc ==  '서울',
+													'loc_color2' : item.fLoc ==  '경기',
+													'loc_color3' : item.fLoc ==  '인천',
+													'loc_color4' : item.fLoc ==  '강원',
+													'loc_color5' : item.fLoc ==  '충북',
+													'loc_color6' : item.fLoc ==  '경북',
+													'loc_color7' : item.fLoc ==  '세종',
+													'loc_color8' : item.fLoc ==  '대전',
+													'loc_color9' : item.fLoc ==  '대구',
+													'loc_color10' : item.fLoc ==  '충남',
+													'loc_color11' : item.fLoc ==  '전북',
+													'loc_color12' : item.fLoc ==  '경남',
+													'loc_color13' : item.fLoc ==  '울산',
+													'loc_color14' : item.fLoc ==  '전남',
+													'loc_color15' : item.fLoc ==  '광주',
+													'loc_color16' : item.fLoc ==  '부산',
+													'loc_color17' : item.fLoc ==  '제주'
+																	}">{{item.fLoc}}</div>
+								<div class="matchTitle">{{item.fName}}</div>
+								<div v-if="item.mGender == 1" class="matchGender">남자 11 VS
+									11</div>
+								<div v-else-if="item.mGender == 2" class="matchGender">여자
+									11 VS 11</div>
+								<div v-else class="matchGender">혼성 11 VS 11</div>
+							</div>
+							<div class="btnBox">
+								<button class="clubBtn" @click="fnAclub()">상대 클럽 보기</button>
+								<button class="fieldBtn" @click="fnfield()">구장 정보 보기</button>
+								<button class="editBtn" onclick="opendimmed()">참여 인원 수정</button>
 							</div>
 						</div>
+					</div>
 					
 					
 					<!-- 페이징 추가 3 -->
@@ -282,6 +282,9 @@ var app = new Vue({
 	   },
 	   setNum: ''
 	   , closeSize : 0
+	   , sessionId : "${sessionId}"
+	   , cNo : ""
+	   , fNo : ""
 
 	},
     mounted() {

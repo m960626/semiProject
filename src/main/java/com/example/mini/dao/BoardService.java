@@ -2,8 +2,6 @@ package com.example.mini.dao;
 
 import java.util.HashMap;
 
-import com.example.mini.model.Board;
-
 public interface BoardService {	
 	
 	// 글 리스트

@@ -49,25 +49,45 @@ public class JoinServiceImpl implements JoinService {
 		joinMapper.insertUser(map);
 	}
 	
-	//회원가입,회원정보수정-중복체크(아이디, 닉네임, 이메일)
+	//회원가입 중복체크(id)
 	@Override
-	public int searchUserChk(HashMap<String, Object> map) {
+	public int searchIdChk(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return joinMapper.selectUserChk(map);
+		return joinMapper.selectIdChk(map);
 	}
 	
+	//회원가입 중복체크(nick)
+		@Override
+		public int searchNickChk(HashMap<String, Object> map) {
+			// TODO Auto-generated method stub
+			return joinMapper.selectNickChk(map);
+		}
+	//회원가입 중복체크(email)
+	@Override
+	public int searchEmailChk(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return joinMapper.selectEmailChk(map);
+	}
+	
+	//nick체크(정보수정)
+	@Override
+	public int searchNickChk2(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return joinMapper.selectNickChk2(map);
+	}
+	
+	//email체크(정보수정)
+	@Override
+	public int searchEmailChk2(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return joinMapper.selectEmailChk2(map);
+	}
+			
 	//회원정보 업데이트
 	@Override
 	public void editUserInfo(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		joinMapper.updateUserInfo(map);
-	}
-
-	// 마이페이지 정보 호출
-	@Override
-	public Join searchMyPageUser(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return joinMapper.selectMyPageUser(map);
 	}
 	
 	// 아이디 찾기

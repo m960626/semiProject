@@ -202,9 +202,11 @@
 							</thead>
 							<tbody>
 								<template v-if="dataFlg">
-									<tr v-for="(item, index) in list">
+									<tr v-for="(item, index) in list" @click="fnViewClub(item)">
 										<td>{{index + 1}}</td>
-										<td>{{item.cImg}}</td>
+										<td class="clubImg">
+											<img :src="item.imgData" />
+										</td>
 										<td>{{item.cName}}</td>
 										<td>{{item.cnt}} 명</td>
 										<td>{{item.cStat}}</td>
@@ -285,6 +287,7 @@ Vue.component('paginate', VuejsPaginate)
 					type : "POST",
 					data : nparmap,
 					success : function(data) {
+						console.log(data);
 						if (data.result == "success") {
 							self.dataFlg = true;
 							self.list = data.list
@@ -376,6 +379,43 @@ Vue.component('paginate', VuejsPaginate)
 			fnCnt2 : function() {
 				var self = this;
 				self.info.cnt1 = "";
+			},
+			
+			
+			// ============================ 문상혁 수정 ===================================
+			fnViewClub : function(item) {
+				var self = this;
+				console.log(item.cNo);
+				self.pageChange("./clubView.do", {cNo : item.cNo});
+			},
+			pageChange : function(url, param) {
+				var target = "_self";
+				if(param == undefined){
+				//	this.linkCall(url);
+					return;
+				}
+				var form = document.createElement("form"); 
+				form.name = "dataform";
+				form.action = url;
+				form.method = "post";
+				form.target = target;
+				for(var name in param){
+					var item = name;
+					var val = "";
+					if(param[name] instanceof Object){
+						val = JSON.stringify(param[name]);
+					} else {
+						val = param[name];
+					}
+					var input = document.createElement("input");
+		    		input.type = "hidden";
+		    		input.name = item;
+		    		input.value = val;
+		    		form.insertBefore(input, null);
+				}
+				document.body.appendChild(form);
+				form.submit();
+				document.body.removeChild(form);
 			}
 		},
 		created : function() {

@@ -37,46 +37,28 @@ li.checkBox.check03{padding-bottom: 15px;}
 .fpmgBt1{background-color: #f7f7f7;color:#888; }
 .fpmgBt2{background-color: #006DAB; color: #fff;}
 
+/*---------------------------------------
+---------  마이페이지-클럽보기  -----------
+---------------------------------------*/
 
-/* 마이페이지-클럽보기 */
-.none_div{margin-top: 50px; display: flex; justify-content: space-evenly;}
-.none>h1 {font-size: 30px;}
+/* 클럽이 없을 경우 */
+.none_club .none {font-size: 20px;text-align: center;}
+.none_club .clubMem_body {display: block;padding: 50px 0 40px;}
+.none_club .foot_btn {margin: 0;}
 
-.case2_clubWait{margin: 20px 0px; }
-.club_wait {width: 100%; margin-top: 5px;}
-.club_wait>tbody {text-align: center;}
-.club_wait0 {border-top: 1px solid #333; border-collapse: collapse;}
-.club_wait1 {border-top:2px solid #333; height: 53px;}
-.club_wait2 {border-top: 2px solid #9e9e9e; border-bottom: 2px solid #9e9e9e; height: 84px;}
-.club_waitBtn {width: 90px; height: 30px; background-color:#fff;border:1px solid #006DAB;border-radius:4px; color:#006DAB;box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);box-sizing:border-box;}
-.inTd {width: 90px; height: 30px; border:1px solid transparent; display: flex; justify-content: space-around; align-items: center; background-color: #006DAB; color: #fff; border-radius:4px;}
-.tdStyle {height: 83.99px; display: flex; align-items: center; justify-content: space-evenly; flex-direction: column;}
-
-.case3_clubMem {display: flex; margin: 20px 0px; border-top: 3px solid #d6d6d6; border-bottom: 3px solid #d6d6d6; padding: 20px 0px;}
-.cImg_box {width: 318px; height: 318px; border: 1px solid #006DAB;}
-.clubInfo {width: 318px; height: 318px; border: 1px solid transparent; font-size: 20px; padding-left: 10px; margin-left: 25px;}
-.clubInfo>.matchInfo_title {padding: 10px 0px; font-size: 25px; font-weight: bold;}
-.info_li {padding: 5px 0px;}
+/* 클럽이 있을 경우 */
+.case3_clubMem {padding: 30px 20px;}
+.mypage_club__info .clubMem_head {padding-bottom: 20px;border-bottom: 1px solid #9e9e9e;}
+.mypage_club__info .clubMem_head .sub_title {margin-bottom: 0;}
+.clubMem_body {display: flex;align-items: center;padding-top: 40px;}
+.cImg_logo {width: 250px; height: 250px;}
+.cImg_logo.none {display: flex;align-items: center;justify-content: center;
+    width: 250px; height: 250px;border: 1px solid #bbbbbb;background-color: #ececec;
+    font-size: 14px;color: #555;}
+.clubInfo_inner {display: flex;align-items: flex-end;justify-content: space-between;
+    width: calc(100% - 290px);margin-left: 40px;}
+.clubInfo > .matchInfo_title {font-size: 22px;font-weight: bold;color: #444;margin-bottom: 20px;}
+.info_li {margin-bottom: 8px;}
+.info_li:last-child {margin-bottom: 0;}
 .info_li>span {margin-left: 10px;}
-.clubInfo.btnBox{display: flex; align-items: flex-end; flex-direction: row-reverse;}
-.clubInfo.infobox{margin-left: 35px;}
-
-/* 마이페이지-최근기록 */
-.case1_clubUser {width: 100%;}
-.boxes{width: 100%; height: auto; margin-bottom: 45px;width: 100%; height: auto; margin-bottom: 45px; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around;}
-.boxes>.userImg>img {width: 204px; height: 204px; border-radius: 50%;}
-.userImg {width: 205px; height: 205px; border: 1px solid #9e9e9e;}
-.userImg.profile{display: flex; flex-direction: column;}
-.userImg.profile>span{padding: 0px 15px; font-size: 26px; font-weight: bold;}
-.userImg.profile>ul>li{font-size: 20px; font-weight: bold;}
-.userImg.profile>ul>li>span{font-size: 20px; font-weight: bold;}
-.userImg>.imgList{padding: 15px; margin-top: 10px;}
-.userImg>.imgTitle{padding: 0px 15px; font-size: 26px; font-weight: bold;}
-.imgTitle>small{font-size: 15px; font-weight: bold; color: #888;}
-.perInfo_ul{padding-left: 15px; margin: 10px auto;}
-.userImg.clubLogo{align-items: center; display: flex; justify-content: space-around;}
-.club_perInfo{width: 100%; margin-bottom: 20px;}
-.club_perInfo>tbody{text-align: center;}
-/* 용병유저 */
-.case2_guestUser {display: flex; align-items: center; flex-direction: column;}
-.case2_guestUser>.boxes{width: 50%; height: auto; margin-bottom: 45px; margin-top: 250px; display: flex; flex-direction: row; flex-wrap: wrap;}
+.case3_clubMem .foot_btn {margin: 0;}

@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.mini.model.Board;
-import com.example.mini.model.Matching;
 
 @Mapper
 public interface BoardMapper {

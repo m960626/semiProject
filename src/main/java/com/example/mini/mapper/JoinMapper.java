@@ -9,11 +9,23 @@ public interface JoinMapper {
 	//회원가입
 	void insertUser(HashMap<String, Object> map);
 	
-	//id, nick, 메일주소 중복체크--??
-	int selectUserChk(HashMap<String, Object> map);
+	//id체크(회원가입)
+	int selectIdChk(HashMap<String, Object> map);
+	
+	//nick체크(회원가입)
+	int selectNickChk(HashMap<String, Object> map);
+	
+	//email체크(회원가입)
+	int selectEmailChk(HashMap<String, Object> map);
 	
 	//회원정보수정-페이지에 정보호출
 	Join selectUserInfoPg(HashMap<String, Object> map);
+	
+	//nick체크(정보수정)
+	int selectNickChk2(HashMap<String, Object> map);
+	
+	//email체크(회원가입)
+	int selectEmailChk2(HashMap<String, Object> map);
 	
 	//회원정보 업데이트
 	void updateUserInfo(HashMap<String, Object> map);
@@ -23,8 +35,6 @@ public interface JoinMapper {
 	
 	int selectUserCnt(HashMap<String, Object> map);
 
-	// 마이페이지 정보 호출
-	Join selectMyPageUser(HashMap<String, Object> map);
 	
 	// 아이디 찾기
 	int findId(HashMap<String, Object> map);

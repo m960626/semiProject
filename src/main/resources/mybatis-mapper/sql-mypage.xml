@@ -4,6 +4,13 @@
 
 <mapper namespace="com.example.mini.mapper.UserMapper">
 
+	<!-- 마이페이지 정보 호출 -->
+	<select id="selectMyPageUser" parameterType="hashmap" resultType="com.example.mini.model.User">
+		SELECT NICK, ID, STATUS, GENDER
+		FROM T2_USER
+		WHERE ID = #{id}
+	</select>
+	
 	<select id="selectMyClub" parameterType="hashmap" resultType="com.example.mini.model.User">
 		select 
 			id
@@ -27,6 +34,7 @@
 		WHERE U.ID = #{sessionId};	
 	</select>
 	
+	<!-- 가입신청 정보 -->
 	<select id="selectMyJoin" parameterType="hashmap" resultType="com.example.mini.model.User">
 		select 
 			cImg
@@ -119,6 +127,7 @@
 		]]>
 	</select>
 	
+	<!-- 최근기록 정보 -->
 	<select id="selectMyInfo" parameterType="hashmap" resultType="com.example.mini.model.User">
 		SELECT U.id, name, nick, position1, position2, position3, C.cName, ranking, cWin, cLose, cDraw, rate, ifnull(mgoal, 0) AS mgoal, ifnull(massi, 0) AS massi, ifnull(myCard, 0) AS myCard, ifnull(mrCard, 0) AS mrCard, ifnull(mCnt, 0) AS mCnt
 		FROM mini_db2.T2_USER U

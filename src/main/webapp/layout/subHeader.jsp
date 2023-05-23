@@ -214,9 +214,40 @@
                                         <!--2  -->
                                     </div>
                                 </div>
+							</div>
+						</div>
+					</div>
+				</div>
             </nav>
             <!-- gnb 영역 끝 -->
+            <nav class="head_login">
+            	<ul v-if="sessionId != '' && sessionId != null">
+	                <li class="colorId"><a href="/mypage.do">{{sessionNickName}}</a>님 환영합니다.</li>
+	            </ul>
+	            <ul v-else>
+	                <li><a href="/login.do">로그인</a></li>
+	                <span>|</span>
+	                <li><a href="/join.do">회원가입</a></li>
+	            </ul>
+            </nav>
         </div>
     </header>
 </body>
 </html>
+<script type="text/javascript">
+var app = new Vue({
+	el : '#header',
+	data : {
+		sessionId : "${sessionId}",
+		sessionStatus : "${sessionStatus}",
+		sessionNickName : "${sessionNickName}"
+	},
+	methods : {
+		
+	},
+	created : function() {
+       	var self = this;
+	}
+		
+});	
+</script>

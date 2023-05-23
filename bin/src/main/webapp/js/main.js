@@ -1,5 +1,5 @@
-$(document).ready(function(){
-
+window.addEventListener('DOMContentLoaded', function() {
+	
 	  // 배너 정지버튼
 	  function bnr_stop(bnr, btn) {
 		if (btn.text() === '정지') {
@@ -47,27 +47,9 @@ $(document).ready(function(){
 		});
 	  }
 	  /*//매칭일정 슬라이드*/
-
-
-
-
-	  $('.slider-for').slick({
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		fade: true,
-		asNavFor: '.slider-nav',
-		draggable: false,
-		arrows:false,
-		autoplay: true
-	  });
+});	  
+	    
 	
-	  $('.slider-nav').slick({
-		slidesToShow: 5,
-		slidesToScroll: 1,
-		asNavFor: '.slider-for',
-		focusOnSelect: true,
-		draggable: false,
-		autoplay: true
-	  });
+		
 
-});
+

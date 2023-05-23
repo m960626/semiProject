@@ -27,15 +27,15 @@
 				<form action="">
 					<div class="form_row form_flex">
 						<div class="form_inner filebox bs3-primary">
-							<label for="clubLogo" class="lbl">클럽 로고</label> <input
-								class="upload-name int" value="파일선택" disabled="disabled"
-								v-model="info.file"> <label for="ex_filename"
-								class="btn_upload">업로드</label> <input type="file"
-								id="ex_filename" class="upload-hidden">
-						</div>
+							<label for="clubLogo" class="lbl">클럽 로고</label> 
+							<!-- <input class="upload-name int" value="파일선택" disabled="disabled">
+              				<label for="file1" class="addBtn">업로드</label> 
+              				<input type="file" id="file1" class="upload-hidden">  -->
+              				<input type="file" id="file1" name="file1" multiple>
+            			</div>
 						<div class="form_inner">
 							<label for="clubName" class="lbl">클럽명</label> <input type="text"
-								id="clubName" class="int" v-model="info.cName">
+								id="clubName" class="int" v-model="info.cName" multiple>
 						</div>
 					</div>
 					<div class="form_row form_flex">
@@ -120,31 +120,31 @@
 					<div class="form_row col_7">
 						<label for="day" class="lbl">선호 요일</label>
 						<div class="details_check">
-							<input type="checkbox" id="day_1" v-model="cDay" value="mon"><label
+							<input type="checkbox" id="day_1" v-model="cDay" value="월"><label
 								for="day_1"><span></span>월요일</label>
 						</div>
 						<div class="details_check">
-							<input type="checkbox" id="day_2" v-model="cDay" value="tue"><label
+							<input type="checkbox" id="day_2" v-model="cDay" value="화"><label
 								for="day_2"><span></span>화요일</label>
 						</div>
 						<div class="details_check">
-							<input type="checkbox" id="day_3" v-model="cDay" value="wed"><label
+							<input type="checkbox" id="day_3" v-model="cDay" value="수"><label
 								for="day_3"><span></span>수요일</label>
 						</div>
 						<div class="details_check">
-							<input type="checkbox" id="day_4" v-model="cDay" value="thu"><label
+							<input type="checkbox" id="day_4" v-model="cDay" value="목"><label
 								for="day_4"><span></span>목요일</label>
 						</div>
 						<div class="details_check">
-							<input type="checkbox" id="day_5" v-model="cDay" value="fri"><label
+							<input type="checkbox" id="day_5" v-model="cDay" value="금"><label
 								for="day_5"><span></span>금요일</label>
 						</div>
 						<div class="details_check">
-							<input type="checkbox" id="day_6" v-model="cDay" value="sat"><label
+							<input type="checkbox" id="day_6" v-model="cDay" value="토"><label
 								for="day_6"><span></span>토요일</label>
 						</div>
 						<div class="details_check">
-							<input type="checkbox" id="day_7" v-model="cDay" value="sun"><label
+							<input type="checkbox" id="day_7" v-model="cDay" value="일"><label
 								for="day_7"><span></span>일요일</label>
 						</div>
 					</div>
@@ -184,6 +184,7 @@
 			sessionNickName : "${sessionNickName}",
 			sessionStatus : "${sessionStatus}",
 			info : {
+				cid : "${sessionId}",
 				file : "",
 				cName : "",
 				cLoc : "",
@@ -198,7 +199,8 @@
 				day2 : "",
 				day3 : ""
 			},
-			cDay : []
+			cDay : [],
+			cNo : ""
 		},
 		methods : {
 			// 클럽 여부 확인
@@ -265,7 +267,6 @@
 				}
 				if (self.info.cont === "") {
 					alert("클럽 소개말을 입력해주세요.");
-					console.log(self.cDay);
 					return;
 				}			
 	             $.ajax({
@@ -274,14 +275,67 @@
 	                 type : "POST", 
 	                 data : nparmap,
 	                 success : function(data) { 
+	                	var form = new FormData();
+	                	console.log($("#file1")[0].files[0]);
+	                	self.cNo = data.cNo;
+	                	console.log("s나는"+self.cNo);
+	 	       	        form.append("file1",  $("#file1")[0].files[0] );
+	 	       	     	form.append("cNo",  data.cNo); // pk
+	 	           		self.upload(form); 
 	               		alert("클럽이 생성되었습니다.");
+	               		self.fnsetMaster();
 	                 }
 	             }); 
+			},
+			// 파일 업로드
+			upload : function(form) {
+				var self = this;
+		         $.ajax({
+		             url : "/fileUpload.dox"
+		           , type : "POST"
+		           , processData : false
+		           , contentType : false
+		           , data : form
+		           , success:function(response) { 
+		        	   
+		           }
+		       });
+			},
+			fnsetMaster : function() {
+				var self = this;
+				var nparmap = {
+						cNo : self.cNo,
+						cid : self.sessionId
+				}
+				console.log(nparmap);
+				$.ajax({
+		            url:"/Club/setClubMaster.dox",
+		            dataType:"json",	
+		            type : "POST", 
+		            data : nparmap,
+		            success : function(data) { 
+		            }
+		        }); 
 			}
 		},
 		created : function() {
 			var self = this;
-			self.fnCheck();	
 		}
 	});
+</script>
+
+<script>
+/* $(document).ready(function(){
+	  var fileTarget = $('.filebox .upload-hidden');
+
+	    fileTarget.on('change', function(){
+	        if(window.FileReader){
+	            var filename = $(this)[0].files[0].name;
+	        } else {
+	            var filename = $(this).val().split('/').pop().split('\\').pop();
+	        }
+
+	        $(this).siblings('.upload-name').val(filename);
+	    });
+	});  */
 </script>

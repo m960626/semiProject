@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.mini.dao.MypageService;
+import com.example.mini.model.User;
 import com.google.gson.Gson;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -25,34 +27,75 @@ public class MypageController {
 	@Autowired
 	HttpSession session;
 	
+	// 마이페이지 정보 호출
+	@RequestMapping("/mypage.do") 
+	public String searchMyPageUser(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("sessionId", session.getAttribute("sessionId"));
+		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
+		request.setAttribute("sessionNickName", session.getAttribute("sessionNickName"));
+		request.setAttribute("sessionGender", session.getAttribute("sessionGender"));
+		return "/sub06_01";
+    }
+	
 	/* 랭킹 페이지*/
 	@RequestMapping("/sub04_01") 
     public String ranking(Model model) throws Exception{
 		return "/sub04_01";
     }
 	
-	/* 마이페이지 페이지*/
-	@RequestMapping("/sub06_04") 
-    public String matching(Model model) throws Exception{
+	/* 클럽 정보 - 마이페이지*/
+	@RequestMapping("/sub06_04.do") 
+	public String read(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+		request.setAttribute("sessionId", session.getAttribute("sessionId"));
+		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
 		return "/sub06_04";
     }
 	
-	/* 마이페이지 페이지*/
-	@RequestMapping("/sub06_07") 
-    public String myrecord(Model model) throws Exception{
-		return "/sub06_07";
-    }
-	
-	/* 클럽 정보 가져오기*/
+	/* 클럽 정보 가져오기 */
 	@RequestMapping(value = "/getclub.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getClub(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	public String getclub(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = mypageService.searchMyClub(map);
+		String result = (String) resultMap.get("result");
+		if(result.equals("success")) {
+			User user = (User) resultMap.get("user");
+			resultMap.put("user", user);
+			resultMap.put("result", result);
+		} else {
+			resultMap.put("result", result);
+		}
 		return new Gson().toJson(resultMap);
 	}
 	
-	/* 클럽 정보 가져오기*/
+	/* 클럽 입장하기 - 마이페이지*/
+	@RequestMapping("/sub01_03.do") 
+	public String clubInfo(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+		request.setAttribute("sessionId", session.getAttribute("sessionId"));
+		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
+		return "/sub01_03";
+    }
+	
+	/* 클럽 정보에서 클럽 입장하기 */
+	@RequestMapping(value = "/getclubInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String getclubInfo(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = mypageService.searchMyClubInfo(map);
+		String result = (String) resultMap.get("result");
+		if(result.equals("success")) {
+			User user = (User) resultMap.get("user");
+			resultMap.put("user", user);
+			resultMap.put("result", result);
+		} else {
+			resultMap.put("result", result);
+		}
+		return new Gson().toJson(resultMap);
+	}
+	
+	/* 가입신청 정보 가져오기 */
 	@RequestMapping(value = "/getjoin.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getJoin(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -88,12 +131,37 @@ public class MypageController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	/* 예약현황(매칭내역) - 마이페이지 */
+	@RequestMapping("/sub06_05.do") 
+	public String matchInfo(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+		request.setAttribute("sessionId", session.getAttribute("sessionId"));
+		return "/sub06_05";
+    }
+	
+	/* 최근기록 페이지*/		
+	@RequestMapping("/sub06_07.do")
+	public String myrecord(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+		request.setAttribute("sessionId", session.getAttribute("sessionId"));
+		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
+		return "/sub06_07";
+    }
+	
 	/* 최근 기록 가져오기*/
-	@RequestMapping(value = "/getinfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/getRecord.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+	public String getRecord(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = mypageService.searchMyInfo(map);
+		String result = (String) resultMap.get("result");
+		if(result.equals("success")) {
+			User user = (User) resultMap.get("user");
+			resultMap.put("user", user);
+			resultMap.put("result", result);
+		} else {
+			resultMap.put("result", result);
+		}
 		return new Gson().toJson(resultMap);
 	}
 }

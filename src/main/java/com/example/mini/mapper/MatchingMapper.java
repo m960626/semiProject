@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.mini.model.Club;
 import com.example.mini.model.Matching;
 import com.example.mini.model.User;
 
