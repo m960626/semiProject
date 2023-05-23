@@ -5,10 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/subHeader.jsp"></jsp:include>
-    <title>티키타카 - 회원가입(00_03)</title>
-    <link rel="stylesheet" type="text/css" href="css/pearl.css">
-    <link rel="stylesheet" type="text/css" href="css/sen.css">
-    <link rel="stylesheet" type="text/css" href="css/moon.css">
+    <title>티키타카 - 회원정보수정(00_04)</title>
+    <link rel="stylesheet" type="text/css" href="../css/pearl.css">
+    <link rel="stylesheet" type="text/css" href="../css/sen.css">
+    <link rel="stylesheet" type="text/css" href="../css/moon.css">
 </head>
 <body>
 	<div class="container color">
@@ -16,15 +16,12 @@
         <div class="wrap" id="app">
             <div class="join_form">
                 <div class="sub_title">
-                    <h2>회원가입</h2>                    
+                    <h2>회원정보 수정</h2>                    
                 </div>
                 <form name="join" method="post" action="join" autocomplete="off">
                     <div class="form_row">
                         <label for="id" class="lbl need">아이디</label>
-                        <input type="text" id="joinId" name="id" class="int" v-model="info.joinId" >
-                        <div class="int_cert">
-                            <button type="button" id="idChk" @click="fnIdChk" class="btn_form">아이디 중복 확인</button>
-                        </div>
+                        <input disabled v-model="sessionId" type="text" class="int" id="id">
                     </div>                    
                     <div class="form_row form_flex">
                         <label for="pw1" class="lbl need">비밀번호</label>
@@ -43,7 +40,7 @@
                     </div>
                     <div class="form_row">
                         <label for="nick" class="lbl need">닉네임</label>
-                        <input type="text" id="nick" class="int" v-model="info.nick">
+                        <input type="text" id="nick" class="int" @keyup="nickChk = false" v-model="info.nick">
                         <div class="int_cert">
                             <button type="button" @click="fnNickChk" class="btn_form" id="nickChk">닉네임 중복 확인</button>
                         </div>
@@ -51,7 +48,7 @@
                     <!-- 폰번호부분 숫자만 넣을 수 있게 정규식 넣을건지?-? -->
                     <div class="form_row">
                         <label for="phone" class="lbl need">휴대폰 번호</label>
-                        <input type="" id="phone" class="int" v-model="info.phone" placeholder="ex) 010-1234-5678" required >
+                        <input type="tel" id="phone" class="int" v-model="info.phone" placeholder="ex) 010-1234-5678" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" required >
                     </div>                    
                     <div>
                         <div class="form_row form_flex posi">
@@ -136,7 +133,7 @@
                     </div>
                     <div class="form_row">
                         <label for="email" class="lbl need">이메일</label>
-                        <input type="text" id="email" class="int" v-model="info.email" name="email">
+                        <input type="text" id="email" class="int" v-model="info.email" @keyup="emailChk = false" name="email">
                         <div class="int_cert">
                             <button type="button" @click="fnEmailChk" class="btn_form" id="emailChk">이메일 중복 확인</button>
                         </div>
@@ -151,13 +148,13 @@
                         </div>
                     </div>
 
-                    <div class="form_row form_flex">
+                    <div  class="form_row form_flex">
                         <label for="birth" class="lbl need">생년월일</label>
-                        <input type="text" id="birth" class="int" v-model="info.birth" placeholder="법정 생년월일 8자리를 입력해주세요.  ex) 20230101">                        
-                    </div>
+                        <input disabled type="text" id="birth" class="int" v-model="info.birth">                        
+                    </div>          
                                    
                     <div class="form_row join">                            
-                        <button type="submit" @click="fnJoin" class="btn_form" id="join">가입하기</button>                                
+                        <button type="submit" @click="fnUserUpdate" class="btn_form" id="submit">수정하기</button>                                
                     </div>
                    
                     
@@ -191,18 +188,26 @@
                 cntChk -= 1;
             }
         }
+        /*
+        var patt = new RegExp("[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}");
+        var res = patt.test( $("#phone").val());
+
+        if( !patt.test( $("#phone").val()) ){
+            alert("전화번호를 정확히 입력하여 주십시오.");
+            return;
+        }
+        */
         
-        
-       
-        
-      
     </script>
 </body>
 </html>
 <script type="text/javascript">
 var app = new Vue({
 	el : '#app',
-	data : {		
+	data : {
+		sessionId : "test125",
+		sessionNick : "${sessionNickName}",
+		sessionEmail : "${sessionEmail}",
 		info : {
 			joinId : "", 
 			pw : "", 
@@ -212,152 +217,169 @@ var app = new Vue({
 			posi1: '',
 			posi2: '',
 			posi3: '',
-			gender : "M", 
+			gender : "", 
 			addr : "", 
 			phone : "", 
 			email : "", 
-			status : "1"
+			status : ""
 		},//5,6,7번째 값 골라 비교
 		pw1 : "",
 		pw2 : "",
 		list : [],
-		idFlg : false,
-		nickChk : false,
-		emailChk : false
+		nickChk : true,
+		emailChk : true
 	},
 	methods : {
-		fnJoin : function() {
-			var self = this;
-			var chkCnt = document.getElementsByName("posi").length; // name=posi인 checkbox 개수를 변수에 저장
-			var arr =['', '', '']; // 선호 포지션을 담아둘 배열 생성
-			var arrCnt=0; // 카운트 세기 용도
-			
-			for (var i=0; i<chkCnt; i++) { // 전체 체크박스 갯수만큼 반복문 시작
-	            if (document.getElementsByName("posi")[i].checked == true) { // 체크박스에 체크가 되어 있을 경우 아래 구문 작동
-	                arr[arrCnt] = document.getElementsByName("posi")[i].value; // 체크박스의 value를 arr 배열에 저장
-	                arrCnt++; // 다음 value 저장을 위해 카운트 숫자 +1
-	            }
-	        }
-				self.info.posi1 = arr[0];
-				self.info.posi2 = arr[1];
-				self.info.posi3 = arr[2];
-			if(self.info.joinId == "" || self.info.joinId == undefined){
-           		alert("아이디를 입력해 주세요.");
-           		return;
+		fnUserInfoPg : function(){
+	    	var self = this;
+	    	var nparmap = {id : self.sessionId};//xml에 데이터를 넘길때 id에 sessionId를 담아 넘긴다
+            $.ajax({
+                url:"/user/info.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	console.log(data);
+                	self.info = data.info;
+            		for(var i=0; i< document.getElementsByName("posi").length; i++){ //
+            			if(data.info.position1 != undefined){
+            				if(document.getElementsByName("posi")[i].value == data.info.position1){
+            					document.getElementsByName("posi")[i].checked = true;
+            				}
+            			}
+            			if(data.info.position2 != undefined){
+            				if(document.getElementsByName("posi")[i].value == data.info.position2){
+            					document.getElementsByName("posi")[i].checked = true;
+            				}
+            			}                		
+            			if(data.info.position3 != undefined){
+            				if(document.getElementsByName("posi")[i].value == data.info.position3){
+            					document.getElementsByName("posi")[i].checked = true;
+            				}
+            			}                		
+            		}
+                }
+            }); 
+	    },
+		
+	    fnNickChk : function(){      //중복체크(버튼) -닉네임, 메일주소
+    		var self = this;
+			var nparmap = {nick : self.info.nick};
+			self.info.nick == sessionNickName;
+			if(document.getElementById("id").onclick){
+				nickChk = false;
 			}
 			if(self.info.nick == "" || self.info.nick == undefined){
-        		alert("닉네임을 입력해주세요.");
+				nickChk = false;
+				alert("닉네임을 입력해주세요.");
         		return;
         	}
+	    	console.log(nparmap);
+            $.ajax({
+                url:"/user/nickCheck.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	self.info = data.info;
+                	if(self.info.nick != self.sessionNick){
+                		if(data.cnt > 0){
+                    		alert("이미 사용중인 닉네임입니다.");
+                    		self.info.nick = "";
+                    		return;
+                    	} else {
+                    		alert("사용 가능한 닉네임입니다.");
+                    		self.nickChk = true;
+                    	}
+    				}
+    			}
+            })
+		},
+		fnEmailChk : function(){      //중복체크(버튼) -닉네임, 메일주소
+    		var self = this;
+			var nparmap = {email : self.info.email};
 			if(self.info.email == "" || self.info.email == undefined){
-        		alert("메일주소를 입력해주세요.");
+				emailChk = false;
+				alert("메일주소를 입력해주세요.");
         		return;
         	}
-			if(self.pw1 == self.pw2){
-				self.info.pw1=self.pw1;
-				}
-			if(!self.idFlg){
-				alert("아이디 중복체크를 해주세요.");
-				return;
-			}
-			if(!self.nickChk){
-				alert("닉네임 중복체크를 해주세요.");
-				return;
-			}
-			if(!self.emailChk){
-				alert("이메일 중복체크를 해주세요.");
-				return;
-			}
-				var nparmap = self.info;
-				console.log(nparmap);
-			 $.ajax({
-	                url:"/join.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
-	                	self.info=data.info;
-	                	
-	                	console.log(data);
-	                }
-	            }); 
-			},
-			fnIdChk : function(){
-		    	var self = this;
-		    	var nparmap = {id : self.info.joinId};
-		    	if(self.info.joinId == "" || self.info.joinId == undefined){
-            		alert("아이디를 입력해 주세요.");
-            		return;
-            	}
-	            $.ajax({
-	                url:"/join/idCheck.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
+	    	console.log(nparmap);
+            $.ajax({
+                url:"/user/emailCheck.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {
+                	if(self.info.email != data.info.email){
                 		if(data.cnt > 0){
-	                		alert("아이디가 이미 존재합니다.");
-	                	} else {
-	                		alert("사용 가능한 아이디입니다.");
-	                		self.idFlg = true;
-	                	}
-	                	
-	                }
-	            }); 
-		    }
-			, fnNickChk : function(){
+                    		alert("이미 사용중인 메일주소입니다.");
+                    		self.info.email = "";
+                    		return;                    		
+                    	} else {
+                    		alert("사용 가능한 메일주소입니다.");
+                    	}
+    				}
+    			}
+            })
+		},
+		    fnUserUpdate : function(){
 		    	var self = this;
-		    	var nparmap = {nick : self.info.nick};
+		    	if(self.pwd1 != self.pwd2){
+	    			alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+	    			return;
+	    		} else{
+	    			self.info.pw = self.pw1
+	    		}		    			  
 		    	if(self.info.nick == "" || self.info.nick == undefined){
-            		alert("닉네임을 입력해주세요.");
-            		return;
-            	}
-	            $.ajax({
-	                url:"/join/nickCheck.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
-                		if(data.cnt > 0){
-	                		alert("이미 사용중인 닉네임입니다.");
-	                		self.info.nick = "";
-	                		return;
-	                	} else {
-	                		alert("사용 가능한 닉네임입니다.");
-	                		self.nickChk = true;
-	                	}
-	                	
-	                }
-	            }); 
-		    }
-			, fnEmailChk : function(){
-		    	var self = this;
-		    	var nparmap = {email : self.info.email};
+					nickChk = false;
+					alert("닉네임을 입력해주세요.");
+	        		return;
+	        	}
 		    	if(self.info.email == "" || self.info.email == undefined){
-            		alert("메일주소를 입력해주세요.");
-            		return;
-            	}
-	            $.ajax({
-	                url:"/join/emailCheck.dox",
-	                dataType:"json",	
-	                type : "POST", 
-	                data : nparmap,
-	                success : function(data) {
-                		if(data.cnt > 0){
-	                		alert("이미 존재하는 메일주소입니다.");
-	                	} else {
-	                		alert("사용 가능한 메일주소입니다.");
-	                		self.emailChk = true;
-	                	}
-	                	
-	                }
-	            }); 
-		    }
-			
+					emailChk = false;
+					alert("메일주소를 입력해주세요.");
+	        		return;
+	        	}
+		    	console.log(self.nickChk);
+		    	if(self.nickChk == false){
+		    		alert("닉네임 중복 체크를 해주세요.");
+		    	}
+		    	if(self.mailChk == false){
+		    		alert("이메일 중복 체크를 해주세요.");
+		    	}
+		    	var nparmap = self.info;
+		           $.ajax({
+		                url:"/user/edit.dox",
+		                dataType:"json",	
+		                type : "POST", 
+		                data : nparmap,
+		                success : function(data) {
+		                	if(self.info.posi1 != data.info.position1 || self.info.posi2 != data.info.position2 || self.info.posi3 != data.info.position3){
+		                		var chkCnt = document.getElementsByName("posi").length;
+		            			var arr =['', '', ''];
+		            			var arrCnt=0;
+		            			
+		            			for (var i=0; i<chkCnt; i++) { 
+		            	            if (document.getElementsByName("posi")[i].checked == true) {
+		            	                arr[arrCnt] = document.getElementsByName("posi")[i].value;
+		            	                arrCnt++; 
+		            	            }
+		            	        }
+		            				self.info.posi1 = arr[0];
+		            				self.info.posi2 = arr[1];
+		            				self.info.posi3 = arr[2];
+		                	}
+		                	self.info = data.info;
+		                	alert("수정되었습니다.");
+		                	location.href="/login.do" //로그인 화면이랑 연결
+		                }
+		        }); 
+	    	}
+
 	},
 	created : function() {
 		var self = this;
-		
+		self.fnUserInfoPg();
 	}
 });
 </script>
