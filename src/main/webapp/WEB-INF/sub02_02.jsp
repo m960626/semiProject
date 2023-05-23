@@ -48,7 +48,7 @@
 						</div>
 						<div class="form_inner">
 							<label for="date" class="lbl">시합 날짜</label> <input type="date"
-								id="date" class="int" placeholder="날짜를 선택해주세요" v-model="info.matchDate">
+								id="date" class="int" placeholder="날짜를 선택해주세요" v-model="info.matchDate" @change="fnDateCheck">
 						</div>
 					</div>
 					<!-- // form_row -->
@@ -297,6 +297,28 @@
 			        }); 
 				}
 			}
+			, fnDateCheck : function(){
+				var self = this;
+				var now = new Date();
+				  now = 
+				    self.leadingZeros(now.getFullYear(), 4) + '-' +
+				    self.leadingZeros(now.getMonth() + 1, 2) + '-' +
+				    self.leadingZeros(now.getDate(), 2);
+				  if(self.info.matchDate < now){
+				   		alert("현재날짜보다 빠를수 없습니다.");
+				   		self.info.matchDate = "";
+				  }
+			}
+			, leadingZeros : function(n, digits) {
+			    var zero = '';
+			    n = n.toString();
+
+			    if (n.length < digits) {
+			        for (i = 0; i < digits - n.length; i++)
+			            zero += '0';
+			    }
+			    return zero + n;
+			}
 			// 구장 정보
 			, fnAddField : function(){
 	    		var self = this;
@@ -361,7 +383,15 @@
 		   }
 		   , fnpList : function (){
 			   var self = this;
-			   closedimmed();
+			   if(self.pList.length < 7){
+				   alert("8명 이상부터 매칭이 가능합니다.");
+			   }
+			   else if(self.pList.length > 15){
+				   alert("15명 이하로 선택해주세요.");
+			   }
+			   else{
+			   	closedimmed();
+		   	   }
 		   }
 		   , fnCloseDim : function (){
 			   var self = this;
@@ -468,17 +498,5 @@ function closedimmed() {
   var modal = document.getElementById("myModal");
   modal.style.display = "none";
 }
-
-// 선택인원 제한
-$(document).ready(function () {
-       $("input[type='checkbox']").on("click", function(){
-           let count = $("input:checked[type='checkbox']").length;
-
-           if(count > 11){
-               $(this).prop("checked", false);
-               alert("11명까지만 선택할 수 있습니다.")
-           }
-       })
-   });
 		   
 </script>

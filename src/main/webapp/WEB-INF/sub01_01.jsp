@@ -320,6 +320,7 @@
 		},
 		created : function() {
 			var self = this;
+			self.fnCheck();
 		}
 	});
 </script>
