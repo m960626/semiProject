@@ -54,14 +54,11 @@
 							</div>
 						</div>
 						<div class="recent_record__inner">
-							<!-- 로고 있는 경우 -->
-							<div class="cImg_logo img_area" v-if='info.cImg != null'>
-								{{info.cImg}}
+							<div class="cImg_logo img_area" v-if="info.imgdata != null">
+								<img :src="info.imgdata" / style="width: 100%;">
 							</div>
-							<!-- // 로고 있는 경우 -->
-							<!-- 로고 없는 경우 -->
 							<div class="cImg_logo none" v-else>클럽 로고가 없습니다.</div>
-							<!-- // 로고 없는 경우 -->
+							
 							<div class="user_profile">
 								<div class="user_profile_list clubInfoArea">
 									<ul>
