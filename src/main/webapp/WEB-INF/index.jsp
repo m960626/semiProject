@@ -33,13 +33,13 @@
                 <div class="wrap">
                     <div class="txtBox">
                         <h2 class="title">
-                            티키타카 사이트 오픈
+                            티키타카 프로젝트 화이팅!
                         </h2>
                         <p class="cont">
-                            티키타카와 함께 지역 최고의 축구 클럽을 생성해보세요!
+                            티키타카와 함께 지역 최고의 축구 클럽을 생성해보세요!!
                         </p>
                         <div class="more">
-                            <a href="/sub01_01.do">
+                            <a href="/sub01_02.do">
                                 자세히 보러 가기
                             </a>
                         </div>
@@ -138,7 +138,7 @@
                                     <div class="clubInfo">
                                         <div class="imgBox">
                                             <div class="img">
-                                            	<img :src="right.imgData" />
+                                            	<img :src="right.imgData"/>
                                             </div>
                                         </div>
                                         <div class="txtBox">
@@ -161,86 +161,50 @@
                 <div class="wrap">
                     <div class="noticeArea">
                         <h3>공지사항</h3>
-                        <a href="javascript:;">더보기 +</a>
+                        <a href="/sub05_01">더보기 +</a>
                         <ul class="noticeList">
-                            <li>
-                                <a href="javascript:;">
+                            <li v-for="(item, index) in notice">
+                                <a href="javascript:;"  @click="noticeView(item)">
                                     <span>[공지사항]</span>
                                     <p class="title">
-                                        공지사항의 제목입니다. 공지사항의 제목입니다. 공지사항의 제목입니다. 공지사항의 제목입니다.
+                                        {{item.cmTitle}}
                                     </p>
                                     <p class="content">
-                                        공지사항의 내용입니다. 공지사항의 내용입니다. 공지사항의 내용입니다.공지사항의 내용입니다.공지사항의 내용입니다. 내용입니다 내용입니다 내용입니다
+                                        {{item.cmCont}}
                                     </p>
                                     <div class="cntArea">
                                         <span class="view">
-                                            999
+                                            {{item.cmCnt}}
                                         </span>
                                         <span class="comm">
-                                            999
+                                            0
                                         </span>
-                                    </div>
-                                    <div class="imgBox">
-
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">
-                                    <span>[공지사항]</span>
-                                    <p class="title">
-                                        공지사항의 제목입니다.
-                                    </p>
-                                    <p class="content">
-                                        공지사항의 내용입니다. 공지사항의 내용입니다. 공지사항의 내용입니다.
-                                    </p>
-                                    <div class="cntArea">
-                                        <span class="view">
-                                            999
-                                        </span>
-                                        <span class="comm">
-                                            999
-                                        </span>
-                                    </div>
-                                    <div class="imgBox">
-
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </div>
                     <div class="reviewArea">
-                        <h3>이용후기</h3>
-                        <a href="javascript:;">더보기 +</a>
-                        <ul class="reviewList">
-                            <li>
-                                <a href="javascript:;">
-                                   <div class="imgBox">
-                                        <div class="img"></div>
-                                   </div>
-                                   <div class="txtBox">
+                        <h3>자유게시판</h3>
+                        <a href="/sub05_02">더보기 +</a>
+                        <ul class="noticeList">
+                            <li v-for="(item, index) in board">
+                                <a href="javascript:;" @click="boardView(item)">
+                                    <span>[자유게시판]</span>
                                     <p class="title">
-                                        이용후기의 제목입니다.
+                                        {{item.cmTitle}}
                                     </p>
                                     <p class="content">
-                                        이용후기의 내용입니다.
+                                        {{item.cmCont}}
                                     </p>
-                                   </div> 
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">
-                                   <div class="imgBox">
-                                        <div class="img"></div>
-                                   </div>
-                                   <div class="txtBox">
-                                    <p class="title">
-                                        이용후기의 제목입니다. 이용후기의 제목입니다. 이용후기의 제목입니다.
-                                    </p>
-                                    <p class="content">
-                                        이용후기의 내용입니다. 이용후기의 내용입니다. 이용후기의 내용입니다. 이용후기의 내용입니다. 이용후기의 내용입니다.
-                                    </p>
-                                   </div> 
+                                    <div class="cntArea">
+                                        <span class="view">
+                                            {{item.cmCnt}}
+                                        </span>
+                                        <span class="comm">
+                                            0
+                                        </span>
+                                    </div>
                                 </a>
                             </li>
                         </ul>
@@ -261,12 +225,15 @@ var app = new Vue({
     	list : [],
     	clubList : [],
     	rList : [],
+    	notice : [],
+    	board : [],
     	selectPage: 1,
     	pageCount: 1,
     	cnt : 0,
 		sessionId : "${sessionId}",
 		sessionStatus : "${sessionStatus}",
-		sessionNickName : "${sessionNickName}"
+		sessionNickName : "${sessionNickName}",
+		sessionCNo : "${sessionCNo}"
     }   
     , methods: {
     	// 매치 리스트 가져오기
@@ -305,28 +272,80 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {  
-                	console.log(data);
                	 	self.clubList = data.list;
                	 	self.rList = data.rlist;	
-               	 	console.log(self.clubList);
-               	 	console.log(self.rList);
                 }
             }); 
+		},
+		fnMainBoard : function() {
+			var self = this;
+			var nparmap = {};
+			$.ajax({
+                url:"/mainBoard.dox",
+                dataType:"json",	
+                type : "POST", 
+                data : nparmap,
+                success : function(data) {  
+                	self.notice = data.notice;
+                	self.board = data.Board;
+                	console.log(self.notice);
+                	console.log(self.board);
+                }
+            }); 
+		},
+		noticeView : function(item) {
+			var self = this;
+			self.pageChange("./sub05_01_read", {cmNo : item.cmNo});
+			
+		},
+		boardView : function(item) {
+			var self = this;
+			self.pageChange("./sub05_01_read", {cmNo : item.cmNo});
+		},
+		pageChange : function(url, param) {
+			var target = "_self";
+			if(param == undefined){
+			//	this.linkCall(url);
+				return;
+			}
+			var form = document.createElement("form"); 
+			form.name = "dataform";
+			form.action = url;
+			form.method = "post";
+			form.target = target;
+			for(var name in param){
+				var item = name;
+				var val = "";
+				if(param[name] instanceof Object){
+					val = JSON.stringify(param[name]);
+				} else {
+					val = param[name];
+				}
+				var input = document.createElement("input");
+	    		input.type = "hidden";
+	    		input.name = item;
+	    		input.value = val;
+	    		form.insertBefore(input, null);
+			}
+			document.body.appendChild(form);
+			form.submit();
+			document.body.removeChild(form);
 		}
 	},
 	created : function() {
 		var self = this;
 		self.fnGetList();
 		self.fnClubRank();
+		self.fnMainBoard();
 	}
 });
 
 
 </script>
 
-<script>
-  window.onload = function() { // window.addEventListener('load', (event) => {와 동일합니다.
-	
+<script type="text/javascript">
+$(window).load(function(){ // window.addEventListener('load', (event) => {와 동일합니다.
+
 	  
 	  if ($('.clubList').length) {
 			var slideFor = $('.slider-for');
@@ -349,5 +368,58 @@ var app = new Vue({
 				autoplay: true
 			});
 		}
-  };
+  });
 </script>
+
+<script type="text/javascript">
+$(window).load(function(){ // window.addEventListener('load', (event) => {와 동일합니다.
+
+	  
+	  function bnr_stop(bnr, btn) {
+			if (btn.text() === '정지') {
+			  bnr.slick('slickPause');
+			  btn.text('시작');
+			  btn.addClass('start');
+			  btn.removeClass('stop');
+			} else {
+			  bnr.slick('slickPlay');
+			  btn.text('정지');
+			  btn.addClass('stop');
+			  btn.removeClass('start');
+			};
+		  };
+
+		  /*매칭일정 슬라이드*/
+		  if ($('.schedule_wrap').length) {
+			var schedule_bnr = $(".schedule_list");
+			schedule_bnr.slick({
+			  infinite: true,
+			  accessibility: true,
+			  slidesToScroll: 1,
+			  slidesToShow: 4,
+			  autoplay: true,
+			  draggable: false,
+			  prevArrow: $('.schedule_control .prev'),
+			  nextArrow: $('.schedule_control .next'),
+			  responsive: [{
+				  settings: {
+					infinite: true,
+					accessibility: true,
+					slidesToScroll: 1,
+					slidesToShow: 3,
+					autoplay: true,
+					draggable: false,
+					prevArrow: $('.schedule_control .prev'),
+					nextArrow: $('.schedule_control .next'),
+				  }
+				}
+			  ]
+			});
+			$('.schedule_control .stop, .schedule_control .start').click(function() {
+			  bnr_stop(schedule_bnr, $(this));
+			});
+		  };
+		  /*//매칭일정 슬라이드*/
+});
+</script>
+

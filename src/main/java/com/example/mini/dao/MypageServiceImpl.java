@@ -133,7 +133,7 @@ public class MypageServiceImpl implements MypageService{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();		
 		User user = userMapper.selectMyInfo(map);
 		if(user != null) {
-			resultMap.put("info", userMapper.selectMyInfo(map));
+			resultMap.put("user", user);
 			resultMap.put("result", "success");
 		}
 		else {

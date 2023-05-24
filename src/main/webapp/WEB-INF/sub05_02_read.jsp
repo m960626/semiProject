@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="/layout/header.jsp"></jsp:include>
+<jsp:include page="/layout/subHeader.jsp"></jsp:include>
 <title>티키타카 - 자유게시판(05_02)</title>
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">

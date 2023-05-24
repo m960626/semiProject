@@ -7,7 +7,6 @@ import com.example.mini.model.Club;
 import com.example.mini.model.Join;
 import com.example.mini.model.Matching;
 import com.example.mini.model.TimeLine;
-import com.example.mini.model.User;
 
 public interface ClubService {	
 	

@@ -140,7 +140,7 @@ public class MypageController {
     }
 	
 	/* 최근기록 페이지*/		
-	@RequestMapping("/sub06_07.do")
+	@RequestMapping("/sub06_07.do") 
 	public String myrecord(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		request.setAttribute("map", map);
 		request.setAttribute("sessionId", session.getAttribute("sessionId"));

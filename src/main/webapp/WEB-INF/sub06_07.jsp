@@ -6,11 +6,11 @@
 <meta charset="UTF-8">
 <jsp:include page="/layout/subHeader.jsp"></jsp:include>
 <title>티키타카 - 최근기록(06_07)</title>
-<link rel="stylesheet" type="text/css" href="css/reset.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/common.css">
-<link rel="stylesheet" type="text/css" href="css/hong.css">
-<link rel="stylesheet" type="text/css" href="css/pearl.css">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/hong.css">
+<link rel="stylesheet" type="text/css" href="../css/pearl.css">
 
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
@@ -55,10 +55,11 @@
 						</div>
 						<div class="recent_record__inner">
 							<div class="cImg_logo img_area" v-if="info.imgdata != null">
-								<img :src="info.imgdata" / style="width: 100%;">
+								<img :src="info.imgdata" / >
 							</div>
-							<div class="cImg_logo none" v-else>클럽 로고가 없습니다.</div>
-							
+							<div class="img_area" v-else>
+								<div class="cImg_logo none">클럽 로고가 없습니다.</div>
+							</div>
 							<div class="user_profile">
 								<div class="user_profile_list clubInfoArea">
 									<ul>
@@ -154,9 +155,10 @@
 			sessionId : "${sessionId}",
 			sessionStatus : "${sessionStatus}",
 			sessionGender : "${sessionGender}"
-		   ,info : {}
-		   ,clubFlg : true
-		   ,dataFlg : false
+			,info : {}
+		   	,list : []
+		   	,clubFlg : true
+		   	,dataFlg : false
 		},
 		methods : {	
 			fnGetInfo : function() {
@@ -168,8 +170,8 @@
 					type : "POST",
 					data : nparmap,
 					success : function(data) {	
-						self.info = data.info;
-						console.log(data.info);
+						console.log(data);
+						self.info = data.user;
 						if(self.info != undefined){
 							self.dataFlg = true;
 							if(self.info.cName != "" && self.info.cName != null){

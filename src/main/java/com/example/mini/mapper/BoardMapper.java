@@ -51,5 +51,10 @@ public interface BoardMapper {
 	// 소통 게시판 게시글 삭제
 	void deleteCm(HashMap<String, Object> map);
 	
+	//문상혁 수정
+	//메인페이지 공지사항, 자유게시판
+	List<Board> selectMainNotice(HashMap<String, Object> map);
+	List<Board> selectMainBoard(HashMap<String, Object> map);
+	
 
 }

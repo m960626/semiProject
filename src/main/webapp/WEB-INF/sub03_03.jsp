@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="/layout/header.jsp"></jsp:include>
+<jsp:include page="/layout/subHeader.jsp"></jsp:include>
 <title>티키타카 - 용병 모집 상세보기(03_03)</title>
 <link rel="stylesheet" type="text/css" href="../css/pearl.css">
 <link rel="stylesheet" href="../libs/remixicon/remixicon-2.5.0.css">

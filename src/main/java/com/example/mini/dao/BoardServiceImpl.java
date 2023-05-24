@@ -1,6 +1,7 @@
 package com.example.mini.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,5 +109,16 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 
+	//문상혁 수정
+	//메인페이지 공지사항, 자유게시판
+	@Override
+	public List<Board> searchMainNotice(HashMap<String, Object> map) {
+		return boardMapper.selectMainNotice(map);
+	}
+	
+	@Override
+	public List<Board> searchMainBoard(HashMap<String, Object> map) {
+		return boardMapper.selectMainBoard(map);
+	}
 
 }

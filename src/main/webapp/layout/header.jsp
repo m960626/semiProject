@@ -206,14 +206,6 @@
                                         <!--2  -->
                                     </div>
                                 </div>
-                                <div class="box-nav">
-                                    <a href="/sub05_03" class="nav">
-                                        <span class="text">영상게시판</span>
-                                    </a>
-                                    <div class="box-nav">
-                                        <!--2  -->
-                                    </div>
-                                </div>
 							</div>
 						</div>
 					</div>

@@ -122,7 +122,7 @@
 		                    </ul>
 		                </div>
 		                <div class="foot_btn">
-							<a href="javascript;:" class="btn_form type2" @click="fnClubView">클럽 입장하기</a>
+							<a href="javascript:;" class="btn_form type2" @click="fnClubView(sessionId)">클럽 입장하기</a>
 						</div>
 					</div>
 				</div>
@@ -153,6 +153,7 @@
 					type : "POST",
 					data : nparmap,
 					success : function(data) {
+						console.log(data);
 						if(data.result == "fail"){
 							console.log("가입 클럽 없");
 							console.log(data);
@@ -254,7 +255,7 @@
 	    		document.body.removeChild(form);
 	    	}, fnClubView : function(sessionId){
 	    		var self = this;
-	    		self.pageChange("./sub03_01.do", {sessionId : sessionId});
+	    		self.pageChange("./sub01_03.do", {sessionId : sessionId});
 	    	}
 		},
 		created : function() {

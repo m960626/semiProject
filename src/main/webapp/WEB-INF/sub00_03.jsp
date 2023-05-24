@@ -222,8 +222,8 @@ var app = new Vue({
 			email : "", 
 			status : "1"
 		},//5,6,7번째 값 골라 비교
-		pw1 : "",
-		pw2 : "",
+		pwd1 : "",
+		pwd2 : "",
 		list : [],
 		idFlg : false,
 		nickChk : false,
@@ -265,9 +265,17 @@ var app = new Vue({
 				alert("주소를 입력해주세요.");
         		return;
         	}
-			if(self.pw1 == self.pw2){
-				self.info.pw1=self.pw1;
-				}
+			if(self.pwd1 == "" && self.pwd2 == ""){
+				alert("비밀번호를 확인해주세요.");
+				return;
+			}
+			
+	    	if(self.pwd1 != self.pwd2){//비밀번호
+    			alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+    			return;
+    		} else{
+    			self.info.pw = self.pwd1
+    		}		    			  
 			if(!self.idFlg){
 				alert("아이디 중복체크를 해주세요.");
 				return;
@@ -292,6 +300,7 @@ var app = new Vue({
 	                	self.info=data.info;
 	                	
 	                	console.log(data);
+	                	location.href="/login.do"
 	                }
 	            }); 
 			},

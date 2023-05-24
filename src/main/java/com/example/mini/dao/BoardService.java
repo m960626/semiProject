@@ -1,6 +1,9 @@
 package com.example.mini.dao;
 
 import java.util.HashMap;
+import java.util.List;
+
+import com.example.mini.model.Board;
 
 public interface BoardService {	
 	
@@ -40,5 +43,10 @@ public interface BoardService {
 	// 공지 게시판 삭제
 	void removeNo(HashMap<String, Object> map);
 	
+	//문상혁 수정
+	//메인페이지 공지사항, 자유게시판
+	List<Board> searchMainNotice(HashMap<String, Object> map);
+	List<Board> searchMainBoard(HashMap<String, Object> map);
+
 
 }

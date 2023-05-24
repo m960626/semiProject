@@ -78,7 +78,7 @@
 .schedule_wrap .schedule_list .item.end > a > span.subject p {display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;height: 19px;font-size: 15px;color: #333;text-overflow: ellipsis;overflow: hidden;word-break: break-word;}
 .schedule_wrap .schedule_list .item.end > a > span.date {color:#686E70}
 .schedule_control {margin-top:25px;display: flex;align-items: center;}
-.schedule_control button { width: 15px; height: 20px; margin: 0 5px;font-size: 0; vertical-align: middle; background-position: center center;  background-repeat: no-repeat;}
+.schedule_control button { width: 15px; height: 20px; margin: 0 5px;font-size: 0; vertical-align: middle; background-position: center center;  background-repeat: no-repeat;background-color: transparent;border: 0;}
 .schedule_control button.next { background-image: url(../images/documentary_banner_next.png);}
 .schedule_control button.prev { background-image: url(../images/documentary_banner_prev.png); margin-left: 0;}
 .schedule_control button.stop { background-image: url(../images/documentary_banner_stop.png);}

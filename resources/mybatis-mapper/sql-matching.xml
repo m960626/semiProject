@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mini.mapper.MatchingMapper">
+	<insert id="insertField" parameterType="hashmap">
+		INSERT INTO T2_FIELD
+			(fName, fLoc, fPrice, parking, showerYn, ballYn, vestYn, marketYn, smokeYn)
+		VALUES
+			(#{groundName}, #{groundLoc}, #{fee}, #{parking}, #{shower}, #{ball}, #{vest}, #{market}, #{smoking})
+	</insert>
+	
+	<insert id="insertMatch" parameterType="hashmap">
+		INSERT INTO T2_MATCH
+			(cNo_h, mTimeS, mTimeE, mDate, mStat, mGender, mGrade, mCont, mAge, mColor)
+		VALUES
+			(#{clubName}, #{matchTime1}, #{matchTime2}, #{matchDate}, 1, #{gender}, #{grade}, #{intro}, #{avgAge}, #{color})
+	</insert>
+	
+	
+	<select id="selectMatchList" parameterType="hashmap" resultType="com.example.mini.model.Matching">
+		<![CDATA[	
+			SELECT *
+			FROM T2_MATCH M
+			INNER JOIN T2_FIELD F ON F.fNo = M.mNo
+			ORDER BY mDATE ASC
+			LIMIT ${startNum}, 10 ]]>
+	</select>  
+	
+	<select id="selectMatchCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM T2_MATCH M
+		INNER JOIN T2_FIELD F ON F.fNo = M.mNo
+	</select>
+	
+	<select id="selectEndCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		from mini_db2.T2_MATCH M
+		INNER JOIN mini_db2.T2_FIELD F ON F.fNo = M.mNo
+		where mStat = '4' 
+	</select>
+	
+	<!-- 매칭 예약 조회 -->
+	<select id="selectScheduleList" parameterType="hashmap" resultType="com.example.mini.model.Matching">
+		<![CDATA[
+			SELECT *
+			FROM mini_db2.T2_MATCH M
+			INNER JOIN mini_db2.T2_FIELD F ON F.fNo = M.mNo
+			
+			ORDER BY mDATE ASC;	]]>
+
+	</select>
+		
+	<!-- 종료된 매칭 조회 -->	
+	<select id="selectEndList" parameterType="hashmap" resultType="com.example.mini.model.Matching">
+		<![CDATA[
+			select * 
+			from mini_db2.T2_MATCH M
+			INNER JOIN mini_db2.T2_FIELD F ON F.fNo = M.mNo
+			where mStat = '4']]>
+	
+	</select>
+	
+	
+	<!-- 경기 참가선수 조회 -->
+	<select id="selectGPlayerList" parameterType="hashmap" resultType="com.example.mini.model.Matching">
+			SELECT mNo, U.id, NAME, U.cNo, M.mgoal AS goal, M.massi AS assi, M.myCard AS yCard, M.mrCard AS rCard
+			FROM mini_db2.T2_MATCHP M
+			INNER JOIN mini_db2.T2_USER U ON M.id = U.id
+			WHERE mNo = #{mNo} 
+	</select>
+	
+	
+	<!-- 선수 경기 기록 추가  -->
+	<update id="insertRecord" parameterType="hashmap">
+		  UPDATE mini_db2.T2_MATCHP	
+		  SET mgoal = #{goal}
+		      , massi = #{assi}
+		      , myCard = #{yCard}
+		      , mrCard = #{rCard}
+		  WHERE id = #{id} AND mNo = #{mNo}
+	</update>
+		
+	
+	
+	<!-- 선수 기록 업데이트 -->
+	<update id="updatePlayer" parameterType="hashmap">
+		UPDATE mini_db2.T2_USER
+	 	SET
+	 		goal = goal + #{goal}
+	 		, assi = assi + #{assi}
+	 		, yCard = yCard + #{yCard}
+            , rCard = rCard + #{rCard}
+	 	WHERE id = #{id}
+	</update>
+	
+	<!-- 매칭리스트 불러오기 - 메인페이지 -->
+	<select id="selectMainMatch" parameterType="hashmap" resultType="com.example.mini.model.Matching">
+		SELECT *
+		FROM T2_MATCH M
+		INNER JOIN T2_FIELD F ON F.fNo = M.mNo
+		WHERE MDATE > sysdate()
+		ORDER BY mDATE ASC
+	</select>
+	
+	<select id="selectMatchInfo" parameterType="hashmap" resultType="com.example.mini.model.Matching">
+		<![CDATA[	
+			SELECT *
+			FROM T2_MATCH M
+			INNER JOIN T2_FIELD F ON F.fNo = M.mNo
+			WHERE mNo = #{mNo}]]>
+	</select>
+	
+	<!-- 클럽원 리스트 -->
+	<select id="selectClubPList" parameterType="hashmap" resultType="com.example.mini.model.User">
+		SELECT 
+			U.id, name, position1, position2, position3, ifnull(mgoal, 0) as mgoal , ifnull(cnt, 0) as cnt
+		FROM mini_db2.T2_USER U
+		INNER JOIN (
+			SELECT cNo
+			FROM mini_db2.T2_USER
+			WHERE ID = #{id}
+		) A ON A.cNo =  U.cNo
+		LEFT JOIN(
+			SELECT ID, count(*) AS CNT, sum(mgoal) as mgoal
+			FROM mini_db2.T2_MATCHP
+			GROUP BY ID
+		)B ON B.ID = U.ID;		
+	</select>
+	
+	<insert id="inserPList" parameterType="hashmap">
+		INSERT INTO mini_db2.T2_MATCHP VALUES (#{mNo}, #{id}, #{cNo}, 0, 0, 0, 0)
+	</insert>
+	
+	<!-- 매치 업데이트 -->
+	<update id="updateMatch" parameterType="hashmap">
+		  UPDATE mini_db2.T2_MATCH
+		  SET cNo_a = #{cName}
+		      , mStat = 2
+		  WHERE mNo = #{mNo}
+	</update>
+</mapper>

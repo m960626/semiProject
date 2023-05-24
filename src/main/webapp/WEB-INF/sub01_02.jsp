@@ -83,9 +83,10 @@
 					<!-- 인원수 선택 -->
 					<div class="form_row form_flex">
 						<div class="form_inner">
-							<label for="grade" class="lbl">인원수</label> <select name=""
+							<label for="grade" class="lbl">인원수</label> 
+							<select name=""
 								id="people" class="selectBox" v-model="info.cnt1"
-								@click="fnCnt1">
+								@click="fnCnt1" style="margin-right: 8px;">
 								<option value="">전체</option>
 								<option value="10">10명 이상</option>
 								<option value="20">20명 이상</option>

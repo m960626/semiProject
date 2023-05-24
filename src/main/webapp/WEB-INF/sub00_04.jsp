@@ -25,14 +25,14 @@
                     </div>                    
                     <div class="form_row form_flex">
                         <label for="pw1" class="lbl need">비밀번호</label>
-                        <input type="password" id="pw1" class="int" v-model="pw1" required>
+                        <input type="password" id="pw1" class="int" v-model="pwd1" required>
                         <div class="form_block">
                             <!-- <p class="form_text3">영문 대소문자, 숫자, 특수문자 중 3개 이상을 조합하여 8자리 이상 입력해주세요.</p> -->
                         </div>
                     </div>
                     <div class="form_row">
                         <label for="pw2" class="lbl need">비밀번호 확인</label>
-                        <input type="password" id="pw2" class="int"  v-model="pw2" required>
+                        <input type="password" id="pw2" class="int"  v-model="pwd2" required>
                     </div>
                     <div class="form_row">
                         <label for="name" class="lbl need">이름</label>
@@ -171,37 +171,31 @@
 	        alert("연락처가 양식에 맞는지 확인해주세요.");
 	    }	
     */
-        var maxChk = 3;
-        var cntChk = 0;
-        function chkPosi(item) {
-        	console.log(item.value);
-        	
-            if(item.checked) {
-                cntChk += 1;
-            } 
-            else {
-                cntChk -= 1;
-            }
-            if(cntChk > maxChk) {
-                alert("최대 "+maxChk+"개까지만 선택 가능합니다.");
-                item.checked = false;
-                cntChk -= 1;
-            }
+    var maxChk = 3;
+    var cntChk = 0;
+    function chkPosi(item) {
+    	console.log(item.value);
+    	
+        if(item.checked) {
+            cntChk += 1;
+        } 
+        else {
+            cntChk -= 1;
         }
-        /*
-        var patt = new RegExp("[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}");
-        var res = patt.test( $("#phone").val());
-
-        if( !patt.test( $("#phone").val()) ){
-            alert("전화번호를 정확히 입력하여 주십시오.");
-            return;
+        if(cntChk > maxChk) {
+            alert("최대 "+maxChk+"개까지만 선택 가능합니다.");
+            item.checked = false;
+            cntChk -= 1;
         }
-        */
+    }
         
     </script>
 </body>
 </html>
 <script type="text/javascript">
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+	app.fnResult(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo);
+} 
 var app = new Vue({
 	el : '#app',
 	data : {
@@ -223,8 +217,8 @@ var app = new Vue({
 			email : "", 
 			status : ""
 		},//5,6,7번째 값 골라 비교
-		pw1 : "",
-		pw2 : "",
+		pwd1 : "",
+		pwd2 : "",
 		list : [],
 		nickChk : true,
 		emailChk : true
@@ -245,16 +239,19 @@ var app = new Vue({
             			if(data.info.position1 != undefined){
             				if(document.getElementsByName("posi")[i].value == data.info.position1){
             					document.getElementsByName("posi")[i].checked = true;
+            					cntChk++;
             				}
             			}
             			if(data.info.position2 != undefined){
             				if(document.getElementsByName("posi")[i].value == data.info.position2){
             					document.getElementsByName("posi")[i].checked = true;
+            					cntChk++;
             				}
             			}                		
             			if(data.info.position3 != undefined){
             				if(document.getElementsByName("posi")[i].value == data.info.position3){
             					document.getElementsByName("posi")[i].checked = true;
+            					cntChk++;
             				}
             			}                		
             		}
@@ -294,11 +291,11 @@ var app = new Vue({
     				}
     			}
             })
-		},
+		}
 		, fnSearchAddr : function(){
     		var self = this;
     		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
-    		window.open("addr.do", "test", option);
+    		window.open("../addr.do", "test", option);
     	},
     	
     	fnResult : function(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
@@ -339,11 +336,32 @@ var app = new Vue({
 		},
 		    fnUserUpdate : function(){
 		    	var self = this;
-		    	if(self.pwd1 != self.pwd2){
+
+		    	var chkCnt = document.getElementsByName("posi").length; // name=posi인 checkbox 개수를 변수에 저장
+				var arr =['', '', '']; // 선호 포지션을 담아둘 배열 생성
+				var arrCnt=0; // 카운트 세기 용도
+				
+				for (var i=0; i<chkCnt; i++) { // 전체 체크박스 갯수만큼 반복문 시작
+		            if (document.getElementsByName("posi")[i].checked == true) { // 체크박스에 체크가 되어 있을 경우 아래 구문 작동
+		                arr[arrCnt] = document.getElementsByName("posi")[i].value; // 체크박스의 value를 arr 배열에 저장
+		                arrCnt++; // 다음 value 저장을 위해 카운트 숫자 +1
+		            }
+		        }
+				
+				self.info.posi1 = arr[0];
+				self.info.posi2 = arr[1];
+				self.info.posi3 = arr[2];
+				
+				if(self.pwd1 == "" && self.pwd2 == ""){
+					alert("비밀번호를 확인해주세요.");
+					return;
+				}
+				
+		    	if(self.pwd1 != self.pwd2){//비밀번호
 	    			alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
 	    			return;
 	    		} else{
-	    			self.info.pw = self.pw1
+	    			self.info.pw = self.pwd1
 	    		}		    			  
 		    	if(self.info.nick == "" || self.info.nick == undefined){
 					nickChk = false;
@@ -373,24 +391,8 @@ var app = new Vue({
 		                type : "POST", 
 		                data : nparmap,
 		                success : function(data) {
-		                	if(self.info.posi1 != data.info.position1 || self.info.posi2 != data.info.position2 || self.info.posi3 != data.info.position3){
-		                		var chkCnt = document.getElementsByName("posi").length;
-		            			var arr =['', '', ''];
-		            			var arrCnt=0;
-		            			
-		            			for (var i=0; i<chkCnt; i++) { 
-		            	            if (document.getElementsByName("posi")[i].checked == true) {
-		            	                arr[arrCnt] = document.getElementsByName("posi")[i].value;
-		            	                arrCnt++; 
-		            	            }
-		            	        }
-		            				self.info.posi1 = arr[0];
-		            				self.info.posi2 = arr[1];
-		            				self.info.posi3 = arr[2];
-		                	}
-		                	self.info = data.info;
 		                	alert("수정되었습니다.");
-		                	location.href="/login.do" //로그인 화면이랑 연결
+		                	location.href="/mypage.do" //로그인 화면이랑 연결
 		                }
 		        }); 
 	    	}

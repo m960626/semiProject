@@ -1,6 +1,7 @@
 package com.example.mini.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.mini.dao.BoardService;
+import com.example.mini.model.Board;
 import com.google.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -257,6 +259,20 @@ public class BoardController {
 			    resultMap.put("result", "success"); // return 값
 				
 				return new Gson().toJson(resultMap); 
+			}
+		  
+		  
+		// 문상혁 수정
+			@RequestMapping(value = "/mainBoard.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+			@ResponseBody
+			public String mainBoard(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+				HashMap<String, Object> resultMap = new HashMap<String, Object>();
+				List<Board> notice = boardService.searchMainNotice(map);
+				List<Board> Board = boardService.searchMainBoard(map);
+				resultMap.put("notice", notice);
+				resultMap.put("Board", Board);
+				resultMap.put("result", "success");
+				return new Gson().toJson(resultMap);
 			}
 		  
 }
