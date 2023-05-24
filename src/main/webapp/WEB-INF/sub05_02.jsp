@@ -22,6 +22,7 @@
 <body>
 	<div id="app">
 		<div class="subContainer-wrap">
+			<!-- 
 			<div class="box-visual">
 				<div class="wrap">
 					<div class="box-navigation">
@@ -37,7 +38,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>  -->
 			<div class="subContainer">
 				<div class="wrap">
 					<!-- 컨텐츠 영역 -->

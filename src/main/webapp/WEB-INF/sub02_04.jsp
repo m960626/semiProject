@@ -249,15 +249,7 @@
 		   }
 		   ,fnpList : function (){
 			   var self = this;
-			   if(self.pList.length < 7){
-				   alert("8명 이상부터 매칭이 가능합니다.");
-			   }
-			   else if(self.pList.length > 15){
-				   alert("15명 이하로 선택해주세요.");
-			   }
-			   else{
-			   	closedimmed();
-		   	   }
+			   closedimmed();
 		   }
 		   , fnCloseDim : function (){
 			   var self = this;

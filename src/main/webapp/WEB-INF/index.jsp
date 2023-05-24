@@ -39,7 +39,7 @@
                             티키타카와 함께 지역 최고의 축구 클럽을 생성해보세요!!
                         </p>
                         <div class="more">
-                            <a href="/sub01_02.do">
+                            <a href="/sub01_01">
                                 자세히 보러 가기
                             </a>
                         </div>
@@ -59,7 +59,7 @@
                                     최고의 클럽을 생성해보세요.
                                 </p>
                             </div>
-                            <a href="/club.do" class="go_btn">자세히 보기<span></span></a>
+                            <a href="/sub01_01" class="go_btn">자세히 보기<span></span></a>
                         </div>
                         <div>
                             <div class="stit">
@@ -68,7 +68,7 @@
                                     클럽을 조회해보세요.
                                 </p>
                             </div>
-                            <a href="/clubSerch.do" class="go_btn">자세히 보기<span></span></a>
+                            <a href="/sub01_02" class="go_btn">자세히 보기<span></span></a>
                         </div>
                         <div>
                             <div class="stit">

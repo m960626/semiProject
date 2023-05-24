@@ -42,8 +42,7 @@
 							<div class="user_profile clubInfoArea">
 								<div class="user_profile_list">
 									<ul>
-										<li>{{info.name}}</li>
-										<li>({{info.nick}})</li>
+										<li>{{info.name}} ({{info.nick}})</li>
 										<li class="perInfo_li">포지션 : 
 											<span v-if="info.position1 != null">{{info.position1}}</span>
 											<span v-if="info.position2 != null">, {{info.position2}}</span>

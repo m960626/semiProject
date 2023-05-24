@@ -18,7 +18,7 @@
 	
 	<div id="app">
 		<!-- container -->
-		<div class="container clubView">
+		<div class="container clubView" style="padding-top: 0px;">
 
 			<div class="topView">
 				<div class="wrap clubS">
