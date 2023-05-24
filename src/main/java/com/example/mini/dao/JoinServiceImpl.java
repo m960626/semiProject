@@ -89,6 +89,7 @@ public class JoinServiceImpl implements JoinService {
 		// TODO Auto-generated method stub
 		joinMapper.updateUserInfo(map);
 	}
+
 	
 	// 아이디 찾기
 	@Override
@@ -137,12 +138,6 @@ public class JoinServiceImpl implements JoinService {
 		// TODO Auto-generated method stub
 		return joinMapper.selectUserInfoPg(map);
 	}
-
 	
-
-
-	
-
-
 
 }

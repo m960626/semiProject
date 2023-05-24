@@ -27,11 +27,35 @@
 			#{gender}, #{addr}, #{phone}, #{email}, '1')
 	</insert>
 	
-	<!-- 중복체크 -->
-	<select id="selectUserChk" parameterType="hashmap" resultType="com.example.mini.model.Join">
-		SELECT ID, NICK, EMAIL
+	<!-- 중복체크 (가입시 아이디)-->
+	<select id="selectIdChk" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
 		FROM T2_USER
-		WHERE ID = #{id} AND NICK = #{nick}  AND EMAIL = #{email}
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- 중복체크 (가입시/수정시 닉네임)-->
+	<select id="selectNickChk" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM T2_USER
+		WHERE NICK = #{nick}
+	</select>
+	<select id="selectNickChk2" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM T2_USER
+		WHERE NICK = #{nick}
+	</select>
+	
+	<!-- 중복체크 (가입시/수정시 이메일)-->
+	<select id="selectEmailChk" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM T2_USER
+		WHERE EMAIL = #{email}
+	</select>
+	<select id="selectEmailChk2" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM T2_USER
+		WHERE EMAIL = #{email}
 	</select>
 	
 	<!-- 회원정보수정 페이지 -->
@@ -42,6 +66,7 @@
 		FROM T2_USER
 		WHERE ID = #{id}
 	</select>
+	
 	<!-- 회원정보수정 -->
 	<update id="updateUserInfo" parameterType="hashmap">
 		UPDATE T2_USER
@@ -60,6 +85,13 @@
 			</if>
 		WHERE ID = #{id}
 	</update>
+	
+	<!-- 마이페이지 정보 호출 -->
+	<select id="selectMyPageUser" parameterType="hashmap" resultType="com.example.mini.model.Join">
+		SELECT NICK, ID, STATUS
+		FROM T2_USER
+		WHERE ID = #{id}
+	</select>
 	
 	<select id="findId" parameterType="hashmap" resultType="int">
 		SELECT ID
