@@ -39,7 +39,7 @@ public class User {
 	private int mCnt;
 	private String name;
 	private String gender;
-	
+	private String imgdata;
 	
 	public String getId() {
 		return id;
@@ -268,5 +268,11 @@ public class User {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	public String getImgdata() {
+		return imgdata;
+	}
+	public void setImgdata(String imgdata) {
+		this.imgdata = imgdata;
 	}
 }

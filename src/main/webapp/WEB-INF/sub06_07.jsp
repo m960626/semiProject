@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="/layout/header.jsp"></jsp:include>
+<jsp:include page="/layout/subHeader.jsp"></jsp:include>
 <title>티키타카 - 최근기록(06_07)</title>
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -32,7 +32,12 @@
 						</div>
 	                    <div class="recent_record__inner">
 							<div class="user_img img_area">
-								<img src="../images/profile_photo_woman.png">
+								<p v-if="sessionGender = 'F'">
+				                	<img src="../images/profile_photo_woman.png" alt="여자 프로필 이미지">
+				                </p>
+				                <p v-else>
+				                	<img src="../images/profile_photo_man.png" alt="남자 프로필 이미지">
+				                </p>
 							</div>
 							<div class="user_profile clubInfoArea">
 								<div class="user_profile_list">
@@ -50,12 +55,12 @@
 						</div>
 						<div class="recent_record__inner">
 							<!-- 로고 있는 경우 -->
-							<div class="cImg_logo img_area">
-								<img src="../images/img_logo.png">
+							<div class="cImg_logo img_area" v-if='info.cImg != null'>
+								{{info.cImg}}
 							</div>
 							<!-- // 로고 있는 경우 -->
 							<!-- 로고 없는 경우 -->
-							<!-- <div class="cImg_logo none">클럽 로고가 없습니다.</div> -->
+							<div class="cImg_logo none" v-else>클럽 로고가 없습니다.</div>
 							<!-- // 로고 없는 경우 -->
 							<div class="user_profile">
 								<div class="user_profile_list clubInfoArea">
@@ -100,7 +105,7 @@
 	                <div class="section">
 	                    <div class="recent_record__inner">
 							<div class="user_img img_area">
-								<img src="../resources/images/profile_photo_woman.png">
+								
 							</div>
 							<div class="user_profile clubInfoArea">
 								<div class="user_profile_list">
@@ -149,7 +154,9 @@
 	var app = new Vue({
 		el : '#app',
 		data : {
-			sessionId : "${sessionId}"
+			sessionId : "${sessionId}",
+			sessionStatus : "${sessionStatus}",
+			sessionGender : "${sessionGender}"
 		   ,info : {}
 		   ,clubFlg : true
 		   ,dataFlg : false

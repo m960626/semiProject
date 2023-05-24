@@ -19,7 +19,7 @@
         </div>
         <div class="mypage_profile">
             <div class="profile_photo">
-            	<p v-if="sessionGender == 'F'">
+            	<p v-if="sessionGender = 'F'">
                 	<img src="../images/profile_photo_woman.png" alt="여자 프로필 이미지">
                 </p>
                 <p v-else>

@@ -71,4 +71,13 @@ public interface ClubMapper {
 	
 	// 메인 화면 클럽 순위 
 	List<Club> selectMainClub(HashMap<String, Object> map);
+	
+	// 회원 방출
+	void deleteClubUser(HashMap<String, Object> map);
+	
+	// 회원 탈퇴 시 타임라인
+	void deleteClubTL(HashMap<String, Object> map);
+	
+	// 클럽 공지사항 작성 
+	void insertClubNotice(HashMap<String, Object> map);
 }

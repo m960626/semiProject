@@ -7,6 +7,7 @@ import com.example.mini.model.Club;
 import com.example.mini.model.Join;
 import com.example.mini.model.Matching;
 import com.example.mini.model.TimeLine;
+import com.example.mini.model.User;
 
 public interface ClubService {	
 	
@@ -60,4 +61,14 @@ public interface ClubService {
 	
 	// 메인화면 클럽 순위
 	List<Club> searchMainClub(HashMap<String, Object> map);
+	
+	// 회원 방출
+	void deleteClubUser(HashMap<String, Object> map);
+	
+	// 회원 탈퇴 시 타임라인
+	void deleteClubTL(HashMap<String, Object> map);
+	
+	// 클럽 공지사항 작성 
+	void insertClubNotice(HashMap<String, Object> map);
+	
 }

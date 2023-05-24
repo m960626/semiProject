@@ -32,6 +32,7 @@ public class MainController {
 		request.setAttribute("sessionId", session.getAttribute("sessionId"));
 		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
 		request.setAttribute("sessionNickName", session.getAttribute("sessionName"));
+		request.setAttribute("sessionCNo", session.getAttribute("sessionCNo"));
 		return "/index";
     }
 	

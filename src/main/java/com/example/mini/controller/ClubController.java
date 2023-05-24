@@ -288,6 +288,27 @@ public class ClubController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+	
+	/* 회원 방출 버튼 클릭 시 */
+	@RequestMapping(value = "/Club/deleteUser.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteUser(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		clubService.deleteClubUser(map);
+		clubService.deleteClubTL(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
+	
+	/* 회원 방출 버튼 클릭 시 */
+	@RequestMapping(value = "/Club/addNotice.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String addNotice(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		clubService.insertClubNotice(map);
+		resultMap.put("result", "success");
+		return new Gson().toJson(resultMap);
+	}
     
     
     

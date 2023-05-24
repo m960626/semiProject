@@ -33,13 +33,13 @@
                 <div class="wrap">
                     <div class="txtBox">
                         <h2 class="title">
-                            티키타카 프로젝트 화이팅!
+                            티키타카 사이트 오픈
                         </h2>
                         <p class="cont">
-                            티키타카와 함께 지역 최고의 축구 클럽을 생성해보세요!!
+                            티키타카와 함께 지역 최고의 축구 클럽을 생성해보세요!
                         </p>
                         <div class="more">
-                            <a href="/club.do">
+                            <a href="/sub01_01.do">
                                 자세히 보러 가기
                             </a>
                         </div>
@@ -138,6 +138,7 @@
                                     <div class="clubInfo">
                                         <div class="imgBox">
                                             <div class="img">
+                                            	<img :src="right.imgData" />
                                             </div>
                                         </div>
                                         <div class="txtBox">
@@ -304,6 +305,7 @@ var app = new Vue({
                 type : "POST", 
                 data : nparmap,
                 success : function(data) {  
+                	console.log(data);
                	 	self.clubList = data.list;
                	 	self.rList = data.rlist;	
                	 	console.log(self.clubList);

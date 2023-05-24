@@ -14,7 +14,7 @@
 .form_row.col_1 .selectBox {width: 458px;}
 .form_row label {width:145px;min-width:145px;word-break:break-all;white-space:nowrap;padding-right:20px;box-sizing:border-box;}
 .form_row input {border-radius: 4px;box-sizing:border-box;}
-.int {width:100%;height:50px;border:1px solid #ccc;font-weight:400;font-size:16px;line-height:16px;color:#222;padding:0 20px;outline: none !important;transition:all 0.2s ease-in-out;box-sizing:border-box;}
+.int {width:100%;height:50px;background-color: #fff;border:1px solid #ccc;font-weight:400;font-size:16px;line-height:16px;color:#222;padding:0 20px;outline: none !important;transition:all 0.2s ease-in-out;box-sizing:border-box;}
 .int::placeholder {font-weight:400;color:#ABABAB;}
 .form_text {display: flex;justify-content: flex-end;margin-top: -10px;margin-bottom: 13px;}
 .form_text p {width: 70%;text-align: left;font-size:12px;line-height: 14px;font-weight:400;color:#ff4747;word-wrap: normal;word-break: keep-all;}
@@ -31,9 +31,9 @@
 .form_row textarea {width:100%;height:150px;border:1px solid #ccc;font-weight:400;font-size:16px;line-height:16px;color:#222;padding:20px;outline: none !important;border-radius: 4px;resize: none;transition:all 0.2s ease-in-out;box-sizing:border-box;}
 
 /* 파일선택 버튼 */
-/* .filebox input[type="file"] {position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip:rect(0,0,0,0);border: 0;}
+.filebox input[type="file"] {position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip:rect(0,0,0,0);border: 0;}
 .filebox .btn_upload {display: flex;align-items: center;justify-content: center;width:140px;min-width: auto;height:50px;padding-right: 0;margin-left: 10px;background-color:#fff;border:1px solid #006DAB;border-radius:4px;font-weight:500;font-size:16px;color:#006DAB;cursor: pointer;box-sizing:border-box;}
- */
+
 /* 폼 라디오 */
 input[type="radio"] {display:none !important;}
 input[type="radio"] + label {display:inline-block !important;font-weight:400;font-size:16px;color:#555;cursor:pointer;}
@@ -102,12 +102,12 @@ select.selectBox::after {content: '';position: absolute;top: 22px;right: 16px;di
 .matching_list .matchTitle {line-height: 1;font-weight: 500;margin: 7px 0;}
 .matching_list .matchGender {line-height: 1;font-size: 0.8rem;}
 .matching_list .btnBox {display: block;width: 140px;text-align: end;}
-.matching_list .btnBox button {width: 120px;margin-bottom: 5px;padding: 5px; border-radius: 5px;color: #fff;;box-sizing: border-box;}
+.matching_list .btnBox button {width: 120px;margin-bottom: 5px;padding: 5px; border-radius: 5px;box-sizing: border-box;}
 .matching_list .btnBox button:last-child {margin-bottom: 0;}
-.clubBtn {background-color: #A341F9;} /* 상대클럽보기 */
-.fieldBtn {background-color: #FF0000;} /* 구장정보보기 */
-.editBtn {background-color: #444;} /* 참여인원수정 */
-.recordBtn {background-color: #444;} /* 경기기록 */
+.fieldBtn {background-color: #006DAB;color: #fff;} /* 구장정보보기 */
+.clubBtn {border: 1px solid #006DAB;background-color: #fff;color: #006DAB;} /* 상대클럽보기 */
+.editBtn {background-color: #4d4d4d;color: #fff;} /* 참여인원수정 */
+.recordBtn {background-color: #4d4d4d;color: #fff;} /* 경기기록 */
 
 .loc_color1{background-color: #ff0000;}
 .loc_color2{background-color: #ff8000;}
@@ -141,7 +141,13 @@ select.selectBox::after {content: '';position: absolute;top: 22px;right: 16px;di
 ---------------------------------------*/
 /* 회원가입 */
 .login__body {max-width: 440px;margin: 0 auto;padding-bottom: 50px;}
-.login_form {width: 540px;
+.join_form {width: 800px; /* 회원가입, 회원정보 수정 비밀번호 찾기 */
+    margin: 0 auto;
+    padding: 50px 30px 30px;
+    background-color: #fff;
+    border: 1px solid #f2f2f2;
+    border-radius: 10px;}
+.login_form {width: 540px; /* 로그인, 아이디 비밀번호 찾기 */
     margin: 0 auto;
     padding-top: 50px;
     background-color: #fff;
@@ -386,4 +392,20 @@ select.selectBox::after {content: '';position: absolute;top: 22px;right: 16px;di
 
 .user_profile_list li {text-align: left;font-size: 16px;font-weight: 400;line-height: 1.3rem;}
 
-
+/*---------------------------------------
+---------- 상혁 추가 css 230524 ------------
+-----------------------------------------*/
+.form_row label.addBtn {
+   background: #fff;
+    text-align: center;
+    padding-right: 0;
+    display: inline-block;
+    min-width: 110px;
+    border: 1px solid #006dab;
+    border-radius: 4px;
+    color: #006dab;
+    margin-left: 6px;
+    height: 50px;
+    line-height: 48px;
+    font-weight: 500;
+}

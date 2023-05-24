@@ -148,6 +148,24 @@ public class ClubServiceImpl implements ClubService{
 	public List<Club> searchMainClub(HashMap<String, Object> map) {
 		return clubMapper.selectMainClub(map);
 	}
+	
+	// 회원 방출
+	@Override
+	public void deleteClubUser(HashMap<String, Object> map) {
+		clubMapper.deleteClubUser(map);
+	}
+	
+	// 회원 탈퇴 시 타임라인
+	@Override
+	public void deleteClubTL(HashMap<String, Object> map) {
+		clubMapper.deleteClubTL(map);
+	}
+	
+	// 회원 탈퇴 시 타임라인
+	@Override
+	public void insertClubNotice(HashMap<String, Object> map) {
+		clubMapper.insertClubNotice(map);
+	}
 		
 		
 }

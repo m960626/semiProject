@@ -145,6 +145,7 @@
 		FROM T2_CLUB C
 		INNER JOIN T2_USER U ON U.ID = C.CID
 		INNER JOIN T2_LOC L ON C.CLOC = L.LOCNUM
+		LEFT JOIN mini_db2.T2_CIMG I ON I.cNo = C.cNo
 		WHERE C.CNO = #{cNo}
 	</select>
 	
@@ -180,6 +181,7 @@
 		WHERE jNo = #{jNo}
 	</update>
 	
+	
 	<!-- 클럽 신청 내역 수락 시 타임라인 추가 -->
 	<insert id="insertClubTL" parameterType="hashmap">
 		INSERT INTO T2_CLUBTL
@@ -188,6 +190,7 @@
 			(NOW(), #{cNo}, '1', #{id})
 	</insert>
 	
+	
 	<!-- 클럽 신청 수락 시 클럽 멤버 추가 -->
 	<update id="insertJoinTrue" parameterType="hashmap">
 		UPDATE T2_USER
@@ -195,12 +198,14 @@
 		WHERE id = #{id}
 	</update>
 	
+	
 	<!-- 클럽 신청 내역 거절 -->
 	<update id="updateJoinTrue" parameterType="hashmap">
 		UPDATE T2_CLUBJOIN
 		SET jStat = '2'
 		WHERE jNo = #{jNo}
 	</update>
+	
 	
 	<!-- 최근 경기 기록 -->
 	<select id="selectMatchList" parameterType="hashmap" resultType="com.example.mini.model.Matching">
@@ -231,16 +236,23 @@
 			U.ID = #{uId}
 	</select>
 	
+	
 	<!-- 회원 방출 -->
-	<delete id="deleteClubUser" parameterType="hashmap">
-		
-	</delete>
-	
-	
-	<!-- 회원 등급 상승 -->
-	<update id="updateClubUser" parameterType="hashmap">
-		
+	<update id="deleteClubUser" parameterType="hashmap">
+		UPDATE T2_USER
+		SET cNo = 0
+		WHERE id = #{uId}
 	</update>
+	
+	
+	<!-- 회원탈퇴 시 타임라인 -->
+	<insert id="deleteClubTL" parameterType="hashmap">
+		INSERT INTO T2_CLUBTL
+			(tDate, cNo, tKind, id)
+		VALUES
+			(NOW(), #{cNo}, '2', #{uId})
+	</insert>
+	
 	
 	<!-- 팀 공지사항 리스트 -->
 	<select id="selectClubNotice" parameterType="hashmap" resultType="com.example.mini.model.Club">
@@ -269,9 +281,17 @@
 			(#{uId}, #{cNo}, NOW(), '1', 'N')
 	</insert>
 	
+	<!-- 클럽 공지사항 작성 -->
+	<insert id="insertClubNotice" parameterType="hashmap">
+		INSERT INTO T2_CNOTICE
+			(id, cNo, nDate, nCont, DelYn)
+		VALUES
+			(#{id}, #{cNo}, NOW(), #{nCont}, 'N')
+	</insert>
+	
 	<!-- 메인화면 클럽 순위 경기 수 -->
 	<select id="selectMainClub" parameterType="hashmap" resultType="com.example.mini.model.Club">
-		select C.CNAME, TOTAL, LOCNAME, C.CNO, USER
+		select C.CNAME, TOTAL, LOCNAME, C.CNO, USER, IMGDATA
 		FROM(
 			SELECT CNAME, COUNT(*) AS TOTAL
 			FROM(
@@ -294,6 +314,7 @@
 			where cNo is not null
 			group by cNo
 		) U ON U.CNO = C.CNO
+		LEFT JOIN mini_db2.T2_CIMG I ON I.cNo = C.cNo
 		ORDER BY TOTAL DESC
 	</select>
 	

@@ -103,6 +103,9 @@
 				</div>
 				<div class="clubMem_body">
 					<div class="cImg_logo none">클럽 로고가 없습니다.</div>
+					<div class="cImg_logo">
+						<img :src="info.imgdata" />
+					</div>
 					<div class="clubInfo_inner">
 						<div class="clubInfo infobox">
 		                    <div class="matchInfo_title">{{info.cName}}</div>

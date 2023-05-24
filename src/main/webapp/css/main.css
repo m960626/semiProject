@@ -4,6 +4,10 @@
     display: block;
     width: 100%;
     height:500px;
+    background:url(../images/img_banner.jpg) 0 0 no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 500px;
 }
 .area-main #section01 .wrap {
     display: -webkit-box;
@@ -20,7 +24,7 @@
 }
 .area-main #section01 .wrap .txtBox .title {
     font-size: 32px;
-    font-weight: 500x;
+    font-weight: 700;
     margin-bottom: 10px;
 }
 .area-main #section01 .wrap .txtBox .cont {
@@ -269,11 +273,14 @@ body{
 .rightArea .clubInfo .imgBox .img {
     display: inline-block;
     width: 140px;
-    height: 145px;
+    height: 140px;
     line-height: 145px;
     color:#fff;
-    background-color: #666;
     border-radius: 5px;
+}
+.rightArea .clubInfo .imgBox .img img{
+	width:100%;
+	height:100%;
 }
 .rightArea .clubInfo .txtBox p + p {
     margin-top: 9px

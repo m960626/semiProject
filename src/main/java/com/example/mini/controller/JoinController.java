@@ -29,40 +29,40 @@ public class JoinController {
 	
 			
 	// 로그인 페이지
-	   @RequestMapping("/login.do") 
-	   public String main(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-	      String id = (String) session.getAttribute("sessionId");
-	      String nick = (String) session.getAttribute("sessionNickName");
-	      String status = (String) session.getAttribute("sessionStatus");
-	      String gender = (String) session.getAttribute("sessionGender");
-	      
-	      session.removeAttribute(id);
-	      session.removeAttribute(nick);
-	      session.removeAttribute(status);
-	      session.removeAttribute(gender);
-	      
-	      session.invalidate();
-	      request.setAttribute("map", map); // (로그인페이지의 map, 아이디찾기의 map)
+		@RequestMapping("/login.do") 
+		public String main(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+			String id = (String) session.getAttribute("sessionId");
+			String nick = (String) session.getAttribute("sessionNickName");
+			String status = (String) session.getAttribute("sessionStatus");
+			String cNo = (String) session.getAttribute("sessionCNo");
+			
+			session.removeAttribute(id);
+			session.removeAttribute(nick);
+			session.removeAttribute(status);
+			session.removeAttribute(cNo);
+			
+			session.invalidate();
+			request.setAttribute("map", map); // (로그인페이지의 map, 아이디찾기의 map)
 	        return "/sub00_01";
 	    }
 
 	
-	   // 로그인 기능
-	   @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	   @ResponseBody
-	   public String get(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-	      HashMap<String, Object> resultMap = new HashMap<String, Object>();
-	      resultMap = joinService.searchUserInfo(map);
-	      String result = (String) resultMap.get("result");
-	      if(result.equals("success")) {
-	         Join user = (Join) resultMap.get("user");
-	         session.setAttribute("sessionId", user.getId());
-	         session.setAttribute("sessionNickName", user.getNick());
-	         session.setAttribute("sessionStatus", user.getStatus());
-	         session.setAttribute("sessionGender", user.getGender());
-	      }
-	      return new Gson().toJson(resultMap);
-	   }
+		// 로그인 기능
+		@RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String get(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap = joinService.searchUserInfo(map);
+			String result = (String) resultMap.get("result");
+			if(result.equals("success")) {
+				Join user = (Join) resultMap.get("user");
+				session.setAttribute("sessionId", user.getId());
+				session.setAttribute("sessionNickName", user.getNick());
+				session.setAttribute("sessionStatus", user.getStatus());
+				session.setAttribute("sessionCNo", user.getcNo());
+			}
+			return new Gson().toJson(resultMap);
+		}
 	
 	/* 메인페이지 로그아웃 */
 	@RequestMapping(value="logout.do", method=RequestMethod.GET)

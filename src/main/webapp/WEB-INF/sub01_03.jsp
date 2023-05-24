@@ -29,7 +29,7 @@
 							<h1>{{userCnt}}/{{info.cMax}}</h1>
 						</div>
 						<div>
-							<img src="/image/teamLogo1.png" class="tlogo">
+							<img :src="info.imgData" class="tlogo" />
 						</div>
 						<h2>{{info.cName}}</h2>
 						<div class="cInfo">{{info.match}}경기 {{info.cWin}}승 {{info.cLose}}패 {{info.cDraw}}무 <span v-if="info.wRate > 0">(승률 {{info.wRate}}%)</span></div>

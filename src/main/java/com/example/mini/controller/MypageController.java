@@ -145,6 +145,7 @@ public class MypageController {
 		request.setAttribute("map", map);
 		request.setAttribute("sessionId", session.getAttribute("sessionId"));
 		request.setAttribute("sessionStatus", session.getAttribute("sessionStatus"));
+		request.setAttribute("sessionGender", session.getAttribute("sessionGender"));
 		return "/sub06_07";
     }
 	
