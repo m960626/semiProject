@@ -131,7 +131,7 @@
                         <label for="address" class="lbl need">주소</label>
                         <input type="text" id="address" class="int" v-model="info.addr" >
                         <div class="int_cert">
-                            <button type="button" class="btn_form" id="btn_certification">우편번호 찾기</button>
+                            <button type="button" @click="fnSearchAddr" class="btn_form" id="btn_certification">주소 찾기</button>
                         </div>
                     </div>
                     <div class="form_row">
@@ -200,6 +200,10 @@
 </body>
 </html>
 <script type="text/javascript">
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+	app.fnResult(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo);
+} 
+
 var app = new Vue({
 	el : '#app',
 	data : {		
@@ -238,6 +242,10 @@ var app = new Vue({
 	                arrCnt++; // 다음 value 저장을 위해 카운트 숫자 +1
 	            }
 	        }
+			/*var phoneNumber = "010-1111-222g";
+		    if(!/01[01689]-[1-9]{1}[0-9]{2,3}-[0-9]{4}$/.test(phoneNumber)){
+		        alert("연락처가 양식에 맞는지 확인해주세요.");
+		    }	*/
 				self.info.posi1 = arr[0];
 				self.info.posi2 = arr[1];
 				self.info.posi3 = arr[2];
@@ -251,6 +259,10 @@ var app = new Vue({
         	}
 			if(self.info.email == "" || self.info.email == undefined){
         		alert("메일주소를 입력해주세요.");
+        		return;
+        	}
+			if(self.info.addr == "" || self.info.addr == undefined){
+				alert("주소를 입력해주세요.");
         		return;
         	}
 			if(self.pw1 == self.pw2){
@@ -268,6 +280,7 @@ var app = new Vue({
 				alert("이메일 중복체크를 해주세요.");
 				return;
 			}
+			
 				var nparmap = self.info;
 				console.log(nparmap);
 			 $.ajax({
@@ -330,6 +343,21 @@ var app = new Vue({
 	                }
 	            }); 
 		    }
+			, fnSearchAddr : function(){
+	    		var self = this;
+	    		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+	    		window.open("addr.do", "test", option);
+	    	},
+	    	
+	    	fnResult : function(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+	    		var self = this;
+	    		self.info.addr = roadFullAddr;
+	    		// 콘솔 통해 각 변수 값 찍어보고 필요한거 가져다 쓰면 됩니다.
+	    		console.log(roadFullAddr);
+	    		console.log(roadAddrPart1);
+	    		console.log(addrDetail);
+	    		console.log(engAddr);
+	    	}
 			, fnEmailChk : function(){
 		    	var self = this;
 		    	var nparmap = {email : self.info.email};

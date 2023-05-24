@@ -128,7 +128,7 @@
                         <label for="address" class="lbl need">주소</label>
                         <input type="text" id="address" class="int" v-model="info.addr" >
                         <div class="int_cert">
-                            <button type="button" class="btn_form" id="btn_certification">우편번호 찾기</button>
+                            <button type="button" @click="fnSearchAddr" class="btn_form" id="btn_certification">주소 찾기</button>
                         </div>
                     </div>
                     <div class="form_row">
@@ -295,7 +295,22 @@ var app = new Vue({
     			}
             })
 		},
-		fnEmailChk : function(){      //중복체크(버튼) -닉네임, 메일주소
+		, fnSearchAddr : function(){
+    		var self = this;
+    		var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+    		window.open("addr.do", "test", option);
+    	},
+    	
+    	fnResult : function(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+    		var self = this;
+    		self.info.addr = roadFullAddr;
+    		// 콘솔 통해 각 변수 값 찍어보고 필요한거 가져다 쓰면 됩니다.
+    		console.log(roadFullAddr);
+    		console.log(roadAddrPart1);
+    		console.log(addrDetail);
+    		console.log(engAddr);
+    	}
+		,fnEmailChk : function(){      //중복체크(버튼) -닉네임, 메일주소
     		var self = this;
 			var nparmap = {email : self.info.email};
 			if(self.info.email == "" || self.info.email == undefined){
@@ -338,6 +353,10 @@ var app = new Vue({
 		    	if(self.info.email == "" || self.info.email == undefined){
 					emailChk = false;
 					alert("메일주소를 입력해주세요.");
+	        		return;
+	        	}
+		    	if(self.info.addr == "" || self.info.addr == undefined){
+					alert("주소를 입력해주세요.");
 	        		return;
 	        	}
 		    	console.log(self.nickChk);

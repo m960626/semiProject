@@ -124,6 +124,12 @@ public class JoinController {
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
+	// 주소 팝업 호출
+	@RequestMapping("/addr.do") 
+    public String addr(Model model, @RequestParam HashMap<String, Object> map, HttpServletRequest request) throws Exception{
+		
+		return "/jusoPopup";
+    }
 	
 	// 회원정보수정 페이지
 	@RequestMapping("/user/info.do") 
