@@ -294,9 +294,8 @@ select.selectBox::after {content: '';position: absolute;top: 22px;right: 16px;di
 /* 문상혁 수정 끝 */
 
 /* 혁진 추가 */
-.btnBox2{display:flex; margin-top: 60px; margin-bottom: 60px; text-align: center;}
-.btnBox2 > *{display:inline-block; margin:0px auto;}
-.btnBox2 .btn_form:hover {background-color:#006DAB;color:#fff;transition:all 0.2s ease-in-out;}
+.btnBox2{display:flex;align-items: center;justify-content: center; margin-top: 60px; margin-bottom: 60px;}
+.btnBox2 button:first-child {margin-right: 7px;}
 
 /* 매칭 구장 예약 */
 .filed__container {padding-top: 89px;}

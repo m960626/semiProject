@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="box-nav">
-                                    <a href="/clubView.do" target="" class="nav">
+                                    <a href="javascript:;" target="" class="nav" @click="fnViewMyClub">
                                         <span class="text">내 클럽</span>
                                     </a>
                                     <div class="box-nav">
@@ -223,13 +223,13 @@
 	            </ul>
             </nav>
             <!-- 사이드메뉴 -->
-        	<nav id="main-tab">
+        	<nav id="main-tab" style="top:40%;">
 	            <ul class="main-tab-list" v-if="sessionId != '' && sessionId != null">
 	                <li class="tab01 on"><a href="/mypage.do" title="tiki 마이페이지"><span>Tiki 마이페이지</span></a></li>
 	                <li class="tab02"><a href="/logout.do" title="tiki 로그아웃"><span>Tiki 로그아웃</span></a></li>
 	            </ul>
 	            <ul class="main-tab-list" v-else>
-	                <li class="tab01 on"><a href="/join.do" title="tiki 회원가입"><span>Tiki 회원가입</span></a></li>
+	                <li class="tab01 on"><a href="/preJoin.do" title="tiki 회원가입"><span>Tiki 회원가입</span></a></li>
 	                <li class="tab02"><a href="/login.do" title="tiki 로그인"><span>Tiki 로그인</span></a></li>
 	            </ul>
         	</nav>
@@ -239,19 +239,57 @@
 </body>
 </html>
 <script type="text/javascript">
-var app = new Vue({
-	el : '#header',
-	data : {
+var app = new Vue({ 
+    el: '#header',
+    data: {
 		sessionId : "${sessionId}",
 		sessionStatus : "${sessionStatus}",
-		sessionNickName : "${sessionNickName}"
-	},
-	methods : {
-		
+		sessionNickName : "${sessionNickName}",
+		sessionCNo : "${sessionCNo}"
+    }   
+    , methods: {
+    	fnViewMyClub : function(){
+    		var self = this;
+    		if(self.sessionCNo != "" && self.sessionCNo > 0) {
+    			self.pageChange("./clubView.do", {cNo : self.sessionCNo});
+    		}
+    		else{
+    			alert("가입된 클럽이 없습니다.");
+    		}
+    	},
+		pageChange : function(url, param) {
+			var target = "_self";
+			if(param == undefined){
+			//	this.linkCall(url);
+				return;
+			}
+			var form = document.createElement("form"); 
+			form.name = "dataform";
+			form.action = url;
+			form.method = "post";
+			form.target = target;
+			for(var name in param){
+				var item = name;
+				var val = "";
+				if(param[name] instanceof Object){
+					val = JSON.stringify(param[name]);
+				} else {
+					val = param[name];
+				}
+				var input = document.createElement("input");
+	    		input.type = "hidden";
+	    		input.name = item;
+	    		input.value = val;
+	    		form.insertBefore(input, null);
+			}
+			document.body.appendChild(form);
+			form.submit();
+			document.body.removeChild(form);
+		}
 	},
 	created : function() {
-       	var self = this;
 	}
-		
-});	
+});
+
+
 </script>

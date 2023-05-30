@@ -15,18 +15,6 @@
 <body>
 	<div id="container">
         <div class="area-main">
-        	<!-- 사이드메뉴 -->
-        	<nav id="main-tab">
-	            <ul class="main-tab-list" v-if="sessionId != '' && sessionId != null">
-	                <li class="tab01 on"><a href="/mypage.do" title="tiki 마이페이지"><span>Tiki 마이페이지</span></a></li>
-	                <li class="tab02"><a href="/logout.do" title="tiki 로그아웃"><span>Tiki 로그아웃</span></a></li>
-	            </ul>
-	            <ul class="main-tab-list" v-else>
-	                <li class="tab01 on"><a href="/join.do" title="tiki 회원가입"><span>Tiki 회원가입</span></a></li>
-	                <li class="tab02"><a href="/login.do" title="tiki 로그인"><span>Tiki 로그인</span></a></li>
-	            </ul>
-        	</nav>
-        	<!-- 사이드메뉴 끝 -->
         	
             <!-- 메인 슬라이드 -->
             <section id="section01">

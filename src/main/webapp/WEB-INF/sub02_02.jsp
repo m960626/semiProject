@@ -180,7 +180,7 @@
 				</form>
 				<!-- // form -->
 				<div class="btnBox2">
-					<button class="btn_form" @click="opendimmed">참여인원 선택하기</button>
+					<button class="btn_form type2" @click="opendimmed" style="width: 200px;padding: 0 15px;">참여인원 선택하기</button>
 					<button class="btn_form" @click="fnApply">신청하기</button>
 				</div>
 				<!-- // foot_btn -->

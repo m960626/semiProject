@@ -218,9 +218,21 @@
 	            <ul v-else>
 	                <li><a href="/login.do">로그인</a></li>
 	                <span>|</span>
-	                <li><a href="/join.do">회원가입</a></li>
+	                <li><a href="/preJoin.do">회원가입</a></li>
 	            </ul>
             </nav>
+            <!-- 사이드메뉴 -->
+        	<nav id="main-tab">
+	            <ul class="main-tab-list" v-if="sessionId != '' && sessionId != null">
+	                <li class="tab01 on"><a href="/mypage.do" title="tiki 마이페이지"><span>Tiki 마이페이지</span></a></li>
+	                <li class="tab02"><a href="/logout.do" title="tiki 로그아웃"><span>Tiki 로그아웃</span></a></li>
+	            </ul>
+	            <ul class="main-tab-list" v-else>
+	                <li class="tab01 on"><a href="/preJoin.do" title="tiki 회원가입"><span>Tiki 회원가입</span></a></li>
+	                <li class="tab02"><a href="/login.do" title="tiki 로그인"><span>Tiki 로그인</span></a></li>
+	            </ul>
+        	</nav>
+        	<!-- 사이드메뉴 끝 -->
             <!-- gnb 영역 끝 -->
         </div>
     </header>

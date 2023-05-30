@@ -12,9 +12,10 @@
 		   ,cDraw
 		   ,C.cNo
 		   ,C.cName
-		   ,R.cRank
+		   ,R.cRank, imgdata
 		from T2_CLUB C
 		INNER JOIN T2_USER U ON C.CNO = U.CNO
+		LEFT JOIN mini_db2.T2_CIMG I ON I.cNo = C.cNo
 		LEFT JOIN (
 			select 
 				cName

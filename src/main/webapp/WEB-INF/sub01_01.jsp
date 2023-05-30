@@ -183,6 +183,7 @@
 			sessionId : "${sessionId}",
 			sessionNickName : "${sessionNickName}",
 			sessionStatus : "${sessionStatus}",
+			sessionCNo : "${sessionCNo}",
 			info : {
 				cid : "${sessionId}",
 				file : "",
@@ -220,7 +221,7 @@
 			            success : function(data) { 
 			          		if(data.result == "success"){
 			          			alert("이미 가입된 클럽이 있습니다.");		
-			          			location.href="/main.do";
+			          			self.pageChange("./clubView.do", {cNo : self.sessionCNo});
 			          		}
 			            }
 			        }); 
@@ -316,6 +317,35 @@
 		            success : function(data) { 
 		            }
 		        }); 
+			},
+			pageChange : function(url, param) {
+				var target = "_self";
+				if(param == undefined){
+				//	this.linkCall(url);
+					return;
+				}
+				var form = document.createElement("form"); 
+				form.name = "dataform";
+				form.action = url;
+				form.method = "post";
+				form.target = target;
+				for(var name in param){
+					var item = name;
+					var val = "";
+					if(param[name] instanceof Object){
+						val = JSON.stringify(param[name]);
+					} else {
+						val = param[name];
+					}
+					var input = document.createElement("input");
+		    		input.type = "hidden";
+		    		input.name = item;
+		    		input.value = val;
+		    		form.insertBefore(input, null);
+				}
+				document.body.appendChild(form);
+				form.submit();
+				document.body.removeChild(form);
 			}
 		},
 		created : function() {

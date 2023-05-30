@@ -122,7 +122,7 @@
 		                    </ul>
 		                </div>
 		                <div class="foot_btn">
-							<a href="javascript:;" class="btn_form type2" @click="fnClubView(sessionId)">클럽 입장하기</a>
+							<a href="javascript:;" class="btn_form type2" @click="fnViewMyClub">클럽 입장하기</a>
 						</div>
 					</div>
 				</div>
@@ -136,7 +136,8 @@
 	var app = new Vue({
 		el : '#app',
 		data : {
-		    sessionId : "${sessionId}"
+		    sessionId : "${sessionId}",
+			sessionCNo : "${sessionCNo}"
 		   ,info : {}
 		   ,list : []
 		   ,clubFlg : true
@@ -253,9 +254,14 @@
 	    		document.body.appendChild(form);
 	    		form.submit();
 	    		document.body.removeChild(form);
-	    	}, fnClubView : function(sessionId){
+	    	}, fnViewMyClub : function(){
 	    		var self = this;
-	    		self.pageChange("./sub01_03.do", {sessionId : sessionId});
+	    		if(self.sessionCNo != "" && self.sessionCNo > 0) {
+	    			self.pageChange("./clubView.do", {cNo : self.sessionCNo});
+	    		}
+	    		else{
+	    			alert("가입된 클럽이 없습니다.");
+	    		}
 	    	}
 		},
 		created : function() {
