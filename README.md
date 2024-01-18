@@ -29,7 +29,6 @@
 - 5/4 ~ 5/10 화면설계, DB설계, 데이터 수집
 - 5/10 ~ 5/31 서비스 구축, 테스트
 
-<br></br>
 - ### 4. 🛠 사용기술
 - HTML / CSS / JAVASCRIPt / JQUERY
 - VUE.js
@@ -38,11 +37,9 @@
 - Figma
 - Google Spread sheet
 
-<br></br>
 - ##### Build Tool
 - Gradle-8.2.1 
 
-<br></br>
-##### DataBase
+- ##### DataBase
 - MySQL Workbench 8.0 CE
   <br></br>
